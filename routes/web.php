@@ -29,4 +29,9 @@ Route::get('organization/status','organizationController@status');
 Route::post('organization','organizationController@store');
 
 Route::get('income', 'incomeController@index');
+Route::get('income/insert', 'incomeController@insert');
+Route::post('income/insert', 'incomeController@store');
+
+Route::post('income/partner','partnerController@store');
+Route::post('income/product','productController@store');
 

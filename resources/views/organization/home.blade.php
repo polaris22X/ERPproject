@@ -1,6 +1,7 @@
 @extends('layouts.app')
-
+@extends('layouts.checkauth')
 @section('content')
+
 <div class="mt-5">
     <div class="container">
   <h1>องค์กร</h1>

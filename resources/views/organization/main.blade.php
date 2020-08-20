@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@extends('layouts.checkauth')
 @section('content')
 @include('layouts.navmenu')
 <style>

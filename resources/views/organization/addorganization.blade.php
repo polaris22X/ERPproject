@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@extends('layouts.checkauth')
 @section('content')
 <div class="mt-5">
 <div class="container">

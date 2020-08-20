@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@extends('layouts.checkauth')
 @section('content')
 <div class="container">
     <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
