@@ -21,7 +21,7 @@ class product extends Model
         WHERE organizations.id = ?;
         ",[$organization_id]);
     }
-    public function selectlastid(){
-        return DB::connection('mysql')->select("SELECT MAX(product_id) as 'lastid' FROM `product`");
+    public function selectlastid($organization_id){
+        return DB::connection('mysql')->select("SELECT product_id FROM product WHERE organization_id = ? ORDER BY product_id DESC LIMIT 1;",[$organization_id]);
     }
 }

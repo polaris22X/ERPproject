@@ -21,7 +21,7 @@ class partner extends Model
         WHERE organizations.id = ?;
         ",[$organization_id]);
     }
-    public function selectlastid(){
-        return DB::connection('mysql')->select("SELECT MAX(partner_id) as 'lastid' FROM `partner`");
+    public function selectlastid($organization_id){
+        return DB::connection('mysql')->select("SELECT partner_id FROM partner WHERE organization_id = ? ORDER BY partner_id DESC LIMIT 1;",[$organization_id]);
     }
 }
