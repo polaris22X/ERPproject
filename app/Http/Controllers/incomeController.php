@@ -44,15 +44,16 @@ class incomeController extends Controller
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);
         $income = new income();
-        $data = $income->selectlastid();
-        foreach($data as $id){
-            $lastid = $id->lastid;
-        }
-        if($lastid == null){
-            $lastid = 1;
+        $data = $income->selectlastid($organization_id);
+        
+        if($data){
+            foreach($data as $id){
+            $lastid = $id->income_id;
+            }
+        $lastid = $lastid + 1;
         }
         else{
-            $lastid = $lastid + 1;
+            $lastid = 1; 
         }
         $i = 0;
         while($i < count($product_id)){
@@ -60,6 +61,6 @@ class incomeController extends Controller
            $income->insert($lastid,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address);
            $i++;
         }
-        return view('income/incomemenu')->with('organizations',$data);
+        return view('income/incomemenu')->with('organizations',$organizations);
     }
 }
