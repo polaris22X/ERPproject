@@ -26,6 +26,12 @@ class productController extends Controller
             $lastid = 1; 
         }
         $product->insert($lastid,$organization_id,$product_name,$product_description);
-        return redirect()->action('incomeController@insert');
+        if(request()->input('page') == "insert"){
+            return redirect()->action('incomeController@insert');
+        }
+        if(request()->input('page') == "update"){
+            $idincome = request()->input('income_id');
+            return redirect('income/update/'.$idincome);
+        }
     }
 }

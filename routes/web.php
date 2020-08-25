@@ -33,6 +33,7 @@ Route::get('income', 'incomeController@index');
 Route::get('income/list','incomeController@list');
 Route::get('income/insert', 'incomeController@insert');
 Route::post('income/insert', 'incomeController@store');
+Route::get('income/update/{idincome}','incomeController@update');
 
 //Quotation
 Route::get('income/quotation/list','quotationController@index');

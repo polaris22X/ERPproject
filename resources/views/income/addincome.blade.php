@@ -22,6 +22,7 @@
       <a href = "{{url('income/list')}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
       <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}">
         @csrf
+
           <div class="row my-2">
               <div class="col"><h5>ชื่อลูกค้า</h5></div><div class="col"></div>
           </div>
@@ -111,6 +112,7 @@
               <div class="form-group">
               <form action="{{ url('income/partner') }}" method="POST">
                 @csrf
+                  <input type="hidden" name="page" value="insert">
                   <label>ชื่อผู้ติดต่อ</label>
                   <input type="text" class="form-control" name="partner_name">
                   <label>ที่อยู่</label>
@@ -142,6 +144,7 @@
               <div class="form-group">
                 <form action="{{ url('income/product') }}" method="POST">
                   @csrf
+                  <input type="hidden" name="page" value="insert">
                   <label for="exampleInputEmail1">ชื่อสินค้า</label>
                   <input type="text" class="form-control" name="product_name">
                   <label for="exampleInputEmail1">รายละเอียด</label>

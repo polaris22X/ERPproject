@@ -19,6 +19,7 @@
                 <th scope="col">วันที่สร้าง</th>
                 <th scope="col">ชื่อลูกค้า</th>
                 <th scope="col">ยอดสุทธิ</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -29,6 +30,7 @@
                 <td>{{$income->created_at}}</td>
                 <td>{{$income->partner_name}}</td>
                 <td>{{$income->sum}}</td>
+                <td><button class="btn btn-secondary mr-2" onclick="location.href='{{url('income/update/'.$income->income_id.'')}}'">แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
                 </tr>
                 @endforeach 
                

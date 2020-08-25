@@ -27,6 +27,13 @@ class partnerController extends Controller
             $lastid = 1; 
         }
         $partner->insert($lastid,$organization_id,$partner_name,$partner_address);
-        return redirect()->action('incomeController@insert');
+
+        if(request()->input('page') == "insert"){
+            return redirect()->action('incomeController@insert');
+        }
+        if(request()->input('page') == "update"){
+            $idincome = request()->input('income_id');
+            return redirect('income/update/'.$idincome);
+        }
     }
 }
