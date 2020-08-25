@@ -28,10 +28,22 @@ Route::get('organization/menu/','organizationController@menu');
 Route::get('organization/status','organizationController@status');
 Route::post('organization','organizationController@store');
 
+//Income
 Route::get('income', 'incomeController@index');
+Route::get('income/list','incomeController@list');
 Route::get('income/insert', 'incomeController@insert');
 Route::post('income/insert', 'incomeController@store');
 
+//Quotation
+Route::get('income/quotation/list','quotationController@index');
+
+//เพิ่มข้อมูลPartner
 Route::post('income/partner','partnerController@store');
+//เพิมข้อมูลProduct
 Route::post('income/product','productController@store');
+
+
+
+
+
 

@@ -17,7 +17,7 @@ class CreateProductTable extends Migration
             $table->integer('organization_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->string('product_name');
-            $table->string('product_description');
+            $table->string('product_description')->nulllabel();
             $table->integer('stock');
             $table->timestamps();
         });

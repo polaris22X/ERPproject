@@ -13,6 +13,7 @@
     number++;
     $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+ number +"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\"><select name=\"product_id[]\" class=\"form-control\"><option value=\"0\">-- รายการสินค้า --</option>@foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach</select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a></div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" ng-model=\"product_amount1\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" ng-model=\"product_price1\"></td></tr>");
   });
+  $('#myTableRow').remove();
 });
 </script>
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
@@ -61,7 +62,7 @@
               </thead>
               <tbody>
                 
-                <tr>
+                <tr id="myTableRow">
                   <th scope="row" style="width: 10%">1</th>
                   <td style="width: 40%">
                     <div class="row">

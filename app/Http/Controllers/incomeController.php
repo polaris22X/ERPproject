@@ -15,6 +15,14 @@ class incomeController extends Controller
         $data = $organization->getorganization($id);
         return view('income/incomemenu')->with('organizations',$data);
     }
+    public function list(Request $reqeust){
+        $id = $reqeust->session()->get('organization_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($id);
+        $income = new income();
+        $incomes = $income->select($id);
+        return view('income/listincome')->with(compact(['organizations','incomes']));
+    }
     public function insert(Request $reqeust){
         $id = $reqeust->session()->get('organization_id');
         $organization = new organization();
@@ -44,8 +52,8 @@ class incomeController extends Controller
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);
         $income = new income();
-        $data = $income->selectlastid($organization_id);
         
+        $data = $income->selectlastid($organization_id);
         if($data){
             foreach($data as $id){
             $lastid = $id->income_id;
@@ -61,6 +69,8 @@ class incomeController extends Controller
            $income->insert($lastid,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address);
            $i++;
         }
-        return view('income/incomemenu')->with('organizations',$organizations);
+        //return view('income/incomemenu')->with('organizations',$organizations)
+        $incomes = $income->select($organization_id);
+        return view('income/listincome')->with(compact(['organizations','incomes']));
     }
 }
