@@ -60,7 +60,7 @@ class incomeController extends Controller
         $product_id = request()->input('product_id');
         $product_price = request()->input('product_price');
         $product_amount = request()->input('product_amount');
-
+        
         $organization_id = $reqeust->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);
@@ -87,5 +87,42 @@ class incomeController extends Controller
         //return view('income/incomemenu')->with('organizations',$organizations)
         $incomes = $income->select($organization_id);
         return view('income/listincome')->with(compact(['organizations','incomes']));
+    }
+
+    public function updatedo(Request $reqeust){
+        $data = request()->validate([
+            'partner_id' => 'required',
+            'partner_address' => 'required',
+            'product_id' => 'required',
+            'product_price' => 'required',
+            'product_amount' => 'required'
+        ]);
+        
+        $partner_id = request()->input('partner_id');
+        $partner_address = request()->input('partner_address');
+        $product_id = request()->input('product_id');
+        $product_price = request()->input('product_price');
+        $product_amount = request()->input('product_amount');
+        $income_id = request()->input('income_id');
+        $created_at = request()->input('created_at');
+        $organization_id = $reqeust->session()->get('organization_id');
+        $oldproduct_id = request()->input('oldproduct_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($organization_id);
+        $income = new income();
+        $i = 0;
+        while($i < count($product_id)){
+           if($product_amount[$i] == 0){
+            $income->deleteproduct($organization_id,$income_id,$product_id[$i]);
+           }
+           if(!isset($oldproduct_id[$i])){
+            $income->insertedit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$created_at);
+           }
+           else{
+            $income->edit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$oldproduct_id[$i]);
+           }
+           $i++;
+        }
+        return redirect('income/list/');
     }
 }

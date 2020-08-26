@@ -24,7 +24,7 @@ function docWrite(variable) {
             <h1>แก้ไขรายการรายรับ</h1>
         </div>
       <a href = "{{url('income/list')}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
-      <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}">
+      <form class="mx-5 my-5" method="POST" action="{{url('income/update')}}">
         @csrf
         
           <div class="row my-2">
@@ -59,6 +59,7 @@ function docWrite(variable) {
             @foreach ($income_partner as $detail)
           <div class="col"><textarea class="form-control" id="address" rows="8" name="partner_address">{{$detail->address}}</textarea></div><div class="col"></div>
           <input type="hidden" name="income_id" value="{{$detail->income_id}}">
+          <input type="hidden" name="created_at" value="{{$detail->created_at}}">
             @endforeach
           </div>
           
@@ -82,16 +83,24 @@ function docWrite(variable) {
                   <td style="width: 40%">
                     <div class="row">
                       <div class="col-8" >
+                     
                       <select name="product_id[]" class="form-control">
                       <option value="0">-- รายการสินค้า --</option>
                       @foreach($products as $product)
                         @if($product->product_id == $income->product_id)
                           <option value="{{$product->product_id}}" selected>{{$product->product_name}}</option>
+                          
                         @else
                           <option value="{{$product->product_id}}">{{$product->product_name}}</option>
                         @endif
                       @endforeach 
                       </select>
+                      @foreach($products as $product)
+                      @if($product->product_id == $income->product_id)
+                        <input value="{{$product->product_id}}" type="hidden" name="oldproduct_id[]">
+                      @endif
+                      @endforeach 
+
                       </div>
                       <div class="col-4">
                       <a href="" class="btn btn-primary" data-toggle="modal" data-target="#ModalAddProduct">+ เพิ่มสินค้า</a> 

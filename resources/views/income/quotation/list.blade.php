@@ -14,12 +14,15 @@
                     </div> 
                     @endif
                 @endforeach
+
         
         <div class="my-2">
-            <button type="button" class="btn btn-primary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation">+ สร้างใบเสนอราคา</a> 
-            <button type="button" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation">+ แก้ไขรายการรายรับ</a> 
-            <button type="button" class="btn btn-danger mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation">+ ลบใบเสนอราคา</a> 
+            <a href="{{url('quotation/listreadytoquotation')}}" type="button" class="btn btn-primary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation">+ สร้างใบเสนอราคา</a> 
+            <a href="{{url('income/listincome')}}" type="button" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation">+ แก้ไขรายการรายรับ</a> 
+            <a href="{{url('income/delete')}}" type="button" class="btn btn-danger mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation">+ ลบใบเสนอราคา</a> 
         </div>
+
+        
 
         
     </div>

@@ -8,10 +8,28 @@ use Carbon\Carbon;
 
 class income extends Model
 {
+    public function edit($income_id,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$address,$oldproduct_id){
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
+        DB::connection('mysql')->update("UPDATE income SET product_id= ?,saleprice= ?,amount= ?,partner_id= ? ,address= ?,updated_at= ? 
+        WHERE organization_id= ? AND income_id= ? AND product_id= ?",
+        [$product_id,$product_price,$product_amount,$partner_id,$address,$unixTimeStamp,$organization_id,$income_id,$oldproduct_id]);
+    }
+    
+    public function deleteproduct($organization_id,$income_id,$product_id){
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
+        DB::connection('mysql')->delete("DELETE FROM `income` WHERE  organization_id= ? AND income_id= ? AND product_id= ?",
+        [$organization_id,$income_id,$product_id]);
+    }
+
     public function insert($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address){
         $unixTimeStamp = Carbon::now()->toDateTimeString();
         DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`) 
         VALUES (?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$unixTimeStamp,$unixTimeStamp]);
+    }
+    public function insertedit($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$created_at){
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
+        DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`) 
+        VALUES (?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$created_at,$unixTimeStamp]);
     }
     public function selectlastid($organization_id){
         return DB::connection('mysql')->select("SELECT income_id FROM income WHERE organization_id = ? ORDER BY income_id DESC LIMIT 1;",[$organization_id]);
@@ -34,4 +52,5 @@ class income extends Model
        return DB::connection('mysql')->select("SELECT * FROM income
         WHERE income.organization_id = ? AND income.income_id = ? LIMIT 1;",[$organization_id,$income_id]);
    }
+  
 }
