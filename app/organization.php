@@ -13,8 +13,6 @@ class organization extends Model
     ];
 
     public function insert($lastid,$organization_name,$organization_address){
-        /*$date = new \DateTime();
-        $unixTimeStamp = $date->getTimestamp();*/
         $unixTimeStamp = Carbon::now()->toDateTimeString();
         DB::connection('mysql')->insert("INSERT INTO organizations(id,organization_name, organization_address, created_at, updated_at) 
         VALUES (?,?,?,?,?)",[$lastid,$organization_name,$organization_address,$unixTimeStamp,$unixTimeStamp]);

@@ -16,7 +16,7 @@ class CreateQuotationTable extends Migration
         Schema::create('quotation', function (Blueprint $table) {
             $table->integer('organization_id')->unsigned();
             $table->integer('income_id')->unsigned();
-            $table->id('quotation_id');
+            $table->integer('quotation_id')->unsigned();;
             $table->timestamps();
         });
     }

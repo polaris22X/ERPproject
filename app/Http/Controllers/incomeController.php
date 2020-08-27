@@ -60,12 +60,10 @@ class incomeController extends Controller
         $product_id = request()->input('product_id');
         $product_price = request()->input('product_price');
         $product_amount = request()->input('product_amount');
-        
         $organization_id = $reqeust->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);
         $income = new income();
-        
         $data = $income->selectlastid($organization_id);
         if($data){
             foreach($data as $id){
@@ -86,7 +84,8 @@ class incomeController extends Controller
         }
         //return view('income/incomemenu')->with('organizations',$organizations)
         $incomes = $income->select($organization_id);
-        return view('income/listincome')->with(compact(['organizations','incomes']));
+        //return view('income/listincome')->with(compact(['organizations','incomes']));
+        return redirect()->action('incomeController@list');
     }
 
     public function updatedo(Request $reqeust){

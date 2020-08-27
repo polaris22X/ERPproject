@@ -38,6 +38,9 @@ Route::post('income/update', 'incomeController@updatedo');
 
 //Quotation
 Route::get('income/quotation/list','quotationController@index');
+Route::get('income/quotation/{idincome}','quotationController@createQuotation');
+Route::get('income/quotation/show/{idquotation}','quotationController@show');
+Route::get('income/quotation/show/pdf/{idquotation}','quotationController@createpdf');
 
 //เพิ่มข้อมูลPartner
 Route::post('income/partner','partnerController@store');
