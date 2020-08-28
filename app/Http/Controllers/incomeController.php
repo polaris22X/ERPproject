@@ -7,6 +7,7 @@ use App\organization;
 use App\product;
 use App\partner;
 use App\income;
+use Carbon\Carbon;
 class incomeController extends Controller
 {
     public function index(Request $reqeust){
@@ -63,6 +64,7 @@ class incomeController extends Controller
         $organization_id = $reqeust->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
         $income = new income();
         $data = $income->selectlastid($organization_id);
         if($data){
@@ -78,7 +80,7 @@ class incomeController extends Controller
         while($i < count($product_id)){
            $income = new income();
            if($product_amount[$i] > 0){
-           $income->insert($lastid,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address);
+           $income->insert($lastid,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$unixTimeStamp);
            }
            $i++;
         }
@@ -108,6 +110,7 @@ class incomeController extends Controller
         $oldproduct_id = request()->input('oldproduct_id');
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
         $income = new income();
         $i = 0;
         while($i < count($product_id)){
@@ -115,10 +118,10 @@ class incomeController extends Controller
             $income->deleteproduct($organization_id,$income_id,$product_id[$i]);
            }
            if(!isset($oldproduct_id[$i])){
-            $income->insertedit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$created_at);
+            $income->insertedit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$created_at,$unixTimeStamp);
            }
            else{
-            $income->edit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$oldproduct_id[$i]);
+            $income->edit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$oldproduct_id[$i],$unixTimeStamp);
            }
            $i++;
         }

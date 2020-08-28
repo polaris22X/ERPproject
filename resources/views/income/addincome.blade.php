@@ -3,23 +3,28 @@
 @section('content')
 @include('layouts.navmenu')
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<script>
-  var number = 1;
-  $(document).ready(function(){
-  $("#add").click(function(){
-    number++;
-    $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+ number +"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\"><select name=\"product_id[]\" class=\"form-control\"><option value=\"0\">-- รายการสินค้า --</option>@foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach</select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a></div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" ng-model=\"product_amount1\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" ng-model=\"product_price1\"></td></tr>");
-  });
-});
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
+
+
+
+
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="jumbotron text-center bg-dark text-white">
             <h1>เพิ่มรายการรายรับ</h1>
         </div>
+        
       <a href = "{{url('income/list')}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
+
       <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}">
         @csrf
 
@@ -28,12 +33,11 @@
           </div>
           <div class="row my-2">
               <div class="col-5">
-                <select name="partner_id" class="form-control" id="partner">
-                  <option value="0">-- รายชื่อผู้ติดต่อ --</option>
+                <select name="partner_id" class="form-control selectpicker" data-live-search="true" title="กรุณาเลือกผู้ติดต่อ">
                   @foreach($partners as $partner)
                   <option value="{{$partner->partner_id}}">{{$partner->partner_name}}</option>
                   @endforeach 
-                 </select>
+                </select>
               </div>
               <div class="col-2">
                 <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#ModalAddPartner">+ เพิ่มลูกค้า</a> 
@@ -67,8 +71,8 @@
                   <td style="width: 40%">
                     <div class="row">
                       <div class="col-8" >
-                      <select name="product_id[]" class="form-control">
-                      <option value="0">-- รายการสินค้า --</option>
+                      <select name="product_id[]"  class="form-control" data-live-search="true" title="กรุณาเลือกสินค้า" >
+                        <option value="" disabled selected hidden>กรุณาเลือกสินค้า</option>
                       @foreach($products as $product)
                       <option value="{{$product->product_id}}">{{$product->product_name}}</option>
                       @endforeach 
@@ -83,6 +87,7 @@
                   <td><input type="number" name="product_price[]"  class="form-control" ng-model="product_amount1"></td>
                   
                 </tr>
+
               </tbody>
              
             </table>
@@ -162,5 +167,18 @@
     </div>
     <!-- End_Modal_Add_product -->
 
+    <script>
+      var number = 1;
+      $(document).ready(function(){
+      
+      $("#add").click(function(){
+        number++;
+        $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\"  class=\"form-control\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" ng-model=\"product_price1\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" ng-model=\"product_amount1\"></td></tr>");
+        $('.form-control selectpicker').selectpicker('refresh');
+        
+     }); 
+    });
+    </script>
 
 @endsection
+
