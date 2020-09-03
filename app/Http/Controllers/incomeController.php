@@ -90,6 +90,18 @@ class incomeController extends Controller
         return redirect()->action('incomeController@list');
     }
 
+    public function getpartner(Request $reqeust) {
+        $partner_id = request()->input('partner_id');
+        $msg = $partner_id;
+        $organization_id = $reqeust->session()->get('organization_id');
+        $partner = new partner();
+        $partners = $partner->selectwithid($organization_id,$partner_id);
+        foreach ($partners as $partner) {
+            $msg = $partner->partner_address;
+        }
+        return response()->json(array('msg'=> $msg), 200);
+    }
+
     public function updatedo(Request $reqeust){
         $data = request()->validate([
             'partner_id' => 'required',
@@ -127,4 +139,5 @@ class incomeController extends Controller
         }
         return redirect('income/list/');
     }
+    
 }

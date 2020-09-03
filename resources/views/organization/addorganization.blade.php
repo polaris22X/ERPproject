@@ -7,12 +7,24 @@
     <form action="/organization" method="POST" >
       @csrf
         <div class="form-group">
-          <label for="exampleInputEmail1">Organization Name</label>
-          <input type="text" class="form-control" id="organization_name" name="organization_name" aria-describedby="emailHelp" placeholder="Enter Organization Name">
+          <label for="exampleInputEmail1">ชื่อองค์กร</label>
+          <input type="text" class="form-control" id="organization_name" name="organization_name" aria-describedby="emailHelp" >
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Organization Address</label>
-          <input type="text" class="form-control" id="organization_address" name="organization_address" placeholder="Enter Organization Address">
+          <label for="exampleInputPassword1">ที่อยู่</label>
+          <input type="text" class="form-control" id="organization_address" name="organization_address">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">เบอร์โทรติดต่อ</label>
+          <input type="text" class="form-control" id="organization_tel" name="organization_tel" >
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">อีเมล์ติดต่อ</label>
+          <input type="text" class="form-control" id="organization_email" name="organization_email" >
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">หมายเลขผู้เสียภาษีอากร</label>
+          <input type="text" class="form-control" id="organization_taxid" name="organization_taxid">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

@@ -12,10 +12,10 @@ class organization extends Model
         'organization_name', 'organization_address'
     ];
 
-    public function insert($lastid,$organization_name,$organization_address){
+    public function insert($lastid,$organization_name,$organization_address,$organization_tel,$organization_email,$organization_taxid){
         $unixTimeStamp = Carbon::now()->toDateTimeString();
-        DB::connection('mysql')->insert("INSERT INTO organizations(id,organization_name, organization_address, created_at, updated_at) 
-        VALUES (?,?,?,?,?)",[$lastid,$organization_name,$organization_address,$unixTimeStamp,$unixTimeStamp]);
+        DB::connection('mysql')->insert("INSERT INTO organizations(id,organization_name,organization_address,organization_tel,organization_email,organization_taxid,created_at, updated_at) 
+        VALUES (?,?,?,?,?,?,?,?)",[$lastid,$organization_name,$organization_address,$organization_tel,$organization_email,$organization_taxid,$unixTimeStamp,$unixTimeStamp]);
     }
     public function select(){
         $id = Auth::id();

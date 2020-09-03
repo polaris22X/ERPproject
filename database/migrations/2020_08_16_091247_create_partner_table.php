@@ -19,6 +19,8 @@ class CreatePartnerTable extends Migration
             $table->string('partner_name');
             $table->string('partner_address');
             $table->string('partner_type');
+            $table->string('partner_tel')->nulllabel();
+            $table->string('partner_email')->nulllabel();
             $table->timestamps();
         });
     }

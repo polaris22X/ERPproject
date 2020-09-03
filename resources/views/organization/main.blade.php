@@ -2,11 +2,7 @@
 @extends('layouts.checkauth')
 @section('content')
 @include('layouts.navmenu')
-<style>
-    #id {
-      background: red;
-    }
-</style>
+
 
     <div class="container">
         <div class="shadow-none p-3 mb-5 bg-dark mt-5 p-1 rounded">

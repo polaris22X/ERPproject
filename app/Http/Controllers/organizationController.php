@@ -37,10 +37,13 @@ class organizationController extends Controller
     public function store(){
         request()->validate([
             'organization_name' => 'required',
-            'organization_address' => 'required'
+            'organization_address' => 'required',  
         ]);
         $organization_name = request()->input('organization_name');
         $organization_address = request()->input('organization_address');
+        $organization_tel = request()->input('organization_tel');
+        $organization_email = request()->input('organization_email');
+        $organization_taxid = request()->input('organization_taxid');
         $organization = new organization();
         $user_organization = new user_organization();
         $data = $organization->selectlastid();
@@ -53,7 +56,7 @@ class organizationController extends Controller
         else{
             $lastid = $lastid + 1;
         }
-        $organization->insert($lastid,$organization_name,$organization_address);
+        $organization->insert($lastid,$organization_name,$organization_address,$organization_tel,$organization_email,$organization_taxid);
         $user_organization->insert($lastid);
         $data = $organization->select();
         return view('organization/status');

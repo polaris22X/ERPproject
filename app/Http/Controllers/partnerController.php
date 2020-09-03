@@ -14,6 +14,8 @@ class partnerController extends Controller
         ]);
         $partner_name = request()->input('partner_name');
         $partner_address = request()->input('partner_address');
+        $partner_tel = request()->input('partner_tel');
+        $partner_email = request()->input('partner_email');
         $organization_id = $reqeust->session()->get('organization_id');
         $partner = new partner();
         $data = $partner->selectlastid($organization_id);
@@ -26,14 +28,15 @@ class partnerController extends Controller
         else{
             $lastid = 1; 
         }
-        $partner->insert($lastid,$organization_id,$partner_name,$partner_address);
-
-        if(request()->input('page') == "insert"){
+        $partner->insert($lastid,$organization_id,$partner_name,$partner_address,$partner_tel,$partner_email );
+        $msg = $lastid;
+        return response()->json(array('msg'=> $msg), 200);;
+        /*if(request()->input('page') == "insert"){
             return redirect()->action('incomeController@insert');
         }
         if(request()->input('page') == "update"){
             $idincome = request()->input('income_id');
             return redirect('income/update/'.$idincome);
-        }
+        }*/
     }
 }
