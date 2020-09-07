@@ -33,6 +33,9 @@
         font-family: "THSarabunNew";
         line-height: 5px;
    }
+   .number{
+     text-align: right;
+   }
 </style>
 <body>
     @foreach ($organizations as $organization)
@@ -45,7 +48,9 @@
             <td>
                 @foreach ($details as $detail)
                     <p style="font-size: 16px">ชื่อลูกค้า : {{$detail->partner_name}} </p>
-                    <p style="font-size: 16px">ที่อยู่ : {{$detail->address}}
+                    <p style="font-size: 16px">ที่อยู่ : {{$detail->address}}</p>
+                    <p style="font-size: 16px">เบอร์โทร : {{$detail->partner_tel}} </p>
+                    <p style="font-size: 16px">อีเมล : {{$detail->partner_email}}</p>
                 @endforeach
             </td>
             <td>
@@ -74,22 +79,22 @@
         @foreach ($quotations as $quotation)
         <?php $i++?>
           <tr>
-          <th scope="row" style="width: 10%">{{$i}}</th>
-          <td style="width: 40%">{{$quotation->product_name}}</td>
-          <td>{{$quotation->amount}}</td>
-          <td>{{$quotation->saleprice}}</td>
-          <td>{{$quotation->saleprice * $quotation->amount}}</td>
+            <th class="number" scope="row" style="width: 10%">{{$i}}</th>
+            <td style="width: 40%">{{$quotation->product_name}}</td>
+            <td class="number">{{$quotation->amount}}</td>
+            <td class="number">{{number_format($quotation->saleprice)}}</td>
+            <td class="number">{{number_format($quotation->saleprice * $quotation->amount)}}</td>
           </tr>
           @endforeach
           @foreach ($sums as $sum)
           <tr>
-          <td rowspan="3" colspan="3">หมายเหตุ : </td><td>VATABLE</td><td>{{$sum->sum - ($sum->sum * 7/100)}}</td>
-          </tr>
-          <tr>
-              <td>VAT 7%</td><td>{{$sum->sum * 7/100}}</td>
-          </tr>
-          <tr>
-            <td>ราคารวมทั้งสิ้น</td><td>{{$sum->sum}}</td>
+            <td rowspan="3" colspan="3">หมายเหตุ : </td><td>VATABLE</td><td class="number">{{number_format($sum->sum - ($sum->sum * 7/100))}}</td>
+            </tr>
+            <tr>
+                <td>VAT 7%</td><td class="number">{{number_format($sum->sum * 7/100)}}</td>
+            </tr>
+            <tr>
+              <td>ราคารวมทั้งสิ้น</td><td class="number">{{number_format($sum->sum)}}</td>
         </tr>
           @endforeach
         </tbody>

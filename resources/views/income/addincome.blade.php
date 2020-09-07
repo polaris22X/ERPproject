@@ -5,18 +5,18 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>!-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>!-->
 
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="jumbotron text-center bg-dark text-white">
@@ -71,7 +71,7 @@
                   <td style="width: 40%">
                     <div class="row">
                       <div class="col-8" >
-                      <select name="product_id[]"  class="form-control" data-live-search="true" title="กรุณาเลือกสินค้า" id="productid">
+                      <select name="product_id[]"  class="form-control product" data-live-search="true" title="กรุณาเลือกสินค้า" id="productid">
                         <option value="" disabled selected hidden>กรุณาเลือกสินค้า</option>
                       @foreach($products as $product)
                       <option value="{{$product->product_id}}">{{$product->product_name}}</option>
@@ -184,12 +184,23 @@
         getaddress(partner_id);
       });
       $("#addpartner").click(function(){
+        
+        if($("#partnername").val() != '' && $("#partneraddress").val() != ''){
         var partnername = $("#partnername").val();
         var partneraddress = $("#partneraddress").val();
         var partnertel = $("#partnertel").val();
         var partneremail = $("#partneremail").val();
-        
+        if ($('#partnertel').val() == ''){
+            partnertel = '-';
+        }
+        if ($('#partneremail').val() == ''){
+            partneremail = '-';
+        }
         addpartner(partnername,partneraddress,partnertel,partneremail);
+      }
+      else{
+        alert("กรุณากรอกชื่อ - ที่อยู่");
+      }     
       });
       $("#addproduct").click(function(){
         var productname = $("#productname").val();
@@ -204,7 +215,7 @@
       });
       $("#add").click(function(){
         number++;
-        $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\"  class=\"form-control\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><p id=\"sum"+number+"\" class=\"mt-2\"></p></td></tr>");
+        $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product\" ><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><p id=\"sum"+number+"\" class=\"mt-2\"></p></td></tr>");
         $("#productamount"+number+",#productprice"+number).change(function(){
         var productamount = $("#productamount"+number).val();
         var productprice = $("#productprice"+number).val();
@@ -247,8 +258,8 @@
                data: {'product_name': productname , 'product_description' : productdescription},
                success:function(data) {
                   alert("Add product is succes.");
-                  $("#productid").append("<option value='"+ data.msg +"'>"+productname+"</option>");
-                  $('#productid').selectpicker('refresh');
+                  $(".product").append("<option value='"+ data.msg +"'>"+productname+"</option>");
+                  $('.product').selectpicker('refresh');
                }
             });
     } 

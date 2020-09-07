@@ -29,7 +29,7 @@
                 <th scope="row">{{$income->income_id}}</th>
                 <td>{{$income->created_at}}</td>
                 <td>{{$income->partner_name}}</td>
-                <td>{{$income->sum}}</td>
+                <td>{{number_format($income->sum)}}</td>
                 <td><button class="btn btn-secondary mr-2" onclick="location.href='{{url('income/update/'.$income->income_id.'')}}'">แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
                 </tr>
                 @endforeach 

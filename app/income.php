@@ -26,10 +26,10 @@ class income extends Model
         DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`) 
         VALUES (?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$unixTimeStamp,$unixTimeStamp]);
     }
-    public function insertedit($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$created_at,$unixTimeStamp){
+    public function insertedit($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$created_at,$unixTimeStamp,$status_id,$quotation_id){
         
-        DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`) 
-        VALUES (?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$created_at,$unixTimeStamp]);
+        DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `quotation_id`,`created_at`, `updated_at`) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$status_id,$quotation_id,$created_at,$unixTimeStamp]);
     }
     public function selectlastid($organization_id){
         return DB::connection('mysql')->select("SELECT income_id FROM income WHERE organization_id = ? ORDER BY income_id DESC LIMIT 1;",[$organization_id]);
@@ -55,6 +55,13 @@ class income extends Model
         WHERE income.organization_id = ? AND income.income_id = ? ",[$organization_id,$income_id]);
    }
 
+   public function preview($organization_id,$income_id){
+       
+       return DB::connection('mysql')->select("SELECT * FROM income
+       INNER JOIN `partner` ON `partner`.partner_id = income.partner_id AND `partner`.organization_id = income.organization_id 
+       INNER JOIN `product` ON `product`.product_id = income.product_id AND `product`.organization_id = income.organization_id 
+        WHERE income.organization_id = ? AND income.income_id = ? ",[$organization_id,$income_id]);
+   }
    public function getpartner($organization_id,$income_id){
        
        return DB::connection('mysql')->select("SELECT * FROM income

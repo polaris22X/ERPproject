@@ -118,6 +118,8 @@ class incomeController extends Controller
         $product_amount = request()->input('product_amount');
         $income_id = request()->input('income_id');
         $created_at = request()->input('created_at');
+        $status_id = request()->input('status_id');
+        $quotation_id = request()->input('quotation_id');
         $organization_id = $reqeust->session()->get('organization_id');
         $oldproduct_id = request()->input('oldproduct_id');
         $organization = new organization();
@@ -130,7 +132,7 @@ class incomeController extends Controller
             $income->deleteproduct($organization_id,$income_id,$product_id[$i]);
            }
            if(!isset($oldproduct_id[$i])){
-            $income->insertedit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$created_at,$unixTimeStamp);
+            $income->insertedit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$created_at,$unixTimeStamp,$status_id,$quotation_id);
            }
            else{
             $income->edit($income_id,$organization_id,$product_id[$i],$product_price[$i],$product_amount[$i],$partner_id,$partner_address,$oldproduct_id[$i],$unixTimeStamp);

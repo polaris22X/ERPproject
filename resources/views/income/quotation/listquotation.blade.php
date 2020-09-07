@@ -18,7 +18,7 @@
 
         
         <div class="my-2">
-            <a style="color: white" class="btn btn-primary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation">+ สร้างใบเสนอราคา</a> 
+            <a href="{{url('income/quotation/create')}}" style="color: white" class="btn btn-primary mr-2">+ สร้างใบเสนอราคา</a> 
             <a href="{{url('income/list')}}" type="button" class="btn btn-secondary mr-2">+ แก้ไขรายการรายรับ</a>  
         </div>
 
@@ -40,7 +40,7 @@
                     <th scope="row">{{$quotation->quotation_id}}</th>
                     <td>{{$quotation->created_at}}</td>
                     <td>{{$quotation->partner_name}}</td>
-                    <td>{{$quotation->sum}}</td>
+                    <td>{{number_format($quotation->sum)}}</td>
                     <td><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/quotation/show/'.$quotation->quotation_id.'')}}'">ดูใบเสนอราคา</button></td>
                     </tr>
                     @endforeach 
@@ -85,7 +85,7 @@
                             <th scope="row">{{$income->income_id}}</th>
                             <td>{{$income->created_at}}</td>
                             <td>{{$income->partner_name}}</td>
-                            <td>{{$income->sum}}</td>
+                            <td>{{number_format($income->sum)}}</td>
                             <td><a href="{{url('income/quotation/'.$income->income_id)}}" class="btn btn-secondary mr-2">สร้างใบเสนอราคา</a><button class="btn btn-danger">ยกเลิก</button></td>
                             </tr>
                             

@@ -8,17 +8,20 @@
 
 <script>
   var number = 0;
+  function docWrite(variable) {
+    document.write(variable);
+  }
   $(document).ready(function(){
   $("#add").click(function(){
     number++;
     $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+ number +"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\"><select name=\"product_id[]\" class=\"form-control\"><option value=\"0\">-- รายการสินค้า --</option>@foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach</select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a></div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" ng-model=\"product_amount1\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" ng-model=\"product_price1\"></td></tr>");
-   
+    
   });
 });
-function docWrite(variable) {
-    document.write(variable);
-}
+
 </script>
+
+
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="jumbotron text-center bg-dark text-white">
             <h1>แก้ไขรายการรายรับ</h1>
@@ -60,6 +63,8 @@ function docWrite(variable) {
           <div class="col"><textarea class="form-control" id="address" rows="8" name="partner_address">{{$detail->address}}</textarea></div><div class="col"></div>
           <input type="hidden" name="income_id" value="{{$detail->income_id}}">
           <input type="hidden" name="created_at" value="{{$detail->created_at}}">
+          <input type="hidden" name="status_id" value="{{$detail->status_id}}">
+          <input type="hidden" name="quotation_id" value="{{$detail->quotation_id}}">
             @endforeach
           </div>
           
@@ -77,6 +82,7 @@ function docWrite(variable) {
               <tbody>
                 
                 @foreach ($incomes as $income)
+                
                 <tr id="myTableRow">
                   <script>number++</script>
                   <th scope="row" style="width: 10%"><script>docWrite(number)</script></th>
@@ -109,7 +115,7 @@ function docWrite(variable) {
                   </td>
                 <td><input type="number" name="product_amount[]" class="form-control" ng-model="product_price1" value="{{$income->amount}}"></td>
                 <td><input type="number" name="product_price[]"  class="form-control" ng-model="product_amount1" value="{{$income->saleprice}}"></td>
-                  
+                <td>{{$income->amount * $income->saleprice}}</td>
                 </tr>
                 
                 @endforeach
@@ -199,5 +205,6 @@ function docWrite(variable) {
     </div>
     <!-- End_Modal_Add_product -->
 
+   
 
 @endsection

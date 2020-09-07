@@ -21,6 +21,24 @@ class quotationController extends Controller
         return view('income/quotation/listquotation')->with(compact(['organizations','readytoquotation','incomes','quotations']));
     }
 
+    public function create(Request $reqeust){
+        $id = $reqeust->session()->get('organization_id');
+        $organization = new organization();
+        $income = new income();
+        $organizations = $organization->getorganization($id);
+        $incomeslist = $income->selectReadyToQuotation($id);
+        
+        return view('income/quotation/createquotation')->with(compact(['organizations','incomeslist']));
+    }
+    
+    public function preview(Request $request){
+        $id = $request->session()->get('organization_id');
+        $income_id = request()->input('income_id'); 
+        $income = new income();
+        $incomes = $income->preview($id,$income_id);
+        return response()->json($incomes, 200);
+    }
+
     public function show(Request $reqeust, $quotation_id){
         $id = $reqeust->session()->get('organization_id');
         $organization = new organization();

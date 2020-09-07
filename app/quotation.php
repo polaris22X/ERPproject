@@ -35,10 +35,10 @@ class quotation extends Model
         INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
         INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
         WHERE quotation.organization_id = ? AND quotation.quotation_id = ?",
-        [$organization_id,$quotation_id]);
+        [$organization_id,$quotation_id]);  
     }
     public function SelectQuotationRow($organization_id,$quotation_id){
-        return  DB::connection('mysql')->select("SELECT partner.partner_name,income.address,quotation.quotation_id,quotation.created_at FROM quotation 
+        return  DB::connection('mysql')->select("SELECT partner.partner_name,income.address,quotation.quotation_id,partner.partner_tel,partner.partner_email,quotation.created_at FROM quotation 
         INNER JOIN income ON quotation.income_id = income.income_id AND quotation.organization_id = income.organization_id AND quotation.quotation_id = income.quotation_id
         INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
         INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
