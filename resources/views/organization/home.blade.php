@@ -5,7 +5,7 @@
 <div class="mt-5">
     <div class="container">
   <h1>องค์กร</h1>
-    
+        
         <div class="list-group mt-3">
         @if($organizations !== null)
         @foreach($organizations as $organization)

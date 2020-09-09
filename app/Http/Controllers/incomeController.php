@@ -10,14 +10,25 @@ use App\income;
 use Carbon\Carbon;
 class incomeController extends Controller
 {
-    public function index(Request $reqeust){
-        $id = $reqeust->session()->get('organization_id');
+    public function index(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
-        $data = $organization->getorganization($id);
-        return view('income/incomemenu')->with('organizations',$data);
+        $income = new income();
+        $readytoquotation = $income->getreadytoquotation($id);
+        $readytoaccept = $income->getreadytoaccept($id);
+        $organizations = $organization->getorganization($id);
+        return view('income/incomemenu')->with(compact('organizations','readytoquotation','readytoaccept'));
     }
-    public function update(Request $reqeust , $idincome){
-        $id = $reqeust->session()->get('organization_id');
+    public function update(Request $request , $idincome){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
         $product = new product();
@@ -29,16 +40,24 @@ class incomeController extends Controller
         $income_partner = $income->getpartner($id,$idincome);
         return view('income/updateincome')->with(compact(['organizations','products','partners','incomes','income_partner']));
     }
-    public function list(Request $reqeust){
-        $id = $reqeust->session()->get('organization_id');
+    public function list(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
         $income = new income();
         $incomes = $income->select($id);
         return view('income/listincome')->with(compact(['organizations','incomes']));
     }
-    public function insert(Request $reqeust){
-        $id = $reqeust->session()->get('organization_id');
+    public function insert(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
         $product = new product();
@@ -47,7 +66,7 @@ class incomeController extends Controller
         $partners = $partner->select($id);
         return view('income/addincome')->with(compact(['organizations','products','partners']));
     }
-    public function store(Request $reqeust){
+    public function store(Request $request){
         $data = request()->validate([
             'partner_id' => 'required',
             'partner_address' => 'required',
@@ -61,7 +80,7 @@ class incomeController extends Controller
         $product_id = request()->input('product_id');
         $product_price = request()->input('product_price');
         $product_amount = request()->input('product_amount');
-        $organization_id = $reqeust->session()->get('organization_id');
+        $organization_id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);
         $unixTimeStamp = Carbon::now()->toDateTimeString();
@@ -90,10 +109,10 @@ class incomeController extends Controller
         return redirect()->action('incomeController@list');
     }
 
-    public function getpartner(Request $reqeust) {
+    public function getpartner(Request $request) {
         $partner_id = request()->input('partner_id');
         $msg = $partner_id;
-        $organization_id = $reqeust->session()->get('organization_id');
+        $organization_id = $request->session()->get('organization_id');
         $partner = new partner();
         $partners = $partner->selectwithid($organization_id,$partner_id);
         foreach ($partners as $partner) {
@@ -102,7 +121,7 @@ class incomeController extends Controller
         return response()->json(array('msg'=> $msg), 200);
     }
 
-    public function updatedo(Request $reqeust){
+    public function updatedo(Request $request){
         $data = request()->validate([
             'partner_id' => 'required',
             'partner_address' => 'required',
@@ -120,7 +139,7 @@ class incomeController extends Controller
         $created_at = request()->input('created_at');
         $status_id = request()->input('status_id');
         $quotation_id = request()->input('quotation_id');
-        $organization_id = $reqeust->session()->get('organization_id');
+        $organization_id = $request->session()->get('organization_id');
         $oldproduct_id = request()->input('oldproduct_id');
         $organization = new organization();
         $organizations = $organization->getorganization($organization_id);

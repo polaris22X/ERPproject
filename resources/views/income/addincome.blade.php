@@ -23,7 +23,7 @@
             <h1>เพิ่มรายการรายรับ</h1>
         </div>
         
-      <a href = "{{url('income/list')}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
+      <a href = "{{url()->previous()}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
 
       <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}">
         @csrf

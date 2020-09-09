@@ -20,7 +20,8 @@ class user_organization extends Model
         DB::connection('mysql')->insert("INSERT INTO user_organization(user_id, organization_id	, userlevel_id,created_at, updated_at) 
         VALUES (?,?,?,?,?)",[$user_id,$organization_id,$userlevel_id,$unixTimeStamp,$unixTimeStamp]);
     }
-   public function checkuser_organization($user_id){
-        return DB::connection('mysql')->select("SELECT * FROM `user_organization` WHERE user_id = ?",[$user_id]);
+   public function selectlevel($organization_id){
+        $user_id = Auth::id();
+        return DB::connection('mysql')->select("SELECT * FROM `user_organization` WHERE organization_id = ? AND user_id = ?",[$organization_id,$user_id]);
    }
 }

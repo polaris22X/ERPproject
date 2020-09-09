@@ -4,25 +4,44 @@ namespace App\Http\Controllers;
 use App\organization;
 use App\income;
 use App\quotation;
+use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
 
 class quotationController extends Controller
 {
-    public function index(Request $reqeust){
-        $id = $reqeust->session()->get('organization_id');
+    public function index(Request $request){
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
         $quotation = new quotation();
         $income = new income();
         $organizations = $organization->getorganization($id);
-        $readytoquotation = $quotation->getreadytoquotation($id);
+        $readytoquotation = $income->getreadytoquotation($id);
+        $readytoaccept = $income->getreadytoaccept($id);
         $incomes = $income->selectReadyToQuotation($id);
         $quotations = $quotation->selectQuotation($id);
-        return view('income/quotation/listquotation')->with(compact(['organizations','readytoquotation','incomes','quotations']));
+        return view('income/quotation/listquotation')->with(compact(['organizations','readytoquotation','incomes','quotations','readytoaccept']));
     }
 
-    public function create(Request $reqeust){
-        $id = $reqeust->session()->get('organization_id');
+    public function acceptlist(Request $request){
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $quotation = new quotation();
+        $organizations = $organization->getorganization($id);
+        $quotations = $quotation->listtoaccept($id);
+        return view('income/quotation/acceptquotation')->with(compact(['organizations','quotations']));
+    }
+
+    public function acceptprocess(Request $request,$idincome){
+        $id = $request->session()->get('organization_id');
+        $quotation = new quotation();
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
+        $quotations = $quotation->QuotationAccept($id,$idincome,$unixTimeStamp);
+        return redirect()->action('quotationController@acceptlist');
+    }
+
+    public function create(Request $request){
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
         $income = new income();
         $organizations = $organization->getorganization($id);
@@ -39,8 +58,8 @@ class quotationController extends Controller
         return response()->json($incomes, 200);
     }
 
-    public function show(Request $reqeust, $quotation_id){
-        $id = $reqeust->session()->get('organization_id');
+    public function show(Request $request, $quotation_id){
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
         $quotation = new quotation();
@@ -51,9 +70,11 @@ class quotationController extends Controller
         
     }
 
-    public function createQuotation(Request $reqeust, $income_id){
+   
+    
+    public function createQuotation(Request $request, $income_id){
         
-        $organization_id = $reqeust->session()->get('organization_id');
+        $organization_id = $request->session()->get('organization_id');
         $quotation = new quotation();
         $data = $quotation->selectlastid($organization_id);
         if($data){
@@ -69,8 +90,8 @@ class quotationController extends Controller
         return redirect()->action('quotationController@index');
     }
 
-    public function createpdf(Request $reqeust, $quotation_id){
-        $id = $reqeust->session()->get('organization_id');
+    public function createpdf(Request $request, $quotation_id){
+        $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
         $quotation = new quotation();

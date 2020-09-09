@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 
 class productController extends Controller
 {
-    public function store(Request $reqeust){
+    public function store(Request $request){
         request()->validate([
             'product_name' => 'required',
             'product_description' => 'required'
         ]);
         $product_name = request()->input('product_name');
         $product_description = request()->input('product_description');
-        $organization_id = $reqeust->session()->get('organization_id');
+        $organization_id = $request->session()->get('organization_id');
         $product = new product();
         $data = $product->selectlastid($organization_id);
         if($data){

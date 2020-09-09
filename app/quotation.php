@@ -8,9 +8,7 @@ use Carbon\Carbon;
 
 class quotation extends Model
 {
-    public function getreadytoquotation($organization_id){
-        return DB::connection('mysql')->select("SELECT count(*) as 'readytoquotation' FROM (SELECT income_id FROM income WHERE organization_id = ? AND status_id = 0 GROUP BY income_id) AS sub;",[$organization_id]);
-    }
+    
     public function createQuotation($organization_id,$income_id,$lastid){
         $unixTimeStamp = Carbon::now()->toDateTimeString();
         DB::connection('mysql')->insert("INSERT INTO `quotation`(`organization_id`, `income_id`, `quotation_id`, `created_at`, `updated_at`) VALUES (?,?,?,?,?)",
@@ -18,15 +16,30 @@ class quotation extends Model
         DB::connection('mysql')->update("UPDATE income SET  `updated_at` = ?, status_id = 1 , quotation_id = ? WHERE organization_id= ? AND income_id= ?",
         [$unixTimeStamp,$lastid,$organization_id,$income_id]);
     }
+    public function QuotationAccept($organization_id,$income_id,$unixTimeStamp){
+        
+        DB::connection('mysql')->update("UPDATE income SET  `updated_at` = ?, status_id = 2 WHERE organization_id= ? AND income_id= ?",
+        [$unixTimeStamp,$organization_id,$income_id]);
+    }
     public function selectlastid($organization_id){
         return DB::connection('mysql')->select("SELECT quotation_id FROM quotation WHERE organization_id = ? ORDER BY income_id DESC LIMIT 1;",[$organization_id]);
     }
     public function selectQuotation($organization_id){
-        return  DB::connection('mysql')->select("SELECT quotation.quotation_id,`partner`.partner_name ,quotation.created_at,SUM(income.saleprice * income.amount) as 'sum' FROM quotation 
+        return  DB::connection('mysql')->select("SELECT income.status_id,quotation.income_id,quotation.quotation_id,`partner`.partner_name ,quotation.created_at,SUM(income.saleprice * income.amount) as 'sum' FROM quotation 
         INNER JOIN income ON quotation.income_id = income.income_id AND quotation.organization_id = income.organization_id AND quotation.quotation_id = income.quotation_id
         INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
         INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
-        WHERE quotation.organization_id = ? GROUP BY quotation.quotation_id,`partner`.partner_name,quotation.created_at;",
+        WHERE quotation.organization_id = ? GROUP BY income.status_id,quotation.income_id,quotation.quotation_id,`partner`.partner_name,quotation.created_at 
+        ORDER BY quotation.quotation_id DESC;",
+        [$organization_id]);
+    }
+    public function listtoaccept($organization_id){
+        return  DB::connection('mysql')->select("SELECT income.status_id,quotation.income_id,quotation.quotation_id,`partner`.partner_name ,quotation.created_at,SUM(income.saleprice * income.amount) as 'sum' FROM quotation 
+        INNER JOIN income ON quotation.income_id = income.income_id AND quotation.organization_id = income.organization_id AND quotation.quotation_id = income.quotation_id
+        INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
+        INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
+        WHERE quotation.organization_id = ? AND income.status_id = 1 GROUP BY income.status_id,quotation.income_id,quotation.quotation_id,`partner`.partner_name,quotation.created_at
+        ORDER BY quotation.quotation_id DESC;;",
         [$organization_id]);
     }
     public function SelectQuotationAll($organization_id,$quotation_id){

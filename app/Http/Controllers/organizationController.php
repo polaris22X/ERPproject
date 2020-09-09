@@ -5,26 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\organization;
 use App\user_organization;
+use App\income;
+use App\quotation;
 use Illuminate\Support\Facades\Auth;
 
 class organizationController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $organization = new organization();
         $data = $organization->select();
         return view('organization/home')->with('organizations',$data);
     }
-    public function menu(Request $reqeust){
-        $id = $reqeust->session()->get('organization_id');
+    public function menu(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
+        $income = new income();
+        $quotation = new quotation();
         $organization = new organization();
-        $data = $organization->getorganization($id);
-        return view('organization/main')->with('organizations',$data);
+        $organizations = $organization->getorganization($id);
+        $readytoquotation = $income->getreadytoquotation($id);
+        $readytoaccept = $income->getreadytoaccept($id);
+        return view('organization/main')->with(compact(['organizations','readytoquotation','readytoaccept']));
     }
 
-    public function main(Request $reqeust,$id)
+    public function main(Request $request,$id)
     {
-        $reqeust->session()->put('organization_id',$id);
-        return redirect()->action('organizationController@menu');
+        $request->session()->put('organization_id',$id);
+        $user_organization = new user_organization();
+        $user_levels = $user_organization->selectlevel($id);
+        foreach ($user_levels as $user_level) {
+            $level = $user_level->userlevel_id;
+        }
+        if($level == 1){
+            $request->session()->put('userlevel_id',$level);
+            return redirect()->action('organizationController@menu');
+        }
+        if($level == 2){
+            $request->session()->put('userlevel_id',$level);
+            return redirect()->action('saleController@index');
+        }
+        
        
     }
 

@@ -2,12 +2,15 @@
 @extends('layouts.checkauth')
 @section('content')
 @include('layouts.navmenu')
+
+
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
     
         <div class="jumbotron text-center bg-dark text-white">
             <h1>ใบเสนอราคา</h1>
-            
         </div>
+
+        
                 @foreach ($readytoquotation as $amount)
                     @if($amount->readytoquotation > 0)
                     <div class="alert alert-primary" role="alert">
@@ -18,8 +21,20 @@
 
         
         <div class="my-2">
-            <a href="{{url('income/quotation/create')}}" style="color: white" class="btn btn-primary mr-2">+ สร้างใบเสนอราคา</a> 
-            <a href="{{url('income/list')}}" type="button" class="btn btn-secondary mr-2">+ แก้ไขรายการรายรับ</a>  
+            <a href="{{url('income/quotation/create')}}" style="color: white" class="btn btn-primary mr-2">+ สร้างใบเสนอราคา  
+              @foreach ($readytoquotation as $amount)
+                @if($amount->readytoquotation > 0)
+                  <span class="badge badge-danger"> {{$amount->readytoquotation}} </span>
+                @endif
+              @endforeach
+            </a> 
+            <a href="{{url('income/quotation/accept')}}" class="btn btn-success mr-2">+ อนุมัติใบเสนอราคา 
+              @foreach ($readytoaccept as $amountaccept)
+              @if($amountaccept->readytoaccept > 0)
+              <span class="badge badge-danger"> {{$amountaccept->readytoaccept}} </span>
+              @endif
+              @endforeach  
+            </a>
         </div>
 
         <div class="my-2">
@@ -30,6 +45,7 @@
                     <th scope="col">วันที่สร้าง</th>
                     <th scope="col">ชื่อลูกค้า</th>
                     <th scope="col">ยอดสุทธิ</th>
+                    <th scope="col">สถานะ</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -41,7 +57,13 @@
                     <td>{{$quotation->created_at}}</td>
                     <td>{{$quotation->partner_name}}</td>
                     <td>{{number_format($quotation->sum)}}</td>
-                    <td><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/quotation/show/'.$quotation->quotation_id.'')}}'">ดูใบเสนอราคา</button></td>
+                    @if ($quotation->status_id == 1)
+                        <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">ยังไม่ได้อนุมัติ</span></td>
+                    @endif
+                    @if ($quotation->status_id == 2)
+                        <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">อนุมัติแล้ว</span></td>
+                    @endif
+                    <td><button class="btn btn-secondary mr-2" onclick="location.href='{{url('income/update/'.$quotation->income_id.'')}}'">แก้ไขรายการ</button><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/quotation/show/'.$quotation->quotation_id.'')}}'">ดูใบเสนอราคา</button></td>
                     </tr>
                     @endforeach 
                    

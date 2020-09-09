@@ -8,6 +8,14 @@ use Carbon\Carbon;
 
 class income extends Model
 {
+    public function getreadytoquotation($organization_id){
+        return DB::connection('mysql')->select("SELECT count(*) as 'readytoquotation' FROM (SELECT income_id FROM income WHERE organization_id = ? AND status_id = 0 GROUP BY income_id) AS sub;",[$organization_id]);
+    }
+    public function getreadytoaccept($organization_id){
+        return DB::connection('mysql')->select("SELECT count(*) as 'readytoaccept' FROM (SELECT income_id FROM income WHERE organization_id = ? AND status_id = 1 GROUP BY income_id) AS sub;",[$organization_id]);
+    }
+    
+
     public function edit($income_id,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$address,$oldproduct_id,$unixTimeStamp){
         
         DB::connection('mysql')->update("UPDATE income SET product_id= ?,saleprice= ?,amount= ?,partner_id= ? ,address= ?,updated_at= ? 
@@ -39,7 +47,8 @@ class income extends Model
         FROM `income` 
         INNER JOIN `partner` ON `partner`.partner_id = income.partner_id AND `partner`.organization_id = income.organization_id 
         WHERE income.organization_id = ? 
-        GROUP BY income.income_id,`partner`.partner_name,income.created_at",[$organization_id]);
+        GROUP BY income.income_id,`partner`.partner_name,income.created_at
+        ORDER BY income_id DESC",[$organization_id]);
     }
 
     public function selectReadyToQuotation($organization_id){

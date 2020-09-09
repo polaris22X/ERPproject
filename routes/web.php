@@ -41,9 +41,14 @@ Route::post('getpartner','incomeController@getpartner');
 Route::get('income/quotation/list','quotationController@index');
 Route::get('income/quotation/create','quotationController@create');
 Route::post('income/quotation/create','quotationController@preview');
+Route::get('income/quotation/accept','quotationController@acceptlist');
 Route::get('income/quotation/{idincome}','quotationController@createQuotation');
+Route::get('income/quotation/accept/{idincome}','quotationController@acceptprocess');
 Route::get('income/quotation/show/{idquotation}','quotationController@show');
 Route::get('income/quotation/show/pdf/{idquotation}','quotationController@createpdf');
+
+//Salesman
+Route::get('sale/','saleController@index');
 
 //เพิ่มข้อมูลPartner
 Route::post('income/partner','partnerController@store');
