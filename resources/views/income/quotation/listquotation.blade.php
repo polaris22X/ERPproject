@@ -21,6 +21,7 @@
 
         
         <div class="my-2">
+          <a href = "{{url('income')}}" class="mr-2 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
             <a href="{{url('income/quotation/create')}}" style="color: white" class="btn btn-primary mr-2">+ สร้างใบเสนอราคา  
               @foreach ($readytoquotation as $amount)
                 @if($amount->readytoquotation > 0)

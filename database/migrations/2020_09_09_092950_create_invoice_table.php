@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePartnerTable extends Migration
+class CreateInvoiceTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreatePartnerTable extends Migration
      */
     public function up()
     {
-        Schema::create('partner', function (Blueprint $table) {
+        Schema::create('invoice', function (Blueprint $table) {
             $table->integer('organization_id')->unsigned();
-            $table->integer('partner_id')->unsigned();
-            $table->string('partner_name');
-            $table->string('partner_address');
-            $table->string('partner_type');
-            $table->string('partner_tel')->nullabel();
-            $table->string('partner_email')->nullabel();
+            $table->integer('income_id')->unsigned();
+            $table->integer('invoice_id')->unsigned();;
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreatePartnerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partner');
+        Schema::dropIfExists('invoice');
     }
 }

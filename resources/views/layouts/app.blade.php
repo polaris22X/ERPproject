@@ -21,8 +21,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
 </head>
-<body>
-    <div id="app">
+<body class="d-flex flex-column" style="min-height: 100vh">
+    <main class="flex-fill">
+    <div id="app" >
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             
                 <a class="navbar-brand" href="{{ url('/organization') }}">
@@ -77,6 +78,65 @@
         <main>
             @yield('content')
         </main>
+
+        
     </div>
+    </main>
+    <footer class="page-footer font-small bg-dark pt-4" style="color: white;">
+
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left">
+      
+          <!-- Grid row -->
+          <div class="row">
+      
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3">
+      
+              <!-- Content -->
+              <h5 class="text-uppercase">ระบบบริหารงานบัญชีงบกำไรขาดทุน</h5>
+              <p>เว็ปไซต์นี้เป็นส่วนหนึ่งของวิชา Project มหาวิทยาลัยราชมงคลตะวันออกวิทยาเขตจักรพงษ์ภูวนาถฯ</p>
+      
+            </div>
+            <!-- Grid column -->
+      
+            <hr class="clearfix w-100 d-md-none pb-3">
+      
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+      
+              <!-- Links -->
+              <h5>อาจารย์ที่ปรึกษา</h5>
+              <ul class="list-unstyled">
+                  <li><a href="https://chumpolm.wordpress.com/04-06-325-%E0%B8%A7%E0%B8%B4%E0%B8%A8%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%8B%E0%B8%AD%E0%B8%9F%E0%B8%95%E0%B9%8C%E0%B9%81%E0%B8%A7%E0%B8%A3%E0%B9%8C-software-engineering/about/" style="color: white">อ.ชุมพล โมฆรัตน์ </a></li>
+              </ul>
+      
+            </div>
+            <!-- Grid column -->
+      
+            <!-- Grid column -->
+            <div class="col-md-3 mb-md-0 mb-3">
+                <h5>จัดทำโดย</h5>
+                <ul class="list-unstyled">
+                    <li><a href="https://www.facebook.com/Flogzpipa" style="color: white">นายพรศักดิ์ ซื่อตรงจิตติ</a></li>
+                    <li><a href="https://www.facebook.com/natawe.sangthong" style="color: white">นายนรรฆวี แสงทอง</a></li>
+                </ul>
+      
+            </div>
+            <!-- Grid column -->
+      
+          </div>
+          <!-- Grid row -->
+      
+        </div>
+        <!-- Footer Links -->
+      
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+          <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+      
+      </footer>
 </body>
 </html>

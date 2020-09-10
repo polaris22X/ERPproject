@@ -55,7 +55,7 @@
             </td>
             <td>
                 @foreach ($details as $detail)
-                <p style="font-size: 16px">หมายเลขใบสั่งซื้อ : {{$detail->quotation_id}} </p>
+                <p style="font-size: 16px">หมายเลขใบเสนอราคา : {{$detail->quotation_id}} </p>
                 <p style="font-size: 16px">วันที่ : {{date('d-m-Y', strtotime($detail->created_at))}} </p>
                 @endforeach
             </td>

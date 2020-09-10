@@ -5,7 +5,7 @@
 <div class="container mt-5 shadow p-5 mb-5 bg-white rounded">
     @foreach ($details as $detail)
     <a href = "{{url()->previous()}}" class="my-2 mr-2 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
-    <a href="{{url('income/quotation/show/pdf/'.$detail->quotation_id)}}" class="btn btn-primary" style="float: right">สร้างเอกสาร PDF</a>
+    <a href="{{url('income/quotation/show/pdf/'.$detail->invoice_id)}}" class="btn btn-primary" style="float: right">สร้างเอกสาร PDF</a>
     @endforeach
     
     @foreach ($organizations as $organization)
@@ -20,7 +20,7 @@
         @endif
     </p>
     @endforeach
-    <h2 class="mt-5" style="text-align: center">ใบเสนอราคา</h2>
+    <h2 class="mt-5" style="text-align: center">ใบวางบิล</h2>
     <div class="row" class="mx-3 mt-2" >
         <div class="col-9 border border-dark">
             <div class="ml-2 my-4">
@@ -41,7 +41,7 @@
         <div class="col-3 border border-dark ">
             <div class="ml-2 my-4">
                 @foreach ($details as $detail)
-                <p style="font-size: 16px">หมายเลขใบสั่งซื้อ : {{$detail->quotation_id}} </p>
+                <p style="font-size: 16px">หมายเลขใบสั่งซื้อ : {{$detail->invoice_id}} </p>
                 <p style="font-size: 16px">วันที่ : {{date('d-m-Y', strtotime($detail->created_at))}} </p>
                 @endforeach
             </div>
@@ -60,14 +60,14 @@
         </thead>
         <tbody>
         <?php $i = 0; ?>
-        @foreach ($quotations as $quotation)
+        @foreach ($invoices as $invoice)
         <?php $i++?>
           <tr>
           <th scope="row" style="width: 10%">{{$i}}</th>
-          <td style="width: 40%">{{$quotation->product_name}}</td>
-          <td style="text-align: right">{{$quotation->amount}}</td>
-          <td style="text-align: right">{{number_format($quotation->saleprice)}}</td>
-          <td style="text-align: right">{{number_format($quotation->saleprice * $quotation->amount)}}</td>
+          <td style="width: 40%">{{$invoice->product_name}}</td>
+          <td style="text-align: right">{{$invoice->amount}}</td>
+          <td style="text-align: right">{{number_format($invoice->saleprice)}}</td>
+          <td style="text-align: right">{{number_format($invoice->saleprice * $invoice->amount)}}</td>
           </tr>
           @endforeach
           @foreach ($sums as $sum)

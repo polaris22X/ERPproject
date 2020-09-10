@@ -22,7 +22,7 @@ class quotation extends Model
         [$unixTimeStamp,$organization_id,$income_id]);
     }
     public function selectlastid($organization_id){
-        return DB::connection('mysql')->select("SELECT quotation_id FROM quotation WHERE organization_id = ? ORDER BY income_id DESC LIMIT 1;",[$organization_id]);
+        return DB::connection('mysql')->select("SELECT quotation_id FROM quotation WHERE organization_id = ? ORDER BY quotation_id DESC LIMIT 1;",[$organization_id]);
     }
     public function selectQuotation($organization_id){
         return  DB::connection('mysql')->select("SELECT income.status_id,quotation.income_id,quotation.quotation_id,`partner`.partner_name ,quotation.created_at,SUM(income.saleprice * income.amount) as 'sum' FROM quotation 

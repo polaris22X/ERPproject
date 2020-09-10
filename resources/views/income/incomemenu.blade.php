@@ -18,6 +18,7 @@
                             @endforeach
                         @endforeach
                        </a>
+                       <a href="{{ url('income/invoice') }}" class="btn btn-dark py-4 mt-3" style="width: 100%;font-size: 24px">ใบวางบิล</a>
                     </div>
                     <div class="col">
                         <img src="{{url('/images/income.png')}}" style="width: 100%">

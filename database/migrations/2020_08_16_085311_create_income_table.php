@@ -22,7 +22,8 @@ class CreateIncomeTable extends Migration
             $table->integer('partner_id')->unsigned();
             $table->string('address');
             $table->integer('status_id')->unsigned();
-            $table->integer('quotation_id')->nulllabel()->unsigned();
+            $table->integer('quotation_id')->unsigned()->nullabel();
+            $table->integer('invoice_id')->unsigned()->nullabel();
             $table->timestamps();
         });
     }
