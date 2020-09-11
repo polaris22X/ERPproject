@@ -7,6 +7,7 @@ use App\organization;
 use App\product;
 use App\partner;
 use App\income;
+use App\invoice;
 use Carbon\Carbon;
 class incomeController extends Controller
 {
@@ -18,10 +19,12 @@ class incomeController extends Controller
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $income = new income();
+        $invoice = new invoice();
         $readytoquotation = $income->getreadytoquotation($id);
         $readytoaccept = $income->getreadytoaccept($id);
         $organizations = $organization->getorganization($id);
-        return view('income/incomemenu')->with(compact('organizations','readytoquotation','readytoaccept'));
+        $readytoinvoice = $invoice->getReadyToInvoice($id);
+        return view('income/incomemenu')->with(compact('organizations','readytoquotation','readytoaccept','readytoinvoice'));
     }
     public function update(Request $request , $idincome){
         $userlevel_id = $request->session()->get('userlevel_id');

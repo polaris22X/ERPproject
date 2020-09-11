@@ -2,9 +2,9 @@
 @extends('layouts.checkauth')
 @section('content')
 
-<div class="mt-5">
-    <div class="container">
-  <h1>องค์กร</h1>
+
+    <div class="container my-5 shadow p-5 mb-5 bg-white rounded">
+        <h1>องค์กร</h1>
         
         <div class="list-group mt-3">
         @if($organizations !== null)
@@ -12,9 +12,9 @@
         <a href = "/organization/main/{{$organization->id}}"  class="list-group-item">{{$organization->organization_name}}</a></li>
         @endforeach
         @endif
-        <a href="/organization/add" class="list-group-item">+ เพิ่มองค์กร</a></li>
+        <a href="/organization/add" class="list-group-item bg-primary text-white">+ เพิ่มองค์กร</a></li>
         </ul>
     </div>
-</div>
+
 
 @endsection

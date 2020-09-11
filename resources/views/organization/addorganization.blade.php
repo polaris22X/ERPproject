@@ -1,9 +1,12 @@
 @extends('layouts.app')
 @extends('layouts.checkauth')
 @section('content')
-<div class="mt-5">
-<div class="container">
-  
+
+  <div class="container my-5 shadow p-5 mb-5 bg-white rounded">
+    <div class="my-2">
+      <a href = "{{url('organization/menu')}}" class="my-2 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
+    </div>
+    <h1 class="my-3">เพิ่มองค์กร</h1>
     <form action="/organization" method="POST" >
       @csrf
         <div class="form-group">
@@ -28,7 +31,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-</div>
+
 </div>
 
 @endsection

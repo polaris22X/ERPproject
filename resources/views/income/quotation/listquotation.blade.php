@@ -3,7 +3,11 @@
 @section('content')
 @include('layouts.navmenu')
 
-
+<script>
+  function alertshow(){
+    alert("ไม่สามารถแก้ไขได้เนื่องจากอนุมัติไปแล้ว");
+  }
+</script>
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
     
         <div class="jumbotron text-center bg-dark text-white">
@@ -54,17 +58,17 @@
                     
                     @foreach($quotations as $quotation)
                     <tr>
-                    <th scope="row">{{$quotation->quotation_id}}</th>
+                    <th scope="row">{{$quotation->qt_id}}</th>
                     <td>{{$quotation->created_at}}</td>
                     <td>{{$quotation->partner_name}}</td>
                     <td>{{number_format($quotation->sum)}}</td>
                     @if ($quotation->status_id == 1)
                         <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">ยังไม่ได้อนุมัติ</span></td>
                     @endif
-                    @if ($quotation->status_id == 2)
+                    @if ($quotation->status_id >= 2)
                         <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">อนุมัติแล้ว</span></td>
                     @endif
-                    <td><button class="btn btn-secondary mr-2" onclick="location.href='{{url('income/update/'.$quotation->income_id.'')}}'">แก้ไขรายการ</button><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/quotation/show/'.$quotation->quotation_id.'')}}'">ดูใบเสนอราคา</button></td>
+                    <td><button class="btn btn-secondary mr-2 @if($quotation->status_id >= 2)disabled @endif" @if($quotation->status_id == 1)onclick="location.href='{{url('income/update/'.$quotation->income_id.'')}}'"@endif @if($quotation->status_id >= 2) onclick="alertshow()" @endif @if($quotation->status_id >= 2) aria-disabled="true" tabindex="-1" @endif>แก้ไขรายการ</button><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/quotation/show/'.$quotation->quotation_id.'')}}'">ดูใบเสนอราคา</button></td>
                     </tr>
                     @endforeach 
                    

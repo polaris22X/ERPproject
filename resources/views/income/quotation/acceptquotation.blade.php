@@ -14,7 +14,7 @@
 
         
         <div class="my-2">
-            <a href = "{{url('income/quotation/list')}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
+            <a href = "{{url('income/quotation/list')}}" class="my-2 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
         </div>
 
         <div class="my-2">
@@ -32,7 +32,7 @@
                     
                     @foreach($quotations as $quotation)
                     <tr>
-                    <th scope="row">{{$quotation->quotation_id}}</th>
+                    <th scope="row">{{$quotation->qt_id}}</th>
                     <td>{{$quotation->created_at}}</td>
                     <td>{{$quotation->partner_name}}</td>
                     <td>{{number_format($quotation->sum)}}</td>

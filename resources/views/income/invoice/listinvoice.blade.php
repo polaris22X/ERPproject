@@ -14,8 +14,14 @@
         
         <div class="my-2">
             <a href = "{{url('income/')}}" class="my-2 mr-2 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
-            <a href="{{url('income/invoice/create')}}" style="color: white" class="btn btn-primary mr-2">+ สร้างใบวางบิล </a> 
-            <a href="" class="btn btn-success mr-2">+ อนุมัติใบวางบิล </a>
+            <a href="{{url('income/invoice/create')}}" style="color: white" class="btn btn-primary mr-2">+ สร้างใบวางบิล 
+                @foreach ($readytoinvoice as $amount)
+                @if($amount->readytoinvoice > 0)
+                  <span class="badge badge-danger"> {{$amount->readytoinvoice}} </span>
+                @endif
+              @endforeach
+            </a> 
+            
         </div>
 
         <div class="my-2">
@@ -33,17 +39,17 @@
                 <tbody>
                     @foreach($invoices as $invoice)
                     <tr>
-                    <th scope="row">{{$invoice->invoice_id}}</th>
+                    <th scope="row">{{$invoice->inv_id}}</th>
                     <td>{{$invoice->created_at}}</td>
                     <td>{{$invoice->partner_name}}</td>
                     <td>{{number_format($invoice->sum)}}</td>
-                    @if ($invoice->status_id == 3)
+                    @if ($invoice->status_id <= 3)
                         <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">ยังไม่ได้ชำระเงิน</span></td>
                     @endif
-                    @if ($invoice->status_id == 4)
+                    @if ($invoice->status_id >= 4)
                         <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">ชำระเงินแล้ว</span></td>
                     @endif
-                    <td><button class="btn btn-secondary mr-2" onclick="location.href='{{url('income/update/'.$invoice->income_id.'')}}'">แก้ไขรายการ</button><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/invoice/show/'.$invoice->invoice_id.'')}}'">ดูใบวางบิล</button></td>
+                    <td><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/invoice/show/'.$invoice->invoice_id.'')}}'">ดูใบวางบิล</button></td>
                     </tr>
                     @endforeach 
                 </tbody>

@@ -1,3 +1,9 @@
+<style>
+    body{
+        background-image: url("https://a-static.besthdwallpaper.com/phuuenhlangmumm-ngaenwn-nsiiekhiiyw-wx-ll-pepexr-1920x1080-10865_48.jpg");
+        height: 100%;
+    }
+</style>
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -21,6 +27,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
 </head>
+
 <body class="d-flex flex-column" style="min-height: 100vh">
     <main class="flex-fill">
     <div id="app" >

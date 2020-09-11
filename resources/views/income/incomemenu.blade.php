@@ -10,15 +10,22 @@
                     <div class="col">
                         <a href="{{ url('income/list') }}" class="btn btn-dark py-4" style="width: 100%;font-size: 24px">รายการรายรับ</a>
                         <a href="{{ url('income/quotation/list')}}" class="btn btn-dark mt-3 py-4" style="width: 100%;font-size: 24px">ใบเสนอราคา 
-                            @foreach ($readytoquotation as $amountquotation)
+                        @foreach ($readytoquotation as $amountquotation)
                             @foreach ($readytoaccept as $amountaccept)
-                            @if($amountquotation->readytoquotation > 0 || $amountaccept->readytoaccept > 0)
-                            <span class="badge badge-danger"> {{$amountquotation->readytoquotation + $amountaccept->readytoaccept}} </span>
-                            @endif
+                                @if($amountquotation->readytoquotation > 0 || $amountaccept->readytoaccept > 0)
+                                    <span class="badge badge-danger"> {{$amountquotation->readytoquotation + $amountaccept->readytoaccept}} </span>
+                                @endif
                             @endforeach
                         @endforeach
                        </a>
-                       <a href="{{ url('income/invoice') }}" class="btn btn-dark py-4 mt-3" style="width: 100%;font-size: 24px">ใบวางบิล</a>
+                       <a href="{{ url('income/invoice') }}" class="btn btn-dark py-4 mt-3" style="width: 100%;font-size: 24px">ใบวางบิล
+                        @foreach ($readytoinvoice as $amount)
+                            @if($amount->readytoinvoice > 0)
+                                <span class="badge badge-danger"> {{$amount->readytoinvoice}} </span>
+                            @endif
+                        @endforeach
+                        </a>
+                        <a href="{{ url('income/receipt') }}" class="btn btn-dark" style="width: 100%">ใบเสร็จ</a>
                     </div>
                     <div class="col">
                         <img src="{{url('/images/income.png')}}" style="width: 100%">

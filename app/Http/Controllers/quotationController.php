@@ -88,7 +88,7 @@ class quotationController extends Controller
         }
         $QT = str_pad($lastid, 8, 0, STR_PAD_LEFT);
         $QTID = "QT-" . $QT;
-        $quotation->createQuotation($organization_id,$income_id,$lastid);
+        $quotation->createQuotation($organization_id,$income_id,$lastid,$QTID);
         return redirect()->action('quotationController@index');
     }
 

@@ -33,7 +33,7 @@
                     @foreach($ReadyToInvoice as $quotation)
                     
                     <tr>
-                    <th scope="row">{{$quotation->quotation_id}}</th>
+                    <th scope="row">{{$quotation->qt_id}}</th>
                     <td>{{$quotation->created_at}}</td>
                     <td>{{$quotation->partner_name}}</td>
                     <td>{{number_format($quotation->sum)}}</td>

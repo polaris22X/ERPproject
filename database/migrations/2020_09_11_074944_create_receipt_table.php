@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuotationTable extends Migration
+class CreateReceiptTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateQuotationTable extends Migration
      */
     public function up()
     {
-        Schema::create('quotation', function (Blueprint $table) {
+        Schema::create('receipt', function (Blueprint $table) {
             $table->integer('organization_id')->unsigned();
             $table->integer('income_id')->unsigned();
-            $table->integer('quotation_id')->unsigned();
-            $table->string('qt_id');
+            $table->integer('receipt_id')->unsigned();
+            $table->string('inv_id');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateQuotationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quotation');
+        Schema::dropIfExists('receipt');
     }
 }

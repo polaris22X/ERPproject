@@ -43,11 +43,12 @@ class income extends Model
         return DB::connection('mysql')->select("SELECT income_id FROM income WHERE organization_id = ? ORDER BY income_id DESC LIMIT 1;",[$organization_id]);
     }
     public function select($organization_id){
-        return DB::connection('mysql')->select("SELECT income.income_id,`partner`.partner_name ,income.created_at,SUM(income.saleprice * income.amount) as 'sum' 
+        return DB::connection('mysql')->select("SELECT income.income_id,`partner`.partner_name,income.status_id,status.status_name ,income.created_at,SUM(income.saleprice * income.amount) as 'sum' 
         FROM `income` 
         INNER JOIN `partner` ON `partner`.partner_id = income.partner_id AND `partner`.organization_id = income.organization_id 
+        INNER JOIN `status` ON `status`.status_id = `income`.status_id 
         WHERE income.organization_id = ? 
-        GROUP BY income.income_id,`partner`.partner_name,income.created_at
+        GROUP BY income.income_id,`partner`.partner_name,income.created_at,income.status_id,status.status_name
         ORDER BY income_id DESC",[$organization_id]);
     }
 

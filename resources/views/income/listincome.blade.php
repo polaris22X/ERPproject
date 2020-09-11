@@ -2,6 +2,12 @@
 @extends('layouts.checkauth')
 @section('content')
 @include('layouts.navmenu')
+
+<script>
+  function alertshow(){
+    alert("ไม่สามารถแก้ไขได้เนื่องจากอนุมัติไปแล้ว");
+  }
+</script>
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="jumbotron text-center bg-dark text-white">
             <h1>รายรับ</h1>
@@ -19,6 +25,7 @@
                 <th scope="col">วันที่สร้าง</th>
                 <th scope="col">ชื่อลูกค้า</th>
                 <th scope="col">ยอดสุทธิ</th>
+                <th scope="col">สถานะ</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -30,7 +37,8 @@
                 <td>{{$income->created_at}}</td>
                 <td>{{$income->partner_name}}</td>
                 <td>{{number_format($income->sum)}}</td>
-                <td><button class="btn btn-secondary mr-2" onclick="location.href='{{url('income/update/'.$income->income_id.'')}}'">แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
+                <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">{{$income->status_name}}</span></td>
+                <td><button class="btn btn-secondary mr-2 @if($income->status_id >= 2)disabled @endif" @if($income->status_id <= 1)onclick="location.href='{{url('income/update/'.$income->income_id.'')}}'"@endif @if($income->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
                 </tr>
                 @endforeach 
                

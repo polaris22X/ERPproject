@@ -31,7 +31,7 @@
    }
    body{
         font-family: "THSarabunNew";
-        line-height: 5px;
+        line-height: 15px;
    }
    .number{
      text-align: right;
@@ -55,7 +55,7 @@
             </td>
             <td>
                 @foreach ($details as $detail)
-                <p style="font-size: 16px">หมายเลขใบเสนอราคา : {{$detail->quotation_id}} </p>
+                <p style="font-size: 16px">หมายเลขใบเสนอราคา : {{$detail->qt_id}} </p>
                 <p style="font-size: 16px">วันที่ : {{date('d-m-Y', strtotime($detail->created_at))}} </p>
                 @endforeach
             </td>
@@ -100,7 +100,19 @@
         </tbody>
        
       </table>
-
+      <div style="float: right;width: 40%;">
+        <div style="width: 40%;margin-right: 5px;float: left;">
+            <p class="text-center">ผู้อนุมัติ</p>
+            <p width="100%" style="border-bottom: 1px dotted;margin-top: 2cm;"></p>
+            <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
+        </div>
+        <div style="width: 40%;float: left;margin-left: 55%">
+            <p class="text-center">ผู้ยอมรับใบเสนอราคา</p>
+            <p width="100%" style="border-bottom: 1px dotted;margin-top: 2cm;"></p>
+            <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
+        </div>
+      </div>
+    </div>
     </body>
 </html>
 

@@ -16,8 +16,9 @@ class invoiceController extends Controller
         $organization = new organization();
         $invoice = new invoice();
         $invoices = $invoice->selectInvoice($id);
+        $readytoinvoice = $invoice->getReadyToInvoice($id);
         $organizations = $organization->getorganization($id);
-        return view('income/invoice/listinvoice')->with(compact(['organizations','invoices']));
+        return view('income/invoice/listinvoice')->with(compact(['organizations','invoices','readytoinvoice']));
     }
     public function create(Request $request){
         $id = $request->session()->get('organization_id');
@@ -42,7 +43,9 @@ class invoiceController extends Controller
         else{
             $lastid = 1; 
         }
-        $invoice->createInvoice($organization_id,$income_id,$lastid);
+        $INV = str_pad($lastid, 8, 0, STR_PAD_LEFT);
+        $INVID = "INV-" . $INV;
+        $invoice->createInvoice($organization_id,$income_id,$lastid,$INVID);
         return redirect()->action('invoiceController@index');
     }
 
