@@ -8,6 +8,7 @@ use App\user_organization;
 use App\income;
 use App\quotation;
 use App\invoice;
+use App\receipt;
 use Illuminate\Support\Facades\Auth;
 
 class organizationController extends Controller
@@ -27,11 +28,14 @@ class organizationController extends Controller
         $quotation = new quotation();
         $organization = new organization();
         $invoice = new invoice();
+        
         $organizations = $organization->getorganization($id);
         $readytoquotation = $income->getreadytoquotation($id);
         $readytoaccept = $income->getreadytoaccept($id);
         $readytoinvoice = $invoice->getReadyToInvoice($id);
-        return view('organization/main')->with(compact(['organizations','readytoquotation','readytoaccept','readytoinvoice']));
+        $receipt = new receipt();
+        $readytoreceipt = $receipt->getReadyToReceipt($id);
+        return view('organization/main')->with(compact(['organizations','readytoquotation','readytoaccept','readytoinvoice','readytoreceipt']));
     }
 
     public function main(Request $request,$id)

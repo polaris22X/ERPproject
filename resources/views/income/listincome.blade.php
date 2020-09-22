@@ -37,7 +37,12 @@
                 <td>{{$income->created_at}}</td>
                 <td>{{$income->partner_name}}</td>
                 <td>{{number_format($income->sum)}}</td>
+                @if($income->status_id <= 3)
                 <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">{{$income->status_name}}</span></td>
+                @endif
+                @if($income->status_id == 4)
+                <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">{{$income->status_name}}</span></td>
+                @endif
                 <td><button class="btn btn-secondary mr-2 @if($income->status_id >= 2)disabled @endif" @if($income->status_id <= 1)onclick="location.href='{{url('income/update/'.$income->income_id.'')}}'"@endif @if($income->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
                 </tr>
                 @endforeach 

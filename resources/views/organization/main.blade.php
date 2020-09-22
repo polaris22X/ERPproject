@@ -3,11 +3,6 @@
 @section('content')
 @include('layouts.navmenu')
 
-
-    
-    
-    
-
     <div class="container mt-5 shadow p-3 mb-5 bg-dark rounded">
         
         <div class="row">
@@ -17,7 +12,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ url('income/list') }}" class="btn btn-dark" style="width: 100%">รายการรายรับ</a>
+                                <a href="{{ url('income/list') }}" class="btn btn-dark" style="width: 100%;">รายการรายรับ</a>
                                 <a href="{{ url('income/quotation/list')}}" class="btn btn-dark mt-3" style="width: 100%">ใบเสนอราคา 
                                     @foreach ($readytoquotation as $amountquotation)
                                     @foreach ($readytoaccept as $amountaccept)
@@ -34,7 +29,13 @@
                                 @endif
                                  @endforeach
                             </a>
-                            <a href="{{ url('income/receipt') }}" class="btn btn-dark" style="width: 100%">ใบเสร็จ</a>
+                            <a href="{{ url('income/receipt') }}" class="btn btn-dark mt-3" style="width: 100%">ใบเสร็จ
+                                @foreach ($readytoreceipt as $amount)
+                                @if($amount->readytoreceipt > 0)
+                                  <span class="badge badge-danger"> {{$amount->readytoreceipt}} </span>
+                                @endif
+                                 @endforeach
+                            </a>
                             </div>
                             <div class="col">
                                 <img src="{{url('/images/income.png')}}" style="width: 100%">
@@ -49,14 +50,15 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                ...
+                                <a href="{{ url('expenses/list') }}" class="btn btn-dark" style="width: 100%;">รายการรายจ่าย</a>
+                                <a href="{{ url('expenses/list')}}" class="btn btn-dark mt-3" style="width: 100%">ใบสั่งซื้อ</a>
                             </div>
                             <div class="col">
                                 <img src="{{url('/images/outcome.png')}}" style="width: 100%">
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
         <div class="row">

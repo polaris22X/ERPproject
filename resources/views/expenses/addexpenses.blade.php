@@ -3,21 +3,13 @@
 @section('content')
 @include('layouts.navmenu')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
-
-
-
-
-
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
         <div class="jumbotron text-center bg-dark text-white">
-            <h1>เพิ่มรายการรายรับ</h1>
+            <h1>เพิ่มรายการรายจ่าย</h1>
         </div>
-        
       <a href = "{{url()->previous()}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
 
-      <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}">
+      <form class="mx-5 my-5" method="POST" action="{{url('expenses/insert')}}">
         @csrf
 
           <div class="row my-2">

@@ -25,7 +25,13 @@
                             @endif
                         @endforeach
                         </a>
-                        <a href="{{ url('income/receipt') }}" class="btn btn-dark" style="width: 100%">ใบเสร็จ</a>
+                        <a href="{{ url('income/receipt') }}" class="btn btn-dark py-4 mt-3" style="width: 100%;font-size: 24px">ใบเสร็จ
+                            @foreach ($readytoreceipt as $amount)
+                            @if($amount->readytoreceipt > 0)
+                              <span class="badge badge-danger"> {{$amount->readytoreceipt}} </span>
+                            @endif
+                             @endforeach
+                        </a>
                     </div>
                     <div class="col">
                         <img src="{{url('/images/income.png')}}" style="width: 100%">

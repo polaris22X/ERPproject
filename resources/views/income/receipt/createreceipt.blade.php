@@ -7,7 +7,7 @@
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
     
         <div class="jumbotron text-center bg-dark text-white">
-            <h1>สร้างใบวางบิล</h1>
+            <h1>สร้างใบเสร็จ</h1>
             
         </div>
                
@@ -21,7 +21,7 @@
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">ID ใบเสนอราคา</th>
+                    <th scope="col">ID ใบวางบิล</th>
                     <th scope="col">วันที่สร้าง</th>
                     <th scope="col">ชื่อลูกค้า</th>
                     <th scope="col">ยอดสุทธิ</th>
@@ -30,14 +30,14 @@
                 </thead>
                 <tbody>
                     
-                    @foreach($ReadyToInvoice as $quotation)
+                    @foreach($ReadyToReceipt as $invoice)
                     
                     <tr>
-                    <th scope="row">{{$quotation->qt_id}}</th>
-                    <td>{{$quotation->created_at}}</td>
-                    <td>{{$quotation->partner_name}}</td>
-                    <td>{{number_format($quotation->sum)}}</td>
-                    <td><a style="color: white" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation" onclick="preview({{$quotation->income_id}})">สร้างใบวางบิล</a><button class="btn btn-danger" >ยกเลิก</button></td>
+                    <th scope="row">{{$invoice->inv_id}}</th>
+                    <td>{{$invoice->created_at}}</td>
+                    <td>{{$invoice->partner_name}}</td>
+                    <td>{{number_format($invoice->sum)}}</td>
+                    <td><a style="color: white" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation" onclick="preview({{$invoice->income_id}})">ออกใบเสร็จ</a><button class="btn btn-danger" >ยกเลิก</button></td>
                     </tr>
                     
                     @endforeach 
@@ -56,7 +56,7 @@
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">ตัวอย่างใบวางบิล</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">ตัวอย่างใบเสร็จ</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -66,7 +66,7 @@
                     <h1 style="text-align: center;" class="mt-5">{{$organization->organization_name}}</h1>
                     <p style="text-align: center;font-size: 18px" >{{$organization->organization_address}}</p>
                     @endforeach
-                    <h2 class="mt-5" style="text-align: center">ใบวางบิล</h2>
+                    <h2 class="mt-5" style="text-align: center">ใบเสร็จ</h2>
                     <div class="row" class="mx-3 mt-2" >
                         <div class="col-9 border border-dark">
                             <div class="ml-2 my-4">
@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-3 border border-dark ">
                             <div class="ml-2 my-4">
-                                <p style="font-size: 16px">หมายเลขใบวางบิล :  ## </p>
+                                <p style="font-size: 16px">หมายเลขใบเสร็จ :  ## </p>
                                 <p style="font-size: 16px">วันที่ : {{date('d-m-Y', time())}} </p>
                             </div>
                         </div>
@@ -152,7 +152,7 @@ function preview(income_id){
                 var vatable = netprice - vat;
                 var income_id = data[0].income_id;
                 $("#tbody").append("<tr><td rowspan=\"3\" colspan=\"3\">หมายเหตุ : </td><td>VATABLE</td><td>"+numberWithCommas(vatable)+"</td></tr><tr><td>VAT 7%</td><td>"+ numberWithCommas(vat) +"</td></tr><tr><td>ราคารวมทั้งสิ้น</td><td>"+numberWithCommas(netprice)+"</td></tr>");
-                $("#modalfooter").append("<a href=\"{{url('income/invoice/')}}/"+income_id+"\" class=\"btn btn-primary mr-2\">สร้างใบวางบิล</a><button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">ยกเลิก</button>")
+                $("#modalfooter").append("<a href=\"{{url('income/receipt/')}}/"+income_id+"\" class=\"btn btn-primary mr-2\">ออกใบเสร็จ</a><button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">ยกเลิก</button>")
                 }
             });
 }

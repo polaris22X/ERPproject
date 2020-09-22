@@ -36,23 +36,29 @@ Route::post('income/insert', 'incomeController@store');
 Route::get('income/update/{idincome}','incomeController@update');
 Route::post('income/update', 'incomeController@updatedo');
 Route::post('getpartner','incomeController@getpartner');
-
-//Quotation
 Route::get('income/quotation/list','quotationController@index');
 Route::get('income/quotation/create','quotationController@create');
 Route::post('income/quotation/create','quotationController@preview');
 Route::get('income/quotation/accept','quotationController@acceptlist');
 Route::get('income/invoice/','invoiceController@index');
 Route::get('income/invoice/create','invoiceController@create');
+Route::get('income/receipt/','receiptController@index');
+Route::get('income/receipt/create','receiptController@create');
+Route::get('income/receipt/{idincome}','receiptController@createreceipt');
+Route::get('income/receipt/show/pdf/{idreceipt}','receiptController@createpdf');
 Route::get('income/invoice/{idincome}','invoiceController@createinvoice');
+Route::get('income/receipt/show/{idreceipt}','receiptController@show');
 Route::get('income/invoice/show/{idinvoice}','invoiceController@show');
+Route::get('income/invoice/show/pdf/{idinvoice}','invoiceController@createpdf');
 Route::get('income/quotation/{idincome}','quotationController@createQuotation');
 Route::get('income/quotation/accept/{idincome}','quotationController@acceptprocess');
 Route::get('income/quotation/show/{idquotation}','quotationController@show');
 Route::get('income/quotation/show/pdf/{idquotation}','quotationController@createpdf');
 
-//Salesman
-Route::get('sale/','saleController@index');
+//expenses
+Route::get('expenses', 'expensesController@index');
+Route::get('expenses/list', 'expensesController@list');
+Route::get('expenses/insert', 'expensesController@insert');
 
 //เพิ่มข้อมูลPartner
 Route::post('income/partner','partnerController@store');

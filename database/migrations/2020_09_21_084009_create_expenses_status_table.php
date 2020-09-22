@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReceiptTable extends Migration
+class CreateExpensesStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateReceiptTable extends Migration
      */
     public function up()
     {
-        Schema::create('receipt', function (Blueprint $table) {
-            $table->integer('organization_id')->unsigned();
-            $table->integer('income_id')->unsigned();
-            $table->integer('receipt_id')->unsigned();
-            $table->string('rt_id');
+        Schema::create('status_expenses', function (Blueprint $table) {
+            $table->id('status_id');
+            $table->string('status_name');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateReceiptTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('receipt');
+        Schema::dropIfExists('status_expenses');
     }
 }

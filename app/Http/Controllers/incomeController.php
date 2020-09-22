@@ -8,14 +8,12 @@ use App\product;
 use App\partner;
 use App\income;
 use App\invoice;
+use App\receipt;
 use Carbon\Carbon;
 class incomeController extends Controller
 {
     public function index(Request $request){
-        $userlevel_id = $request->session()->get('userlevel_id');
-        if($userlevel_id != 1){
-            return redirect()->action('organizationController@index');
-        }
+        
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $income = new income();
@@ -24,7 +22,9 @@ class incomeController extends Controller
         $readytoaccept = $income->getreadytoaccept($id);
         $organizations = $organization->getorganization($id);
         $readytoinvoice = $invoice->getReadyToInvoice($id);
-        return view('income/incomemenu')->with(compact('organizations','readytoquotation','readytoaccept','readytoinvoice'));
+        $receipt = new receipt();
+        $readytoreceipt = $receipt->getReadyToReceipt($id);
+        return view('income/incomemenu')->with(compact('organizations','readytoquotation','readytoaccept','readytoinvoice','readytoreceipt'));
     }
     public function update(Request $request , $idincome){
         $userlevel_id = $request->session()->get('userlevel_id');

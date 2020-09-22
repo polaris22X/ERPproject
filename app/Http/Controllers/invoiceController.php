@@ -60,4 +60,20 @@ class invoiceController extends Controller
         return view('income/invoice/showinvoice')->with(compact(['organizations','invoices','details','sums']));
         
     }
+
+    public function createpdf(Request $request, $invoice_id){
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($id);
+        $invoice = new invoice();
+        $invoices = $invoice->selectInvoiceAll($id,$invoice_id);
+        $details = $invoice->selectInvoiceRow($id,$invoice_id);
+        $sums = $invoice->selectSum($id,$invoice_id);
+        // share data to view
+        $pdf = PDF::loadView('income/invoice/invoicepdf', compact('organizations','invoices','details','sums'));
+
+        // download PDF file with download method
+        return $pdf->download('invoice.pdf');
+        
+    }
 }
