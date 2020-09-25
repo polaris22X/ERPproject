@@ -31,7 +31,21 @@
             </thead>
             <tbody>
                 
-               
+                @foreach($expensess as $expenses)
+                <tr>
+                <th scope="row">{{$expenses->expenses_id}}</th>
+                <td>{{$expenses->created_at}}</td>
+                <td>{{$expenses->partner_name}}</td>
+                <td>{{number_format($expenses->sum)}}</td>
+                @if($expenses->status_id <= 1)
+                <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">{{$expenses->status_name}}</span></td>
+                @endif
+                @if($expenses->status_id == 2)
+                <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">{{$expenses->status_name}}</span></td>
+                @endif
+                <td><button class="btn btn-secondary mr-2 @if($expenses->status_id >= 2)disabled @endif" @if($expenses->status_id <= 1)onclick="location.href='{{url('expenses/update/'.$expenses->expenses_id.'')}}'"@endif @if($expenses->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
+                </tr>
+                @endforeach 
                
               
              

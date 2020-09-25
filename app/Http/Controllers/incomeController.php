@@ -23,6 +23,7 @@ class incomeController extends Controller
         $organizations = $organization->getorganization($id);
         $readytoinvoice = $invoice->getReadyToInvoice($id);
         $receipt = new receipt();
+        
         $readytoreceipt = $receipt->getReadyToReceipt($id);
         return view('income/incomemenu')->with(compact('organizations','readytoquotation','readytoaccept','readytoinvoice','readytoreceipt'));
     }
@@ -44,10 +45,6 @@ class incomeController extends Controller
         return view('income/updateincome')->with(compact(['organizations','products','partners','incomes','income_partner']));
     }
     public function list(Request $request){
-        $userlevel_id = $request->session()->get('userlevel_id');
-        if($userlevel_id != 1){
-            return redirect()->action('organizationController@index');
-        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);

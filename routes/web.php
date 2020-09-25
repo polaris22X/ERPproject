@@ -59,6 +59,19 @@ Route::get('income/quotation/show/pdf/{idquotation}','quotationController@create
 Route::get('expenses', 'expensesController@index');
 Route::get('expenses/list', 'expensesController@list');
 Route::get('expenses/insert', 'expensesController@insert');
+Route::get('expenses/purchaseorder/list', 'purchaseorderController@index');
+Route::get('expenses/purchaseorder/create', 'purchaseorderController@create');
+Route::get('expenses/purchaseorder/accept', 'purchaseorderController@acceptlist');
+Route::post('expenses/purchaseorder/create', 'purchaseorderController@preview');
+Route::post('expenses/insert', 'expensesController@store');
+
+Route::get('expenses/update/{idexpenses}','expensesController@update');
+Route::post('expenses/update', 'expensesController@updatedo');
+Route::get('expenses/purchaseorder/show/{idexpenses}','purchaseorderController@show');
+Route::get('expenses/purchaseorder/show/pdf/{idpurchaseorder}','purchaseorderController@createpdf');
+Route::get('expenses/purchaseorder/{idexpenses}','purchaseorderController@createPurchaseorder');
+Route::get('expenses/purchaseorder/accept/{idexpenses}','purchaseorderController@acceptprocess');
+
 
 //เพิ่มข้อมูลPartner
 Route::post('income/partner','partnerController@store');
