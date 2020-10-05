@@ -2,10 +2,26 @@
 
 namespace App\Http\Controllers;
 use App\product;
+use App\organization;
 use Illuminate\Http\Request;
 
 class productController extends Controller
 {
+    public function index(Request $request){
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($id);
+        return view('product/menu')->with(compact('organizations'));
+    }
+
+    public function stock(Request $request){
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($id);
+        $product = new product();
+        $products = $product->select($id);
+        return view('product/stock')->with(compact('organizations','products'));
+    }
     public function store(Request $request){
         request()->validate([
             'product_name' => 'required',
@@ -29,12 +45,6 @@ class productController extends Controller
         $msg = $lastid;
         
         return response()->json(array('msg'=> $msg), 200);
-        /*if(request()->input('page') == "insert"){
-            return redirect()->action('incomeController@insert');
-        }
-        if(request()->input('page') == "update"){
-            $idincome = request()->input('income_id');
-            return redirect('income/update/'.$idincome);
-        }*/
     }
+
 }

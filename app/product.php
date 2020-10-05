@@ -15,10 +15,21 @@ class product extends Model
         DB::connection('mysql')->insert("INSERT INTO product(product_id, organization_id,product_name, product_description, stock, created_at, updated_at) 
         VALUES (?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_name,$product_description,0,$unixTimeStamp,$unixTimeStamp]);
     }
-    public function updatestock($organization_id,$productid,$stock){
-        $product = DB::connection('mysql')->select("SELECT * FROM organizations INNER JOIN product ON organizations.id = product.organization_id WHERE organizations.id = ? AND product_id = ?;",[$organization_id,$product_id]);
-        $nowstock = $stock + $product->stock;
-        DB::connection('mysql')->update("UPDATE product SET stock = ? WHERE organizations.id = ? AND product_id = ?;",[$nowstock,$organization_id,$product_id]);
+    public function updateaddstock($organization_id,$product_id,$stock){
+        $product = DB::connection('mysql')->select("SELECT * FROM product WHERE organization_id = ? AND product_id = ?;",[$organization_id,$product_id]);
+        $nowstock = 0;
+        foreach ($product as $stocks) {
+            $nowstock = $stock + $stocks->stock;
+        }
+        DB::connection('mysql')->update("UPDATE product SET stock = ? WHERE organization_id = ? AND product_id = ?;",[$nowstock,$organization_id,$product_id]);
+    }
+    public function updatesalestock($organization_id,$product_id,$stock){
+        $product = DB::connection('mysql')->select("SELECT * FROM product WHERE organization_id = ? AND product_id = ?;",[$organization_id,$product_id]);
+        $nowstock = 0;
+        foreach ($product as $stocks) {
+            $nowstock = $stock - $stocks->stock;
+        }
+        DB::connection('mysql')->update("UPDATE product SET stock = ? WHERE organization_id = ? AND product_id = ?;",[$nowstock,$organization_id,$product_id]);
     }
     public function select($organization_id){
         return DB::connection('mysql')->select("SELECT * FROM organizations

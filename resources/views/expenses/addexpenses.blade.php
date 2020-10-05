@@ -17,7 +17,7 @@
           </div>
           <div class="row my-2">
               <div class="col-5">
-                <select name="partner_id" class="form-control selectpicker" data-live-search="true" title="กรุณาเลือกผู้ติดต่อ" id="partnerid">
+                <select name="partner_id" class="form-control selectpicker" data-live-search="true" title="กรุณาเลือกผู้ติดต่อ" id="partnerid" data-size="5">
                   @foreach($partners as $partner)
                   <option value="{{$partner->partner_id}}">{{$partner->partner_name}}</option>
                   @endforeach 
@@ -55,11 +55,10 @@
                   <td style="width: 40%">
                     <div class="row">
                       <div class="col-8" >
-                      <select name="product_id[]"  class="form-control product" data-live-search="true" title="กรุณาเลือกสินค้า" id="productid">
-                        <option value="" disabled selected hidden>กรุณาเลือกสินค้า</option>
-                      @foreach($products as $product)
-                      <option value="{{$product->product_id}}">{{$product->product_name}}</option>
-                      @endforeach 
+                      <select name="product_id[]"  class="form-control product-select selectpicker" data-live-search="true" title="กรุณาเลือกสินค้า" id="product1" data-size="5">
+                        @foreach($products as $product)
+                        <option value="{{$product->product_id}}">{{$product->product_name}}</option>
+                        @endforeach 
                       </select>
                       </div>
                       <div class="col-4">
@@ -199,16 +198,26 @@
       });
       $("#add").click(function(){
         number++;
-        $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product\" ><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><p id=\"sum"+number+"\" class=\"mt-2\"></p></td></tr>");
-        $("#productamount"+number+",#productprice"+number).change(function(){
-        var productamount = $("#productamount"+number).val();
-        var productprice = $("#productprice"+number).val();
-        var total = parseFloat(productamount) * parseFloat(productprice);
-        $("#sum"+number).text(numberWithCommas(total));
-      });
+        
+        $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><p id=\"sum"+number+"\" class=\"mt-2\"></p></td></tr>");
+        $('.product-select').selectpicker('render');
+        var x = 1;
+        while(x < number){
+        x++;
+        var total = 0;
+        $("#productamount"+x+",#productprice"+x).change(function(){
+        var productamount = $("#productamount"+x).val();
+        var productprice = $("#productprice"+x).val();
+        total = parseFloat(productamount) * parseFloat(productprice);
+        $("#sum"+x).text(numberWithCommas(total));      
+       });
+      }
+     
+   
+  
         
      }); 
-    });
+    
     function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -229,24 +238,40 @@
                url:'{{ url("income/partner") }}',
                data: {'partner_name': partnername , 'partner_address' : partneraddress ,'partner_tel' : partnertel, 'partner_email' : partneremail},
                success:function(data) {
-                  alert("Add partner is succes.");
-                  $("#partnerid").append("<option selected value='"+ data.msg +"'>"+partnername+"</option>");
-                  $('#partnerid').selectpicker('refresh');
+              
+                  $("#partnerid").append("<option value='"+ data.msg +"' >"+partnername+"</option>");
+                  $("#partnerid").val(data.msg);
+                  $('#ModalAddPartner').modal('hide');
+                  $('body').removeClass('modal-open');
+                  $('.modal-backdrop').remove();
+                  $("#partnerid").selectpicker("refresh");
+                  $('#partnerid').selectpicker('val',data.msg);
+                  $("#address").val(partneraddress);  
+
                }
             });
     } 
-    function addproduct(productname,productdescription){
-          $.ajax({
-               type:'POST',
-               url:"{{ url('income/product') }}" ,
-               data: {'product_name': productname , 'product_description' : productdescription},
-               success:function(data) {
-                  alert("Add product is succes.");
-                  $(".product").append("<option value='"+ data.msg +"'>"+productname+"</option>");
-                  $('.form-control product').selectpicker('refresh');
-               }
-            });
-    } 
+     function addproduct(productname,productdescription){
+           $.ajax({
+                type:'POST',
+                url:"{{ url('income/product') }}" ,
+                data: {'product_name': productname , 'product_description' : productdescription},
+                success:function(data) {
+                  var a = 0;
+                  
+                  while(a <= number){
+                   $("#product"+a).append("<option value='"+ data.msg +"' >"+productname+"</option>");
+                   $('#product'+a).selectpicker('refresh');
+                   a++
+                  }
+                   $('.modal').modal('hide');
+                   $('body').removeClass('modal-open');
+                   $('.modal-backdrop').remove();
+                  
+                }
+             });
+     } 
+  });
     </script>
 
 @endsection

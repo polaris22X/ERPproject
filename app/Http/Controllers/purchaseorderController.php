@@ -36,8 +36,14 @@ class purchaseorderController extends Controller
 
     public function acceptprocess(Request $request,$idexpenses){
         $id = $request->session()->get('organization_id');
+        $expenses = new expenses();
         $purchaseorder = new purchaseorder();
+        $product = new product();
         $unixTimeStamp = Carbon::now()->toDateTimeString();
+        $expenseslist = $expenses->getdata($id,$idexpenses);
+        foreach ($expenseslist as $listproduct) {
+           $product->updateaddstock($id,$listproduct->product_id,$listproduct->amount);
+        }
         $purchaseorders = $purchaseorder->PurchaseorderAccept($id,$idexpenses,$unixTimeStamp);
         return redirect()->action('purchaseorderController@acceptlist');
     }

@@ -3,10 +3,7 @@
 @section('content')
 @include('layouts.navmenu')
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<script>
+<<script>
   var number = 0;
   $(document).ready(function(){
     $.ajaxSetup({
@@ -49,16 +46,22 @@
   });
   $("#add").click(function(){
     number++;
-    $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product\" ><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><p id=\"sum"+number+"\" class=\"mt-2\"></p></td></tr>");
-    $("#productamount"+number+",#productprice"+number).change(function(){
-    var productamount = $("#productamount"+number).val();
-    var productprice = $("#productprice"+number).val();
-    var total = parseFloat(productamount) * parseFloat(productprice);
-    $("#sum"+number).text(numberWithCommas(total));
-  });
-    
- }); 
+    $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><p id=\"sum"+number+"\" class=\"mt-2\"></p></td></tr>");
+    $('.product-select').selectpicker('render');
+    var x = 1;
+    while(x < number){
+    x++;
+    var total = 0;
+    $("#productamount"+x+",#productprice"+x).change(function(){
+    var productamount = $("#productamount"+x).val();
+    var productprice = $("#productprice"+x).val();
+    total = parseFloat(productamount) * parseFloat(productprice);
+    $("#sum"+x).text(numberWithCommas(total));      
+      });
+    } 
 });
+});
+
 function docWrite(variable) {
     document.write(variable);
   }
@@ -79,11 +82,14 @@ function getaddress(partner_id) {
 function addpartner(partnername,partneraddress,partnertel,partneremail){
       $.ajax({
            type:'POST',
-           url:'{{ url("expenses/partner") }}',
+           url:'{{ url("income/partner") }}',
            data: {'partner_name': partnername , 'partner_address' : partneraddress ,'partner_tel' : partnertel, 'partner_email' : partneremail},
            success:function(data) {
               alert("Add partner is succes.");
               $("#partnerid").append("<option selected value='"+ data.msg +"'>"+partnername+"</option>");
+              $('.modal').modal('hide');
+              $('body').removeClass('modal-open');
+              $('.modal-backdrop').remove();
               $('#partnerid').selectpicker('refresh');
            }
         });
@@ -91,11 +97,14 @@ function addpartner(partnername,partneraddress,partnertel,partneremail){
 function addproduct(productname,productdescription){
       $.ajax({
            type:'POST',
-           url:"{{ url('expenses/product') }}" ,
+           url:"{{ url('income/product') }}" ,
            data: {'product_name': productname , 'product_description' : productdescription},
            success:function(data) {
               alert("Add product is succes.");
               $(".product").append("<option value='"+ data.msg +"'>"+productname+"</option>");
+              $('.modal').modal('hide');
+              $('body').removeClass('modal-open');
+              $('.modal-backdrop').remove();
               $('.product').selectpicker('refresh');
            }
         });
@@ -159,18 +168,20 @@ function addproduct(productname,productdescription){
                 </tr>
               </thead>
               <tbody>
-                
+                <?php $number = 0;?>
                 @foreach ($expensess as $expenses)
                 
                 <tr id="myTableRow">
+                  <?php $number++ ?>
                   <script>number++</script>
+                  
                   <th scope="row" style="width: 10%"><script>docWrite(number)</script></th>
                   <td style="width: 40%">
                     <div class="row">
                       <div class="col-8" >
                      
-                      <select name="product_id[]" class="form-control product">
-                      <option value="0">-- รายการสินค้า --</option>
+                      <select name="product_id[]" class="form-control product-select selectpicker" data-live-search="true" title="กรุณาเลือกสินค้า" id="product1" data-size="5">
+                
                       @foreach($products as $product)
                         @if($product->product_id == $expenses->product_id)
                           <option value="{{$product->product_id}}" selected>{{$product->product_name}}</option>
@@ -192,9 +203,9 @@ function addproduct(productname,productdescription){
                       </div>
                     </div>
                   </td>
-                <td><input type="number" name="product_amount[]" class="form-control" ng-model="product_price1" value="{{$expenses->amount}}"></td>
-                <td><input type="number" name="product_price[]"  class="form-control" ng-model="product_amount1" value="{{$expenses->saleprice}}"></td>
-                <td>{{$expenses->amount * $expenses->saleprice}}</td>
+                <td><input type="number" name="product_amount[]" class="form-control" id="productamount{{$number}}" value="{{$expenses->amount}}"></td>
+                <td><input type="number" name="product_price[]"  class="form-control" id="productprice{{$number}}" value="{{$expenses->saleprice}}"></td>
+                <td id="sum{{$number}}">{{$expenses->amount * $expenses->saleprice}}</td>
                 </tr>
                 
                 @endforeach

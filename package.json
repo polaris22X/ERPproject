@@ -23,8 +23,5 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {
-        "@popperjs/core": "^2.4.4",
-        "bootstrap-select": "file:bootstrap-select"
-    }
+    "dependencies": {}
 }

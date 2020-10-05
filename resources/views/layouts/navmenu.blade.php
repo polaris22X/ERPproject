@@ -8,18 +8,43 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{{url('organization/menu')}}">หน้าหลัก</a>
+        <li class="nav-item active">
+        <a href="{{url('organization/menu')}}" class="nav-link">หน้าแรก</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{url('/income')}}">รายรับ</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              รายรับ
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{url("income/list")}}">รายการรายรับ</a>
+              <a class="dropdown-item" href="{{url("income/quotation/list")}}">ใบเสนอราคา</a>
+              <a class="dropdown-item" href="{{url("income/invoice/")}}">ใบวางบิล</a>
+              <a class="dropdown-item" href="{{url("income/receipt/")}}">ใบเสร็จ</a>
         </li>
-        <li class="nav-item">
-        <a class="nav-link" href="{{url('/expenses')}}">รายจ่าย</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="">รายงาน</a>
-        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+              รายจ่าย
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{url("expenses/list")}}">รายการรายจ่าย</a>
+              <a class="dropdown-item" href="{{url("expenses/purchaseorder/list")}}">ใบสั่งซื้อ</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                รายงาน
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{url("income/list")}}">งบกำไรขาดทุน</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                สินค้า
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{url("product/insert")}}">เพิ่มสินค้า</a>
+                <a class="dropdown-item" href="{{url("product/stock")}}">รายการสินค้าคงเหลือ</a>
+            </li>
+        
       </ul>
     </div>
   </nav>

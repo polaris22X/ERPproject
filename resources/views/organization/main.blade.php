@@ -72,6 +72,40 @@
         <div class="row">
             <div class="col">
                 <div class="card text-dark bg-light mb-3">
+                    <h3 class="card-header">สินค้า</h3>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{ url('product/insert') }}" class="btn btn-dark" style="width: 100%;">เพิ่มสินค้า</a>
+                                <a href="{{ url('product/stock/')}}" class="btn btn-dark mt-3" style="width: 100%;">รายการสินค้าคงเหลือ</a>
+                            </div>
+                            <div class="col">
+                                <img src="{{url('/images/product.png')}}" style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3">
+                    <h3 class="card-header">ผู้ติดต่อ</h3>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{ url('product/insert') }}" class="btn btn-dark" style="width: 100%;">เพิ่มผู้ติดต่อ</a>
+                                <a href="{{ url('product/stock/')}}" class="btn btn-dark mt-3" style="width: 100%;">รายชื่อผู้ติดต่อ</a>
+                            </div>
+                            <div class="col">
+                                <img src="{{url('/images/partner.png')}}" style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3">
                     <h3 class="card-header">รายงาน</h3>
                     <div class="card-body">
                         <div class="row">
@@ -102,6 +136,7 @@
             </div>
         </div>
     </div>
+    
     
            
            <!-- <a href="{{ url('income/quotation/list')}}" style="color: black" class="list-group-item list-group-item-action">ใบเสนอราคา</a></li>

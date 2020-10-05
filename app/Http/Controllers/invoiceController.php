@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\organization;
 use App\income;
+use App\product;
 use App\quotation;
 use App\invoice;
 use Carbon\Carbon;
@@ -33,6 +34,12 @@ class invoiceController extends Controller
         
         $organization_id = $request->session()->get('organization_id');
         $invoice = new invoice();
+        $income = new income();
+        $product = new product();
+        $incomelist = $income->getdata($organization_id,$income_id);
+        foreach ($incomelist as $listproduct) {
+           $product->updatesalestock($organization_id,$listproduct->product_id,$listproduct->amount);
+        }
         $data = $invoice->selectlastid($organization_id);
         if($data){
             foreach($data as $id){
@@ -46,6 +53,7 @@ class invoiceController extends Controller
         $INV = str_pad($lastid, 8, 0, STR_PAD_LEFT);
         $INVID = "INV-" . $INV;
         $invoice->createInvoice($organization_id,$income_id,$lastid,$INVID);
+        
         return redirect()->action('invoiceController@index');
     }
 

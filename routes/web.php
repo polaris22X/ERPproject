@@ -76,7 +76,10 @@ Route::get('expenses/purchaseorder/accept/{idexpenses}','purchaseorderController
 //เพิ่มข้อมูลPartner
 Route::post('income/partner','partnerController@store');
 //เพิมข้อมูลProduct
+Route::get('product','productController@index');
+Route::get('product/stock','productController@stock');
 Route::post('income/product','productController@store');
+
 
 
 

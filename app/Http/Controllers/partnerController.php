@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class partnerController extends Controller
 {
     
-    public function store(Request $request){
+    public function store(Request $request){    
         request()->validate([
             'partner_name' => 'required',
             'partner_address' => 'required'
