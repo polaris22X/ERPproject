@@ -12,7 +12,7 @@
         <a href = "/organization/main/{{$organization->id}}"  class="list-group-item">{{$organization->organization_name}}</a></li>
         @endforeach
         @endif
-        <a href="/organization/add" class="list-group-item bg-primary text-white">+ เพิ่มองค์กร</a></li>
+        <a href="/organization/add" class="list-group-item bg-primary text-white">+ เพิ่มข้อมูลองค์กร</a></li>
         </ul>
     </div>
 

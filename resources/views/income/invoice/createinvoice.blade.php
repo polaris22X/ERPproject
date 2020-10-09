@@ -119,6 +119,7 @@
           
 <script>
 $(document).ready(function(){
+      
         $.ajaxSetup({
             headers:
             { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
@@ -128,6 +129,8 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 function preview(income_id){
+            $("#tbody").empty();
+            $("#modalfooter").empty();
             $.ajax({
                type:'POST',
                url:"{{ url('income/quotation/create') }}" ,
@@ -150,11 +153,24 @@ function preview(income_id){
                 }
                 var vat = netprice * 7 /100;
                 var vatable = netprice - vat;
-                var income_id = data[0].income_id;
+                
                 $("#tbody").append("<tr><td rowspan=\"3\" colspan=\"3\">หมายเหตุ : </td><td>VATABLE</td><td>"+numberWithCommas(vatable)+"</td></tr><tr><td>VAT 7%</td><td>"+ numberWithCommas(vat) +"</td></tr><tr><td>ราคารวมทั้งสิ้น</td><td>"+numberWithCommas(netprice)+"</td></tr>");
-                $("#modalfooter").append("<a href=\"{{url('income/invoice/')}}/"+income_id+"\" class=\"btn btn-primary mr-2\">สร้างใบวางบิล</a><button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">ยกเลิก</button>")
-                }
+                $("#modalfooter").append("<a href=\"{{url('income/invoice/')}}/"+income_id+"\" class=\"btn btn-primary mr-2\" onclick=\"return accept()\">สร้างใบวางบิล</a><button type=\"button\" class=\"btn btn-secondary cancel\" data-dismiss=\"modal\">ยกเลิก</button>")
+               
+              }
             });
+}
+function accept(){
+  var txt;
+  var r = confirm("ยืนยันการสร้างใบวางบิล");
+  if (r == true) {
+    txt = "ยืนยัน";
+    return true;
+  } else {
+    txt = "ยกเลิก";
+    return false;
+  }
+  document.getElementById("demo").innerHTML = txt;
 }
 </script>
 @endsection

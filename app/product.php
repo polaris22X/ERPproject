@@ -23,11 +23,11 @@ class product extends Model
         }
         DB::connection('mysql')->update("UPDATE product SET stock = ? WHERE organization_id = ? AND product_id = ?;",[$nowstock,$organization_id,$product_id]);
     }
-    public function updatesalestock($organization_id,$product_id,$stock){
+    public function updatesalestock($organization_id,$product_id,$stocktosale){
         $product = DB::connection('mysql')->select("SELECT * FROM product WHERE organization_id = ? AND product_id = ?;",[$organization_id,$product_id]);
         $nowstock = 0;
         foreach ($product as $stocks) {
-            $nowstock = $stock - $stocks->stock;
+            $nowstock = $stocks->stock - $stocktosale;
         }
         DB::connection('mysql')->update("UPDATE product SET stock = ? WHERE organization_id = ? AND product_id = ?;",[$nowstock,$organization_id,$product_id]);
     }

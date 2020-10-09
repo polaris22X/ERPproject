@@ -2,7 +2,64 @@
 @extends('layouts.checkauth')
 @section('content')
 @include('layouts.navmenu')
-
+<script>
+    $(document).ready(function(){
+       
+        $.ajaxSetup({
+            headers:
+            { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+});
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+function preview(income_id){
+            $("#tbody").empty();
+            $("#modalfooter").empty();
+            $.ajax({
+               type:'POST',
+               url:"{{ url('income/quotation/create') }}" ,
+               data: {'income_id': income_id},
+               success:function(data) {
+                var jsonlength = Object.keys(data).length;
+                var i = 0;
+                var netprice = 0;
+                console.log(data);
+                $("#partnername").text("ชื่อลูกค้า : " + data[0].partner_name);
+                $("#partneraddress").text("ที่อยู่ : " + data[0].partner_address);
+                $("#partnertel").text("เบอร์โทร : " + data[0].partner_tel);
+                $("#partneremail").text("อีเมล : " + data[0].partner_email);
+                $("#quotation_id").text("หมายเลขใบสั่งซื้อ : " + data[0].qt_id);
+                $("#quotation_create").text("วันที่ : " + data[0].quotation_date);
+                while(i < jsonlength){
+                    var x = i + 1; 
+                    var sum = data[i].amount * data[i].saleprice;
+                    netprice = netprice + sum;
+                    $("#tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+ x +"</th><td style=\"width: 40%\" id=\"productname\">"+ data[i].product_name + "</td><td id=\"productamount\">" + data[i].amount+ "</td><td id=\"saleprice\">"+ numberWithCommas(data[i].saleprice)+ "</td><td id=\"sum\">"+numberWithCommas(sum)+"</td></tr>");
+                    i++;
+                }
+                var vat = netprice * 7 /100;
+                var vatable = netprice - vat;
+                
+                $("#tbody").append("<tr><td rowspan=\"3\" colspan=\"3\">หมายเหตุ : </td><td>VATABLE</td><td>"+numberWithCommas(vatable)+"</td></tr><tr><td>VAT 7%</td><td>"+ numberWithCommas(vat) +"</td></tr><tr><td>ราคารวมทั้งสิ้น</td><td>"+numberWithCommas(netprice)+"</td></tr>");
+                $("#modalfooter").append("<a onclick=\"return accept()\" href=\"{{url('income/quotation/accept/')}}/"+income_id+"\" class=\"btn btn-primary mr-2\">อนุมัติใบเสนอราคา</a><button type=\"button\" class=\"btn btn-secondary cancel\" data-dismiss=\"modal\">ยกเลิก</button>");
+               
+            }
+    });
+}
+function accept(){
+  var txt;
+  var r = confirm("ยืนยันอนุมัติใบเสนอราคา");
+  if (r == true) {
+    txt = "ยืนยัน";
+    return true;
+  } else {
+    txt = "ยกเลิก";
+    return false;
+  }
+  document.getElementById("demo").innerHTML = txt;
+}
+</script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
     
@@ -36,7 +93,8 @@
                     <td>{{$quotation->created_at}}</td>
                     <td>{{$quotation->partner_name}}</td>
                     <td>{{number_format($quotation->sum)}}</td>
-                    <td><button class="btn btn-primary mr-2" onclick="location.href='{{url('income/quotation/accept/'.$quotation->income_id.'')}}'">อนุมัติรายการ</button></td>
+                    <td><a style="color: white" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalPreviewQuotation" onclick="preview({{$quotation->income_id}})">อนุมัติใบเสนอราคา</a></td>
+                    
                     </tr>
                     @endforeach 
                    
@@ -47,5 +105,70 @@
         </div>
     </div>
 
+     <!-- Modal_Add_quotation -->
+     <div class="modal fade bd-example-modal-lg" id="ModalPreviewQuotation" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">อนุมัติใบเสนอราคา</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                @foreach ($organizations as $organization)
+                <h1 style="text-align: center;" class="mt-5">{{$organization->organization_name}}</h1>
+                <p style="text-align: center;font-size: 18px" >{{$organization->organization_address}}</p>
+                @endforeach
+                <h2 class="mt-5" style="text-align: center">ใบเสนอราคา</h2>
+                <div class="row" class="mx-3 mt-2" >
+                    <div class="col-9 border border-dark">
+                        <div class="ml-2 my-4">
+                            
+                                <p style="font-size: 16px" id="partnername">ชื่อลูกค้า : </p>
+                                <p style="font-size: 16px" id="partneraddress">ที่อยู่ : </p>
+                                <p style="font-size: 16px" id="partnertel">เบอร์โทร : </p>
+                                <p style="font-size: 16px" id="partneremail">อีเมล : </p>
+                 
+                        </div>
+                    </div>
+                    <div class="col-3 border border-dark ">
+                        <div class="ml-2 my-4">
+                            <p style="font-size: 16px" id="quotation_id">หมายเลขใบเสนอราคา :   </p>
+                            <p style="font-size: 16px" id="quotation_create">วันที่ : </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="table table-bordered mt-5" style="font-size: 16px">
+                    <thead>
+                      <tr>
+                        <th scope="col">ลำดับ</th>
+                        <th scope="col">รายการ</th>
+                        <th scope="col">จำนวน</th>
+                        <th scope="col">ราคา/หน่วย</th>
+                        <th scope="col">ราคารวม</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody">
+                   
+                    
+                   
+    
+                     
+                     
+                      
+                    </tbody>
+                   
+                  </table>
+            </div>
+            <div class="modal-footer" id="modalfooter">
+                
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End_Modal_Add_product -->
        
 @endsection

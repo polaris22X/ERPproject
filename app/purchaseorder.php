@@ -63,9 +63,10 @@ class purchaseorder extends Model
 
    public function preview($organization_id,$expenses_id){
        
-       return DB::connection('mysql')->select("SELECT * FROM expenses
+       return DB::connection('mysql')->select("SELECT *,`purchaseorder`.created_at as 'purchaseorder_date' FROM expenses
        INNER JOIN `partner` ON `partner`.partner_id = expenses.partner_id AND `partner`.organization_id = expenses.organization_id 
        INNER JOIN `product` ON `product`.product_id = expenses.product_id AND `product`.organization_id = expenses.organization_id 
+       LEFT JOIN `purchaseorder` ON `purchaseorder`.purchaseorder_id = expenses.purchaseorder_id AND `purchaseorder`.purchaseorder_id = expenses.purchaseorder_id AND `purchaseorder`.expenses_id = expenses.expenses_id
         WHERE expenses.organization_id = ? AND expenses.expenses_id = ? ",[$organization_id,$expenses_id]);
    }
 

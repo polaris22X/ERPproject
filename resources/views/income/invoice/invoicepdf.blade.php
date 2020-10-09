@@ -39,10 +39,10 @@
 </style>
 <body>
     @foreach ($organizations as $organization)
-    <p style="text-align: center; font-size:24px;" class="mt-5">{{$organization->organization_name}}</p>
+    <p style="text-align: center; font-size:24px;" class="mt-5"><b>{{$organization->organization_name}}</b></p>
     <p style="text-align: center; font-size:18px" class="mt-2">{{$organization->organization_address}}</p>
     @endforeach
-    <p class="mt-5" style="text-align: center; font-size: 20px">ใบวางบิล</p>
+    <p class="mt-5" style="text-align: center; font-size: 20px"><b>ใบวางบิล</b></p>
     <table class="table table-bordered mt-4">
         <tr>
             <td>
@@ -100,19 +100,36 @@
         </tbody>
        
       </table>
-      <div style="float: right;width: 40%;">
-        <div style="width: 40%;margin-right: 5px;float: left;">
-            <p class="text-center">ผู้อนุมัติ</p>
-            <p width="100%" style="border-bottom: 1px dotted;margin-top: 2cm;"></p>
-            <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
-        </div>
-        <div style="width: 40%;float: left;margin-left: 55%">
-            <p class="text-center">ผู้ยอมรับใบเสนอราคา</p>
-            <p width="100%" style="border-bottom: 1px dotted;margin-top: 2cm;"></p>
-            <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
-        </div>
+      
+      <table class="table table-bordered mt-4" style="width: 100%;">
+        <tr>
+            <td style="width: 30%">
+              <div class="mx-1 my-1">
+                <p class="text-center">ผู้รับวางบิล</p>
+                <p width="100%" style="border-bottom: 1px dotted;margin-top: 1.5cm;"></p>
+                <p width="100%" style="border-bottom: 1px dotted;">วันที่รับวางบิล</p>
+                
+              </div>
+            </td>
+            <td style="width: 30%">
+              <div class="mx-1 my-1">
+                <p class="text-center">ผู้วางบิล</p>
+                <p width="100%" style="border-bottom: 1px dotted;margin-top: 1.5cm;"></p>
+                <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
+              </div>
+            </td>
+            <td style="width: 30%">
+              <div class="mx-1 my-1">
+                <p class="text-center">วันครบกำหนดชำระ</p>
+                <p width="100%" style="border-bottom: 1px dotted;margin-top: 1.5cm;"></p>
+                
+              </div>
+            </td>
+            
+        </tr>
+    
+    </table>
       </div>
-    </div>
     </body>
 </html>
 

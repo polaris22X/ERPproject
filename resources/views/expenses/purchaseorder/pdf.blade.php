@@ -107,7 +107,7 @@
             <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
         </div>
         <div style="width: 40%;float: left;margin-left: 55%">
-            <p class="text-center">ผู้ยอมรับใบเสนอราคา</p>
+            <p class="text-center">ผู้ยอมรับใบสั่งซื้อ</p>
             <p width="100%" style="border-bottom: 1px dotted;margin-top: 2cm;"></p>
             <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
         </div>

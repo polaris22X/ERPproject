@@ -68,9 +68,10 @@ class income extends Model
 
    public function preview($organization_id,$income_id){
        
-       return DB::connection('mysql')->select("SELECT * FROM income
+       return DB::connection('mysql')->select("SELECT *,quotation.created_at as 'quotation_date' FROM income
        INNER JOIN `partner` ON `partner`.partner_id = income.partner_id AND `partner`.organization_id = income.organization_id 
-       INNER JOIN `product` ON `product`.product_id = income.product_id AND `product`.organization_id = income.organization_id 
+       INNER JOIN `product` ON `product`.product_id = income.product_id AND `product`.organization_id = income.organization_id
+       LEFT JOIN `quotation` ON `quotation`.quotation_id = income.quotation_id AND `quotation`.organization_id = quotation.organization_id AND `quotation`.income_id = income.income_id
         WHERE income.organization_id = ? AND income.income_id = ? ",[$organization_id,$income_id]);
    }
    public function getpartner($organization_id,$income_id){

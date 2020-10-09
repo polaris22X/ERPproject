@@ -9,7 +9,7 @@
         </div>
       <a href = "{{url()->previous()}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
 
-      <form class="mx-5 my-5" method="POST" action="{{url('expenses/insert')}}">
+      <form class="mx-5 my-5" method="POST" action="{{url('expenses/insert')}}" id="accept">
         @csrf
 
           <div class="row my-2">
@@ -180,6 +180,10 @@
             partneremail = '-';
         }
         addpartner(partnername,partneraddress,partnertel,partneremail);
+        $("#partnername").val("");
+        $("#partneraddress").val("");
+        $("#partnertel").val("");
+        $("#partneremail").val("");
       }
       else{
         alert("กรุณากรอกชื่อ - ที่อยู่");
@@ -189,6 +193,8 @@
         var productname = $("#productname").val();
         var productdescription = $("#productdescription").val();
         addproduct(productname,productdescription);
+        $("#productname").val("");
+        $("#productdescription").val();
       });
       $("#productamount1,#productprice1").change(function(){
         var productamount = $("#productamount1").val();
@@ -217,6 +223,9 @@
   
         
      }); 
+     $("#accept").submit(function(){
+        return accept();
+      }); 
     
     function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -251,6 +260,18 @@
                }
             });
     } 
+    function accept(){
+      var txt;
+      var r = confirm("ยืนยันการสร้างรายการรายจ่าย");
+      if (r == true) {
+        txt = "ยืนยัน";
+        return true;
+      } else {
+       txt = "ยกเลิก";
+        return false;
+      }
+      document.getElementById("demo").innerHTML = txt;
+    }
      function addproduct(productname,productdescription){
            $.ajax({
                 type:'POST',
