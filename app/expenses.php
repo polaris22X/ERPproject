@@ -10,9 +10,9 @@ use Carbon\Carbon;
 class expenses extends Model
 {
     public function insert($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$unixTimeStamp){
-        
-        DB::connection('mysql')->insert("INSERT INTO `expenses`(`expenses_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`) 
-        VALUES (?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$unixTimeStamp,$unixTimeStamp]);
+        $id = Auth::id();
+        DB::connection('mysql')->insert("INSERT INTO `expenses`(`expenses_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`,`user_id`) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$unixTimeStamp,$unixTimeStamp,$id]);
     }
     public function selectlastid($organization_id){
         return DB::connection('mysql')->select("SELECT expenses_id FROM expenses WHERE organization_id = ? ORDER BY expenses_id DESC LIMIT 1;",[$organization_id]);
@@ -41,15 +41,15 @@ class expenses extends Model
    }
 
    public function edit($expenses_id,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$address,$oldproduct_id,$unixTimeStamp){
-        
-        DB::connection('mysql')->update("UPDATE expenses SET product_id= ?,saleprice= ?,amount= ?,partner_id= ? ,address= ?,updated_at= ? 
+        $id = Auth::id();
+        DB::connection('mysql')->update("UPDATE expenses SET product_id= ?,saleprice= ?,amount= ?,partner_id= ? ,address= ?,updated_at= ? , user_id = ?
         WHERE organization_id= ? AND expenses_id= ? AND product_id= ?",
-        [$product_id,$product_price,$product_amount,$partner_id,$address,$unixTimeStamp,$organization_id,$expenses_id,$oldproduct_id]);
+        [$product_id,$product_price,$product_amount,$partner_id,$address,$unixTimeStamp,$id,$organization_id,$expenses_id,$oldproduct_id]);
     }
     public function insertedit($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$created_at,$unixTimeStamp,$status_id){
-        
-        DB::connection('mysql')->insert("INSERT INTO `expenses`(`expenses_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`,`created_at`, `updated_at`) 
-        VALUES (?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$status_id,$created_at,$unixTimeStamp]);
+        $id = Auth::id();
+        DB::connection('mysql')->insert("INSERT INTO `expenses`(`expenses_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`,`created_at`, `updated_at`,`user_id`) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$status_id,$created_at,$unixTimeStamp,$id]);
     }
     public function deleteproduct($organization_id,$expenses_id,$product_id){
         

@@ -52,7 +52,7 @@
               </thead>
               <tbody>
                 
-                <tr>
+                <tr id="myTableRow1">
                   <th scope="row" style="width: 10%">1</th>
                   <td style="width: 40%">
                     <div class="row">
@@ -68,9 +68,9 @@
                       </div>
                     </div>
                   </td>
-                  <td><input type="number" name="product_amount[]" class="form-control" id="productamount1"></td>
-                  <td><input type="number" name="product_price[]"  class="form-control" id="productprice1"></td>
-                  <td><p id="sum1" class="mt-2"></p></td>
+                  <td style="width: 15%"><input type="number" name="product_amount[]" class="form-control" id="productamount1"></td>
+                  <td style="width: 15%"><input type="number" name="product_price[]"  class="form-control" id="productprice1"></td>
+                  <td style="width: 20%"><a id="sum1" class="mt-2"></a><button type="button" class="btn btn-danger ml-4" id="buttondel1"><i class="fa fa-trash mx-2"></i></button></td>
                 </tr>
 
               </tbody>
@@ -204,10 +204,15 @@
         var total = parseFloat(productamount) * parseFloat(productprice);
         $("#sum1").text(numberWithCommas(total));
       });
+      
+      $("#buttondel1").click(function(){
+       $("#productamount1").val("0");
+       $("#myTableRow1").hide();
+      });
       $("#add").click(function(){
         number++;
         
-        $("tbody").append("<tr><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><p id=\"sum"+number+"\" class=\"mt-2\"></p></td></tr>");
+        $("tbody").append("<tr id=\"myTableRow"+number+"\"><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><a id=\"sum"+number+"\" class=\"mt-2\"></a><button type=\"button\" class=\"btn btn-danger ml-4\" id=\"buttondel"+number+"\"><i class=\"fa fa-trash mx-2\"></i></button></td></tr>");
         $('.product-select').selectpicker('render');
         var x = 1;
         while(x < number){
@@ -219,6 +224,11 @@
         total = parseFloat(productamount) * parseFloat(productprice);
         $("#sum"+x).text(numberWithCommas(total));      
        });
+       $("#buttondel"+x).click(function(){
+       $("#productamount"+x).val("0");
+       $("#myTableRow"+x).hide();
+    });
+      
       }    
      }); 
      $("#accept").submit(function(){

@@ -72,10 +72,12 @@ class quotationController extends Controller
 
    
     
-    public function createQuotation(Request $request, $income_id){
+    public function createQuotation(Request $request){
         
         $organization_id = $request->session()->get('organization_id');
         $quotation = new quotation();
+        $income_id = request()->input('income_id');
+        $detail = request()->input('detail');
         $data = $quotation->selectlastid($organization_id);
         if($data){
             foreach($data as $id){
@@ -88,7 +90,7 @@ class quotationController extends Controller
         }
         $QT = str_pad($lastid, 8, 0, STR_PAD_LEFT);
         $QTID = "QT-" . $QT;
-        $quotation->createQuotation($organization_id,$income_id,$lastid,$QTID);
+        $quotation->createQuotation($organization_id,$income_id,$lastid,$QTID,$detail);
         return redirect()->action('quotationController@index');
     }
 

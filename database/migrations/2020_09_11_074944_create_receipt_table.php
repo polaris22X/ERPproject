@@ -19,6 +19,8 @@ class CreateReceiptTable extends Migration
             $table->integer('receipt_id')->unsigned();
             $table->string('rt_id');
             $table->timestamps();
+            $table->string('user_id')->nullable();
+
         });
     }
 

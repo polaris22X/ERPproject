@@ -53,6 +53,8 @@
 
         <!-- Modal_Add_quotation -->
         <div class="modal fade bd-example-modal-lg" id="ModalMakeQuotation" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <form action="{{url("income/quotation")}}" method="POST" onsubmit="return accept()">
+            @csrf
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -70,7 +72,7 @@
                     <div class="row" class="mx-3 mt-2" >
                         <div class="col-9 border border-dark">
                             <div class="ml-2 my-4">
-                                
+                        
                                     <p style="font-size: 16px" id="partnername">ชื่อลูกค้า : </p>
                                     <p style="font-size: 16px" id="partneraddress">ที่อยู่ : </p>
                                     <p style="font-size: 16px" id="partnertel">เบอร์โทร : </p>
@@ -107,14 +109,18 @@
                         </tbody>
                        
                       </table>
+                    
                 </div>
                 <div class="modal-footer" id="modalfooter">
                     
-                </form>
+                
                 </div>
+              
               </div>
             </div>
+          </form>
           </div>
+        
           <!-- End_Modal_Add_product -->
 <script>
 $(document).ready(function(){
@@ -138,6 +144,7 @@ function preview(income_id){
                 var i = 0;
                 var netprice = 0;
                 console.log(data);
+                
                 $("#partnername").text("ชื่อลูกค้า : " + data[0].partner_name);
                 $("#partneraddress").text("ที่อยู่ : " + data[0].partner_address);
                 $("#partnertel").text("เบอร์โทร : " + data[0].partner_tel);
@@ -151,8 +158,10 @@ function preview(income_id){
                 }
                 var vat = netprice * 7 /100;
                 var vatable = netprice - vat;
-                $("#tbody").append("<tr><td rowspan=\"3\" colspan=\"3\">หมายเหตุ : </td><td>VATABLE</td><td>"+numberWithCommas(vatable)+"</td></tr><tr><td>VAT 7%</td><td>"+ numberWithCommas(vat) +"</td></tr><tr><td>ราคารวมทั้งสิ้น</td><td>"+numberWithCommas(netprice)+"</td></tr>");
-                $("#modalfooter").append("<a onclick=\"return accept()\" href=\"{{url('income/quotation/')}}/"+income_id+"\" class=\"btn btn-primary mr-2\">สร้างใบเสนอราคา</a><button type=\"button\" class=\"btn btn-secondary cancel\" data-dismiss=\"modal\">ยกเลิก</button>");
+                $("#tbody").append("<tr><td rowspan=\"3\" colspan=\"3\">หมายเหตุ <br> <textarea class=\"form-control\" rows=\"5\" id=\"detail\" style=\"width: 100%\" name=\"detail\"></textarea></td><td>VATABLE</td><td>"+numberWithCommas(vatable)+"</td></tr><tr><td>VAT 7%</td><td>"+ numberWithCommas(vat) +"</td></tr><tr><td>ราคารวมทั้งสิ้น</td><td>"+numberWithCommas(netprice)+"</td></tr>");
+                $("#tbody").append("<input type=\"hidden\" name=\"income_id\" value="+income_id+">");
+                //$("#modalfooter").append("<a onclick=\"return accept()\" href=\"{{url('income/quotation/')}}/"+income_id+"\" class=\"btn btn-primary mr-2\">สร้างใบเสนอราคา</a><button type=\"button\" class=\"btn btn-secondary cancel\" data-dismiss=\"modal\">ยกเลิก</button>");
+                $("#modalfooter").append("<input class=\"btn btn-primary\" type=\"submit\" name=\"submit\"  value=\"ยืนยัน\" ><button type=\"button\" class=\"btn btn-secondary cancel\" data-dismiss=\"modal\">ยกเลิก</button>");
                 
               }
             });

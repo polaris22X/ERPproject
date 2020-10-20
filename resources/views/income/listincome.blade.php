@@ -18,7 +18,7 @@
           <a href = "{{url('income')}}" class="mr-2 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a> <a href="{{url('income/insert')}}" class="btn btn-primary mr-2">+ เพิ่มรายการรายรับ</a> 
         </div>
 
-        <table class="table">
+        <table id="example" class="table table-striped table-bordered">
             <thead>
               <tr>
                 <th scope="col">ID</th>
@@ -53,5 +53,9 @@
           </table>
 
     </div>
-
+    <script>
+    $(document).ready(function() {
+      $('#example').DataTable();
+    } );
+    </script>
 @endsection

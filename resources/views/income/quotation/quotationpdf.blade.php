@@ -88,7 +88,7 @@
           @endforeach
           @foreach ($sums as $sum)
           <tr>
-            <td rowspan="3" colspan="3">หมายเหตุ : </td><td>VATABLE</td><td class="number">{{number_format($sum->sum - ($sum->sum * 7/100))}}</td>
+            <td rowspan="3" colspan="3">หมายเหตุ : {{$sum->detail}} </td><td>VATABLE</td><td class="number">{{number_format($sum->sum - ($sum->sum * 7/100))}}</td>
             </tr>
             <tr>
                 <td>VAT 7%</td><td class="number">{{number_format($sum->sum * 7/100)}}</td>

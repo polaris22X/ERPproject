@@ -17,10 +17,10 @@ class income extends Model
     
 
     public function edit($income_id,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$address,$oldproduct_id,$unixTimeStamp){
-        
-        DB::connection('mysql')->update("UPDATE income SET product_id= ?,saleprice= ?,amount= ?,partner_id= ? ,address= ?,updated_at= ? 
+        $id = Auth::id();
+        DB::connection('mysql')->update("UPDATE income SET product_id= ?,saleprice= ?,amount= ?,partner_id= ? ,address= ?,updated_at= ? , `user_id` = ?
         WHERE organization_id= ? AND income_id= ? AND product_id= ?",
-        [$product_id,$product_price,$product_amount,$partner_id,$address,$unixTimeStamp,$organization_id,$income_id,$oldproduct_id]);
+        [$product_id,$product_price,$product_amount,$partner_id,$address,$unixTimeStamp,$id,$organization_id,$income_id,$oldproduct_id]);
     }
     
     public function deleteproduct($organization_id,$income_id,$product_id){
@@ -30,14 +30,14 @@ class income extends Model
     }
 
     public function insert($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$unixTimeStamp){
-        
-        DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`) 
-        VALUES (?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$unixTimeStamp,$unixTimeStamp]);
+        $id = Auth::id();
+        DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `created_at`, `updated_at`,`user_id`) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,0,$unixTimeStamp,$unixTimeStamp,$id]);
     }
     public function insertedit($lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$created_at,$unixTimeStamp,$status_id,$quotation_id){
-        
-        DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `quotation_id`,`created_at`, `updated_at`) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$status_id,$quotation_id,$created_at,$unixTimeStamp]);
+        $id = Auth::id();
+        DB::connection('mysql')->insert("INSERT INTO `income`(`income_id`, `organization_id`, `product_id`, `saleprice`, `amount`, `partner_id`, `address`, `status_id`, `quotation_id`,`created_at`, `updated_at`,`user_id`) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",[$lastid,$organization_id,$product_id,$product_price,$product_amount,$partner_id,$partner_address,$status_id,$quotation_id,$created_at,$unixTimeStamp,$id]);
     }
     public function selectlastid($organization_id){
         return DB::connection('mysql')->select("SELECT income_id FROM income WHERE organization_id = ? ORDER BY income_id DESC LIMIT 1;",[$organization_id]);

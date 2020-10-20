@@ -18,7 +18,9 @@ class CreateQuotationTable extends Migration
             $table->integer('income_id')->unsigned();
             $table->integer('quotation_id')->unsigned();
             $table->string('qt_id');
+            $table->string('detail')->nullable();
             $table->timestamps();
+            $table->string('user_id')->nullable();
         });
     }
 

@@ -24,6 +24,7 @@ class CreateExpensesTable extends Migration
             $table->integer('status_id')->unsigned();
             $table->integer('purchaseorder_id')->unsigned()->default(0);
             $table->timestamps();
+            $table->string('user_id')->nullable();
         });
     }
 

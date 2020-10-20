@@ -30,9 +30,10 @@ class invoice extends Model
     }
 
     public function createInvoice($organization_id,$income_id,$lastid,$INVID){
+        $id = Auth::id();
         $unixTimeStamp = Carbon::now()->toDateTimeString();
-        DB::connection('mysql')->insert("INSERT INTO `invoice`(`organization_id`, `income_id`, `invoice_id`, `created_at`, `updated_at`,`inv_id`) VALUES (?,?,?,?,?,?)",
-        [$organization_id,$income_id,$lastid,$unixTimeStamp,$unixTimeStamp,$INVID]);
+        DB::connection('mysql')->insert("INSERT INTO `invoice`(`organization_id`, `income_id`, `invoice_id`, `created_at`, `updated_at`,`inv_id`,`user_id`) VALUES (?,?,?,?,?,?,?)",
+        [$organization_id,$income_id,$lastid,$unixTimeStamp,$unixTimeStamp,$INVID,$id]);
         DB::connection('mysql')->update("UPDATE income SET  `updated_at` = ?, status_id = 3 , invoice_id = ? WHERE organization_id= ? AND income_id= ?",
         [$unixTimeStamp,$lastid,$organization_id,$income_id]);
     }

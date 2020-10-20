@@ -19,6 +19,7 @@ class CreatePurchaseorderTable extends Migration
             $table->integer('purchaseorder_id')->unsigned();
             $table->string('po_id');
             $table->timestamps();
+            $table->string('user_id')->nullable();
         });
     }
 

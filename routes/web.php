@@ -50,7 +50,7 @@ Route::get('income/invoice/{idincome}','invoiceController@createinvoice');
 Route::get('income/receipt/show/{idreceipt}','receiptController@show');
 Route::get('income/invoice/show/{idinvoice}','invoiceController@show');
 Route::get('income/invoice/show/pdf/{idinvoice}','invoiceController@createpdf');
-Route::get('income/quotation/{idincome}','quotationController@createQuotation');
+Route::post('income/quotation/','quotationController@createQuotation');
 Route::get('income/quotation/accept/{idincome}','quotationController@acceptprocess');
 Route::get('income/quotation/show/{idquotation}','quotationController@show');
 Route::get('income/quotation/show/pdf/{idquotation}','quotationController@createpdf');

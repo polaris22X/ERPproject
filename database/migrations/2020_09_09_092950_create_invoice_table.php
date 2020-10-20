@@ -19,6 +19,7 @@ class CreateInvoiceTable extends Migration
             $table->integer('invoice_id')->unsigned();
             $table->string('inv_id');
             $table->timestamps();
+            $table->string('user_id')->nullable();
         });
     }
 

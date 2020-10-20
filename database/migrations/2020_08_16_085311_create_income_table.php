@@ -26,6 +26,7 @@ class CreateIncomeTable extends Migration
             $table->integer('invoice_id')->unsigned()->default(0);
             $table->integer('receipt_id')->unsigned()->default(0);
             $table->timestamps();
+            $table->string('user_id')->nullable();
         });
     }
 

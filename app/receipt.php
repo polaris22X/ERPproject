@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Auth;
 
 class receipt extends Model
 {
@@ -45,9 +46,10 @@ class receipt extends Model
 
   
    public function createReceipt($organization_id,$income_id,$lastid,$RTID){
+        $id = Auth::id();
         $unixTimeStamp = Carbon::now()->toDateTimeString();
-        DB::connection('mysql')->insert("INSERT INTO `receipt`(`organization_id`, `income_id`, `receipt_id`, `created_at`, `updated_at`,`rt_id` ) VALUES (?,?,?,?,?,?)",
-        [$organization_id,$income_id,$lastid,$unixTimeStamp,$unixTimeStamp,$RTID]);
+        DB::connection('mysql')->insert("INSERT INTO `receipt`(`organization_id`, `income_id`, `receipt_id`, `created_at`, `updated_at`,`rt_id`,`user_id` ) VALUES (?,?,?,?,?,?,?)",
+        [$organization_id,$income_id,$lastid,$unixTimeStamp,$unixTimeStamp,$RTID,$id]);
         DB::connection('mysql')->update("UPDATE income SET  `updated_at` = ?, status_id = 4 , receipt_id = ? WHERE organization_id= ? AND income_id= ?",
         [$unixTimeStamp,$lastid,$organization_id,$income_id]);
     }

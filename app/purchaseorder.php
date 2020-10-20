@@ -5,15 +5,17 @@ namespace App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Auth;
 
 
 
 class purchaseorder extends Model
 {
     public function createPurchaseorder($organization_id,$expenses_id,$lastid,$POID){
+        $id = Auth::id();
         $unixTimeStamp = Carbon::now()->toDateTimeString();
-        DB::connection('mysql')->insert("INSERT INTO `purchaseorder`(`organization_id`, `expenses_id`, `purchaseorder_id`, `created_at`, `updated_at`,`po_id` ) VALUES (?,?,?,?,?,?)",
-        [$organization_id,$expenses_id,$lastid,$unixTimeStamp,$unixTimeStamp,$POID]);
+        DB::connection('mysql')->insert("INSERT INTO `purchaseorder`(`organization_id`, `expenses_id`, `purchaseorder_id`, `created_at`, `updated_at`,`po_id` ,`user_id`) VALUES (?,?,?,?,?,?,?)",
+        [$organization_id,$expenses_id,$lastid,$unixTimeStamp,$unixTimeStamp,$POID,$id]);
         DB::connection('mysql')->update("UPDATE expenses SET  `updated_at` = ?, status_id = 1 , purchaseorder_id = ? WHERE organization_id= ? AND expenses_id= ?",
         [$unixTimeStamp,$lastid,$organization_id,$expenses_id]);
     }

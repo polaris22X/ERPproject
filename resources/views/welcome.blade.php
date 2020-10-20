@@ -2,11 +2,51 @@
 
 @section('content')
 
-<div class="container h-100 d-flex justify-content-center" style="margin-top: 10%">
-    <div class="jumbotron my-auto">
-      <h1 class="display-3 text-center">ระบบบริหารบัญชีงบกำไร - ขาดทุนสำหรับธุรกิจพาณิชยกรรม</h1>
+
+<div class="d-flex justify-content-center">
+<div class="card bg-dark d-flex my-5 p-2" style="width: 80%">
+  <div class="jumbotron mt-2 mx-2">
+    <h2 class="display-4 text-center">ระบบบริหารบัญชีงบกำไร - ขาดทุน<br>สำหรับธุรกิจพาณิชยกรรม</h2>
+  </div>
+ 
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#demo" data-slide-to="0" class="active"></li>
+      <li data-target="#demo" data-slide-to="1"></li>
+      <li data-target="#demo" data-slide-to="2"></li>
+    </ul>
+    
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{url("images/wallpaper1.jpg")}}" alt="Los Angeles" width="100%" height="650">
+      </div>
+      <div class="carousel-item">
+        <img src="{{url("images/wallpaper2.jpg")}}" alt="Chicago" width="100%" height="650">
+      </div>
+      <div class="carousel-item">
+        <img src="{{url("images/wallpaper3.jpg")}}" alt="New York" width="100%" height="650">
+      </div>
     </div>
- </div>
+    
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+
+
+    
+   
+</div>
+</div>
+
+
 
 
 
