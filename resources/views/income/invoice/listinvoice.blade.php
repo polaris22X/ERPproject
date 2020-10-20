@@ -25,7 +25,7 @@
         </div>
 
         <div class="my-2">
-            <table class="table">
+            <table id="example" class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">ID ใบวางบิล</th>
@@ -60,6 +60,10 @@
 
         
     </div>
-
+    <script>
+      $(document).ready(function() {
+        $('#example').DataTable();
+      } );
+      </script>
         
 @endsection

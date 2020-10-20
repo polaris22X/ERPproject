@@ -18,7 +18,7 @@
         </div>
 
         <div class="my-2">
-            <table class="table">
+            <table id="example" class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
@@ -124,6 +124,9 @@
           <!-- End_Modal_Add_product -->
 <script>
 $(document).ready(function(){
+  
+        $('#example').DataTable();
+        } );
         $.ajaxSetup({
             headers:
             { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
