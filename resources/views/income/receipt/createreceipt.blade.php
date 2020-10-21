@@ -21,8 +21,8 @@
             <table id="example" class="table table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">ID ใบวางบิล</th>
                     <th scope="col">วันที่สร้าง</th>
+                    <th scope="col">ID ใบวางบิล</th>
                     <th scope="col">ชื่อลูกค้า</th>
                     <th scope="col">ยอดสุทธิ</th>
                     <th scope="col"></th>
@@ -33,8 +33,8 @@
                     @foreach($ReadyToReceipt as $invoice)
                     
                     <tr>
-                    <th scope="row">{{$invoice->inv_id}}</th>
-                    <td>{{$invoice->created_at}}</td>
+                    <th scope="row">{{$invoice->created_at}}</th>
+                    <td>{{$invoice->inv_id}}</td>
                     <td>{{$invoice->partner_name}}</td>
                     <td>{{number_format($invoice->sum)}}</td>
                     <td><a style="color: white" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation" onclick="preview({{$invoice->income_id}})">ออกใบเสร็จ</a><button class="btn btn-danger" >ยกเลิก</button></td>
@@ -121,7 +121,9 @@
  
 $(document).ready(function(){
 
-        $('#example').DataTable();
+        $('#example').DataTable({
+                "ordering": false 
+              });
         $.ajaxSetup({
             headers:
             { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }

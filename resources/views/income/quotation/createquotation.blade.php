@@ -125,8 +125,10 @@
 <script>
 $(document).ready(function(){
   
-        $('#example').DataTable();
-        } );
+        $('#example').DataTable({
+            "ordering": false 
+          });
+        
         $.ajaxSetup({
             headers:
             { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }

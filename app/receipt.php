@@ -25,7 +25,7 @@ class receipt extends Model
        INNER JOIN `invoice` ON `invoice`.invoice_id = income.invoice_id AND `invoice`.organization_id = income.organization_id
        WHERE income.organization_id = ? AND income.status_id = 3 
        GROUP BY invoice.inv_id,income.income_id,income.invoice_id,`partner`.partner_name,invoice.created_at
-       ORDER BY income.invoice_id DESC",[$organization_id]);
+       ORDER BY invoice.created_at DESC",[$organization_id]);
    }
    public function SelectReceiptAll($organization_id,$receipt_id){
         return  DB::connection('mysql')->select("SELECT * FROM receipt 
@@ -59,7 +59,7 @@ class receipt extends Model
         INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
         INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
         WHERE receipt.organization_id = ? GROUP BY receipt.rt_id,income.status_id,receipt.income_id,receipt.receipt_id,`partner`.partner_name,receipt.created_at 
-        ORDER BY receipt.receipt_id DESC;",
+        ORDER BY receipt.created_at DESC;",
         [$organization_id]);
     }
 

@@ -32,7 +32,7 @@ class quotation extends Model
         INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
         INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
         WHERE quotation.organization_id = ? GROUP BY quotation.qt_id,income.status_id,quotation.income_id,quotation.quotation_id,`partner`.partner_name,quotation.created_at 
-        ORDER BY quotation.quotation_id DESC;",
+        ORDER BY quotation.created_at DESC;",
         [$organization_id]);
     }
     public function listtoaccept($organization_id){
@@ -41,7 +41,7 @@ class quotation extends Model
         INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
         INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
         WHERE quotation.organization_id = ? AND income.status_id = 1 GROUP BY quotation.qt_id,income.status_id,quotation.income_id,quotation.quotation_id,`partner`.partner_name,quotation.created_at
-        ORDER BY quotation.quotation_id DESC;;",
+        ORDER BY quotation.created_at DESC;",
         [$organization_id]);
     }
     public function SelectQuotationAll($organization_id,$quotation_id){

@@ -28,8 +28,9 @@
             <table id="example" class="table table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">ID ใบเสร็จ</th>
+                    
                     <th scope="col">วันที่สร้าง</th>
+                    <th scope="col">รหัสใบเสร็จ</th>
                     <th scope="col">ชื่อลูกค้า</th>
                     <th scope="col">ยอดสุทธิ</th>
                     <th scope="col">สถานะ</th>
@@ -39,8 +40,8 @@
                 <tbody>
                     @foreach($receipts as $receipt)
                     <tr>
-                    <th scope="row">{{$receipt->rt_id}}</th>
-                    <td>{{$receipt->created_at}}</td>
+                    <th scope="row">{{$receipt->created_at}}</th>
+                    <td>{{$receipt->rt_id}}</td>
                     <td>{{$receipt->partner_name}}</td>
                     <td>{{number_format($receipt->sum)}}</td>
                     @if ($receipt->status_id >= 4)
@@ -60,7 +61,9 @@
 
     <script>
         $(document).ready(function() {
-          $('#example').DataTable();
+          $('#example').DataTable({
+                "ordering": false 
+              });
         } );
         </script>
 @endsection

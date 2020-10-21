@@ -22,7 +22,7 @@ class invoice extends Model
        INNER JOIN `quotation` ON `quotation`.quotation_id = income.quotation_id AND `quotation`.organization_id = income.organization_id
        WHERE income.organization_id = ? AND income.status_id = 2 
        GROUP BY quotation.qt_id,income.income_id,income.quotation_id,`partner`.partner_name,quotation.created_at
-       ORDER BY income.quotation_id DESC",[$organization_id]);
+       ORDER BY quotation.created_at DESC",[$organization_id]);
    }
 
    public function selectlastid($organization_id){
@@ -44,7 +44,7 @@ class invoice extends Model
         INNER JOIN partner ON income.partner_id = partner.partner_id AND income.organization_id = partner.organization_id
         INNER JOIN product ON income.product_id = product.product_id AND income.organization_id = product.organization_id
         WHERE invoice.organization_id = ? GROUP BY invoice.inv_id,income.status_id,invoice.income_id,invoice.invoice_id,`partner`.partner_name,invoice.created_at 
-        ORDER BY invoice.invoice_id DESC;",
+        ORDER BY invoice.created_at DESC;",
         [$organization_id]);
     }
 

@@ -34,15 +34,15 @@
                 รายงาน
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{url("income/list")}}">งบกำไรขาดทุน</a>
+                <a class="dropdown-item" href="{{url("report/profit")}}">งบกำไรขาดทุน</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                 สินค้า
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{url("product/insert")}}">เพิ่มสินค้า</a>
-                <a class="dropdown-item" href="{{url("product/stock")}}">รายการสินค้าคงเหลือ</a>
+                <a class="dropdown-item" href="{{url("product/insert")}}"><i class="fa fa-plus mr-2" aria-hidden="true"></i>เพิ่มสินค้า</a>
+                <a class="dropdown-item" href="{{url("product/stock")}}">รายการสินค้า</a>
             </li>
         
       </ul>

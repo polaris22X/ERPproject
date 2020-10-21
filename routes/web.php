@@ -78,8 +78,14 @@ Route::post('income/partner','partnerController@store');
 //เพิมข้อมูลProduct
 Route::get('product','productController@index');
 Route::get('product/stock','productController@stock');
+Route::get('product/insert','productController@insertform');
+Route::get('product/update/{idproduct}','productController@edit');
+Route::post('product/insert','productController@insert');
+Route::post('product/update/','productController@updatedo');
 Route::post('income/product','productController@store');
 
+
+Route::get('report/profit','reportController@profit');
 
 
 

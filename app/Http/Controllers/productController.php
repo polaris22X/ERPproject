@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\product;
 use App\organization;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class productController extends Controller
@@ -14,6 +15,13 @@ class productController extends Controller
         return view('product/menu')->with(compact('organizations'));
     }
 
+    public function insertform(Request $request){
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($id);
+        return view('product/insert')->with(compact('organizations'));
+    }
+
     public function stock(Request $request){
         $id = $request->session()->get('organization_id');
         $organization = new organization();
@@ -21,6 +29,28 @@ class productController extends Controller
         $product = new product();
         $products = $product->select($id);
         return view('product/stock')->with(compact('organizations','products'));
+    }
+    public function insert(Request $request){
+        request()->validate([
+            'product_name' => 'required',
+            'product_description' => 'required'
+        ]);
+        $product_name = request()->input('product_name');
+        $product_description = request()->input('product_description');
+        $organization_id = $request->session()->get('organization_id');
+        $product = new product();
+        $data = $product->selectlastid($organization_id);
+        if($data){
+            foreach($data as $id){
+            $lastid = $id->product_id;
+            }
+        $lastid = $lastid + 1;
+        }
+        else{
+            $lastid = 1; 
+        }
+        $product->insert($lastid,$organization_id,$product_name,$product_description);
+        return redirect('product/stock/');
     }
     public function store(Request $request){
         request()->validate([
@@ -47,4 +77,29 @@ class productController extends Controller
         return response()->json(array('msg'=> $msg), 200);
     }
 
+    public function edit(Request $request , $idproduct){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('productController@index');
+        }
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($id);
+        $product = new product();
+        $products = $product->selectedit($id,$idproduct);
+        return view('product/update')->with(compact(['organizations','products']));
+    }
+
+    public function updatedo(Request $request){
+        $organization_id = $request->session()->get('organization_id');
+        $product_id = request()->input('product_id');
+        $product_name = request()->input('product_name');
+        $product_description = request()->input('product_description');
+        $organization = new organization();
+        $organizations = $organization->getorganization($organization_id);
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
+        $product = new product();
+        $product->updatedo($organization_id,$product_id,$product_name,$product_description,$unixTimeStamp);
+        return redirect('product/stock/');
+    }
 }

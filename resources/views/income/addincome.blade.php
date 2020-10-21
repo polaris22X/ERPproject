@@ -10,7 +10,15 @@
         </div>
         
       <a href = "{{url()->previous()}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
-
+      @if ($errors->any())
+        <div class="alert alert-danger mx-5 mt-5">  
+          <ol>  
+          @foreach ($errors->all() as $error)  
+            <li>{{ $error }}</li>
+        @endforeach
+          </ol>
+        </div>
+      @endif
       <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}" id="accept">
         @csrf
 
@@ -224,10 +232,10 @@
         total = parseFloat(productamount) * parseFloat(productprice);
         $("#sum"+x).text(numberWithCommas(total));      
        });
-       $("#buttondel"+x).click(function(){
+       /*$("#buttondel"+x).click(function(){
        $("#productamount"+x).val("0");
        $("#myTableRow"+x).hide();
-    });
+       });*/
       
       }    
      }); 

@@ -78,8 +78,8 @@ function accept(){
             <table id="example" class="table table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">ID ใบเสนอราคา</th>
                     <th scope="col">วันที่สร้าง</th>
+                    <th scope="col">รหัสใบเสนอราคา</th>
                     <th scope="col">ชื่อลูกค้า</th>
                     <th scope="col">ยอดสุทธิ</th>
                     <th scope="col"></th>
@@ -89,8 +89,8 @@ function accept(){
                     
                     @foreach($quotations as $quotation)
                     <tr>
-                    <th scope="row">{{$quotation->qt_id}}</th>
-                    <td>{{$quotation->created_at}}</td>
+                    <th scope="row">{{$quotation->created_at}}</th>
+                    <td>{{$quotation->qt_id}}</td>
                     <td>{{$quotation->partner_name}}</td>
                     <td>{{number_format($quotation->sum)}}</td>
                     <td><a style="color: white" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalPreviewQuotation" onclick="preview({{$quotation->income_id}})">อนุมัติใบเสนอราคา</a></td>
@@ -172,7 +172,9 @@ function accept(){
       <!-- End_Modal_Add_product -->
       <script>
         $(document).ready(function() {
-          $('#example').DataTable();
+          $('#example').DataTable({
+            "ordering": false 
+          });
         } );
         </script>  
 @endsection
