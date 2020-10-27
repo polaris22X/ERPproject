@@ -49,7 +49,7 @@ class income extends Model
         INNER JOIN `status` ON `status`.status_id = `income`.status_id 
         WHERE income.organization_id = ? 
         GROUP BY income.income_id,`partner`.partner_name,income.created_at,income.status_id,status.status_name
-        ORDER BY income_id DESC",[$organization_id]);
+        ORDER BY created_at DESC",[$organization_id]);
     }
 
     public function selectReadyToQuotation($organization_id){

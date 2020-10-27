@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class productController extends Controller
 {
     public function index(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -16,6 +20,10 @@ class productController extends Controller
     }
 
     public function insertform(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -23,6 +31,10 @@ class productController extends Controller
     }
 
     public function stock(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -31,6 +43,10 @@ class productController extends Controller
         return view('product/stock')->with(compact('organizations','products'));
     }
     public function insert(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         request()->validate([
             'product_name' => 'required',
             'product_description' => 'required'
@@ -78,6 +94,7 @@ class productController extends Controller
     }
 
     public function edit(Request $request , $idproduct){
+        
         $userlevel_id = $request->session()->get('userlevel_id');
         if($userlevel_id != 1){
             return redirect()->action('productController@index');
@@ -91,6 +108,10 @@ class productController extends Controller
     }
 
     public function updatedo(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $organization_id = $request->session()->get('organization_id');
         $product_id = request()->input('product_id');
         $product_name = request()->input('product_name');

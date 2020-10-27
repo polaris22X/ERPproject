@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 class purchaseorderController extends Controller
 {
     public function index(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $purchaseorder = new purchaseorder();
@@ -26,6 +30,10 @@ class purchaseorderController extends Controller
     }
 
     public function acceptlist(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $purchaseorder = new purchaseorder();
@@ -35,6 +43,10 @@ class purchaseorderController extends Controller
     }
 
     public function acceptprocess(Request $request,$idexpenses){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $expenses = new expenses();
         $purchaseorder = new purchaseorder();
@@ -50,6 +62,10 @@ class purchaseorderController extends Controller
        
 
     public function create(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $purchaseorder = new purchaseorder();
@@ -57,8 +73,14 @@ class purchaseorderController extends Controller
         $expenseslist = $purchaseorder->selectReadyToPurchaseorder($id);
         return view('expenses/purchaseorder/create')->with(compact(['organizations','expenseslist']));
     }
-    public function createPurchaseorder(Request $request, $expenses_id){
+    public function createPurchaseorder(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $organization_id = $request->session()->get('organization_id');
+        $expenses_id = request()->input('expenses_id');
+        $detail = request()->input('detail');
         $purchaseorder = new purchaseorder();
         $data = $purchaseorder->selectlastid($organization_id);
         if($data){
@@ -72,11 +94,15 @@ class purchaseorderController extends Controller
         }
         $PO = str_pad($lastid, 8, 0, STR_PAD_LEFT);
         $POID = "PO-" . $PO;
-        $purchaseorder->createPurchaseorder($organization_id,$expenses_id,$lastid,$POID);
+        $purchaseorder->createPurchaseorder($organization_id,$expenses_id,$lastid,$POID,$detail);
         return redirect()->action('purchaseorderController@index');
     }
 
     public function show(Request $request, $purchaseorder_id){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);

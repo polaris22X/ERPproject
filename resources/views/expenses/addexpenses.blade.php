@@ -9,15 +9,7 @@
         </div>
       <a href = "{{url()->previous()}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
 
-      @if ($errors->any())
-        <div class="alert alert-danger mx-5 mt-5">  
-          <ol>  
-          @foreach ($errors->all() as $error)  
-            <li>{{ $error }}</li>
-        @endforeach
-          </ol>
-        </div>
-      @endif
+      
       <form class="mx-5 my-5" method="POST" action="{{url('expenses/insert')}}" id="accept">
         @csrf
 
@@ -77,7 +69,7 @@
                   </td>
                   <td style="width: 15%"><input type="number" name="product_amount[]" class="form-control" id="productamount1"></td>
                   <td style="width: 15%"><input type="number" name="product_price[]"  class="form-control" id="productprice1"></td>
-                  <td style="width: 20%"><a id="sum1" class="mt-2"></a><button type="button" class="btn btn-danger ml-4" id="buttondel1"><i class="fa fa-trash mx-2"></i></button></td>
+                  <td style="width: 20%"><a id="sum1" class="mt-2"></a><button type="button" class="btn btn-danger ml-4 "  ><i class="fa fa-trash mx-2"></i></button></td>
                 </tr>
 
               </tbody>
@@ -161,10 +153,14 @@
         </div>
       </div>
     </div>
+    
     <!-- End_Modal_Add_product -->
+
+    
 
 
     <script>
+    
       var number = 1;
       $(document).ready(function(){
         $.ajaxSetup({

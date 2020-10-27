@@ -113,7 +113,7 @@
                             <td>{{$income->created_at}}</td>
                             <td>{{$income->partner_name}}</td>
                             <td>{{number_format($income->sum)}}</td>
-                            <td><a href="{{url('income/quotation/'.$income->income_id)}}" class="btn btn-secondary mr-2">สร้างใบเสนอราคา</a><button class="btn btn-danger">ยกเลิก</button></td>
+                            <td><a href="{{url('income/quotation/'.$income->income_id)}}" class="btn btn-secondary mr-2">สร้างใบเสนอราคา</a></td>
                             </tr>
                             
                             @endforeach 

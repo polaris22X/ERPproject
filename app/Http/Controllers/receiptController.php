@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 class receiptController extends Controller
 {
     public function index(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $income = new income();
@@ -23,6 +27,10 @@ class receiptController extends Controller
         return view('income/receipt/listreceipt')->with(compact(['organizations','receipts','readytoreceipt','readytoreceipt']));
     }
     public function create(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $receipt = new receipt();
@@ -31,6 +39,10 @@ class receiptController extends Controller
         return view('income/receipt/createreceipt')->with(compact(['organizations','ReadyToReceipt']));
     }
     public function createreceipt(Request $request, $income_id){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $organization_id = $request->session()->get('organization_id');
         $receipt = new receipt();
         $data = $receipt->selectlastid($organization_id);
@@ -49,6 +61,10 @@ class receiptController extends Controller
         return redirect()->action('receiptController@index');
     }
     public function show(Request $request, $receipt_id){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);

@@ -23,7 +23,9 @@
         <div class="row">
             <div class="col-6"><label style="text-align: left;font-size: 18px;" class="ml-5" >ต้นทุนขาย</label></div><div class="col-3"><label style="text-align: right;font-size: 18px;float: right; ">@foreach ($expensess as $expenses){{number_format($expenses->sumexpenses)}}@endforeach</label></div><div class="col-3"></div>
         </div>
-        
+        <div class="row">
+            <div class="col-6"><label style="text-align: left;font-size: 18px;" ><b>กำไรสุทธิ</b></label></div><div class="col-3"></div><div class="col-3"><label style="text-align: right;font-size: 18px;float: right; ">@foreach ($incomes as $income) @foreach ($expensess as $expenses){{number_format($income->sumincome - $expenses->sumexpenses)}}@endforeach @endforeach</label></div>
+        </div>
 
         </div>
         

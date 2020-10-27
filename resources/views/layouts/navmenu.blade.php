@@ -1,5 +1,9 @@
 @foreach($organizations as $organization)
-
+<style>
+ .navbar-brand:hover{
+   text-decoration: underline;
+ }
+</style>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <a class="navbar-brand" href="{{url('organization')}}">{{$organization->organization_name}}</a>
@@ -43,7 +47,15 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{url("product/insert")}}"><i class="fa fa-plus mr-2" aria-hidden="true"></i>เพิ่มสินค้า</a>
                 <a class="dropdown-item" href="{{url("product/stock")}}">รายการสินค้า</a>
-            </li>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                  ผู้ติดต่อ
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{{url("partner/insert")}}"><i class="fa fa-plus mr-2" aria-hidden="true"></i>เพิ่มผู้ติดต่อ</a>
+                  <a class="dropdown-item" href="{{url("partner/list")}}">รายชื่อผู้ติดต่อ</a>
+          </li>
         
       </ul>
     </div>

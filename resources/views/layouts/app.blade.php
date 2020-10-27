@@ -28,6 +28,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.multifield.min.js"></script>
     
     
     
@@ -49,8 +51,8 @@
     <div id="app" >
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
             
-                <a class="navbar-brand" href="{{ url('/organization') }}">
-                   ระบบบริหารงานบัญชี
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    ระบบบริหารบัญชีงบกำไร - ขาดทุนสำหรับธุรกิจพาณิชยกรรม
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

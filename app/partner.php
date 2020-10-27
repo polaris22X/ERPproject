@@ -29,4 +29,7 @@ class partner extends Model
     public function selectlastid($organization_id){
         return DB::connection('mysql')->select("SELECT partner_id FROM partner WHERE organization_id = ? ORDER BY partner_id DESC LIMIT 1;",[$organization_id]);
     }
+    public function updatedo($organization_id,$partner_id,$partner_name,$partner_address,$partner_tel,$partner_email,$uinxTimeStamp){
+       DB::connection('mysql')->update("UPDATE partner SET partner_name = ? , partner_address = ?,partner_tel = ?,partner_email = ?,updated_at = ? WHERE organization_id = ? AND partner_id = ?;",[$partner_name,$partner_address,$partner_tel,$partner_email,$uinxTimeStamp,$organization_id,$partner_id]);
+    }
 }

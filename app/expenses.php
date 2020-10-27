@@ -25,7 +25,7 @@ class expenses extends Model
         INNER JOIN `status_expenses` ON `status_expenses`.status_id = `expenses`.status_id 
         WHERE expenses.organization_id = ? 
         GROUP BY expenses.expenses_id,`partner`.partner_name,expenses.created_at,expenses.status_id,status_expenses.status_name
-        ORDER BY expenses_id DESC",[$organization_id]);
+        ORDER BY created_at DESC",[$organization_id]);
     }
 
     public function getdata($organization_id,$expenses_id){

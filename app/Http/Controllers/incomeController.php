@@ -13,7 +13,10 @@ use Carbon\Carbon;
 class incomeController extends Controller
 {
     public function index(Request $request){
-        
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $income = new income();
@@ -32,6 +35,10 @@ class incomeController extends Controller
         if($userlevel_id != 1){
             return redirect()->action('organizationController@index');
         }
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -45,6 +52,10 @@ class incomeController extends Controller
         return view('income/updateincome')->with(compact(['organizations','products','partners','incomes','income_partner']));
     }
     public function list(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -53,6 +64,10 @@ class incomeController extends Controller
         return view('income/listincome')->with(compact(['organizations','incomes']));
     }
     public function insert(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $userlevel_id = $request->session()->get('userlevel_id');
         if($userlevel_id != 1){
             return redirect()->action('organizationController@index');
@@ -67,6 +82,10 @@ class incomeController extends Controller
         return view('income/addincome')->with(compact(['organizations','products','partners']));
     }
     public function store(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $data = request()->validate([
             'partner_id' => 'required',
             'partner_address' => 'required',
@@ -110,6 +129,7 @@ class incomeController extends Controller
     }
 
     public function getpartner(Request $request) {
+        
         $partner_id = request()->input('partner_id');
         $msg = $partner_id;
         $organization_id = $request->session()->get('organization_id');
@@ -122,6 +142,10 @@ class incomeController extends Controller
     }
 
     public function updatedo(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $data = request()->validate([
             'partner_id' => 'required',
             'partner_address' => 'required',

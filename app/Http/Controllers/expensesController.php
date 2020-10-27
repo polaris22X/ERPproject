@@ -14,6 +14,10 @@ use Illuminate\Http\Request;
 class expensesController extends Controller
 {
     public function index(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -23,6 +27,7 @@ class expensesController extends Controller
         return view('expenses/menu')->with(compact('organizations','readytopurchaseorder','readytoacceptpurchaseorder'));
     }
     public function insert(Request $request){
+        
         $userlevel_id = $request->session()->get('userlevel_id');
         if($userlevel_id != 1){
             return redirect()->action('organizationController@index');
@@ -37,6 +42,10 @@ class expensesController extends Controller
         return view('expenses/addexpenses')->with(compact(['organizations','products','partners']));
     }
     public function list(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -45,6 +54,10 @@ class expensesController extends Controller
         return view('expenses/list')->with(compact(['organizations','expensess']));
     }
     public function store(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $data = request()->validate([
             'partner_id' => 'required',
             'partner_address' => 'required',
@@ -103,6 +116,10 @@ class expensesController extends Controller
     }
 
     public function updatedo(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $data = request()->validate([
             'partner_id' => 'required',
             'partner_address' => 'required',

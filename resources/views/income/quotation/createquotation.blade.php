@@ -121,7 +121,7 @@
           </form>
           </div>
         
-          <!-- End_Modal_Add_product -->
+          <!-- End_Modal -->
 <script>
 $(document).ready(function(){
   

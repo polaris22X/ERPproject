@@ -11,11 +11,11 @@ use Auth;
 
 class purchaseorder extends Model
 {
-    public function createPurchaseorder($organization_id,$expenses_id,$lastid,$POID){
+    public function createPurchaseorder($organization_id,$expenses_id,$lastid,$POID,$detail){
         $id = Auth::id();
         $unixTimeStamp = Carbon::now()->toDateTimeString();
-        DB::connection('mysql')->insert("INSERT INTO `purchaseorder`(`organization_id`, `expenses_id`, `purchaseorder_id`, `created_at`, `updated_at`,`po_id` ,`user_id`) VALUES (?,?,?,?,?,?,?)",
-        [$organization_id,$expenses_id,$lastid,$unixTimeStamp,$unixTimeStamp,$POID,$id]);
+        DB::connection('mysql')->insert("INSERT INTO `purchaseorder`(`organization_id`, `expenses_id`, `purchaseorder_id`, `created_at`, `updated_at`,`po_id`,`detail` ,`user_id`) VALUES (?,?,?,?,?,?,?,?)",
+        [$organization_id,$expenses_id,$lastid,$unixTimeStamp,$unixTimeStamp,$POID,$detail,$id]);
         DB::connection('mysql')->update("UPDATE expenses SET  `updated_at` = ?, status_id = 1 , purchaseorder_id = ? WHERE organization_id= ? AND expenses_id= ?",
         [$unixTimeStamp,$lastid,$organization_id,$expenses_id]);
     }
@@ -55,11 +55,11 @@ class purchaseorder extends Model
     }
 
     public function selectSum($organization_id,$purchaseorder_id){
-        return  DB::connection('mysql')->select("SELECT purchaseorder.purchaseorder_id,`partner`.partner_name ,purchaseorder.created_at,SUM(expenses.saleprice * expenses.amount) as 'sum' FROM purchaseorder 
+        return  DB::connection('mysql')->select("SELECT purchaseorder.purchaseorder_id,purchaseorder.detail,`partner`.partner_name ,purchaseorder.created_at,SUM(expenses.saleprice * expenses.amount) as 'sum' FROM purchaseorder 
         INNER JOIN expenses ON purchaseorder.expenses_id = expenses.expenses_id AND purchaseorder.organization_id = expenses.organization_id AND purchaseorder.purchaseorder_id = expenses.purchaseorder_id
         INNER JOIN partner ON expenses.partner_id = partner.partner_id AND expenses.organization_id = partner.organization_id
         INNER JOIN product ON expenses.product_id = product.product_id AND expenses.organization_id = product.organization_id
-        WHERE purchaseorder.organization_id = ? AND purchaseorder.purchaseorder_id = ? GROUP BY purchaseorder.purchaseorder_id,`partner`.partner_name,purchaseorder.created_at;",
+        WHERE purchaseorder.organization_id = ? AND purchaseorder.purchaseorder_id = ? GROUP BY purchaseorder.purchaseorder_id,`partner`.partner_name,purchaseorder.created_at,purchaseorder.detail;",
         [$organization_id,$purchaseorder_id]);
     }
 

@@ -88,7 +88,30 @@
           @endforeach
           @foreach ($sums as $sum)
           <tr>
-            <td rowspan="3" colspan="3">หมายเหตุ : </td><td>VATABLE</td><td class="number">{{number_format($sum->sum - ($sum->sum * 7/100))}}</td>
+            <td rowspan="3" colspan="3">
+              ชำระผ่านทาง<br>
+               
+              <p style="width: 400px; display: table;">
+                <span style="display: table-cell; width: 100px;"><input type="checkbox" name="getmoney" class="radio" value="cash" >
+                  <label> เงินสด</label><label style="margin-left: 5px">จำนวน</label></span>
+                  <span style="display: table-cell; border-bottom: 1px solid black;margin-top: -4mm"></span>
+                  <span style="display: table-cell; width: 50px;"><label style="margin-left: 5px">บาท</label></span>
+              </p>
+              <p style="width: 400px; display: table;">
+                <span style="display: table-cell; width: 100px;"><input type="checkbox" name="getmoney" class="radio" value="transfer" >
+                  <label> เงินโอน</label><label style="margin-left: 5px">จำนวน</label></span>
+                  <span style="display: table-cell; border-bottom: 1px solid black;margin-top: -4mm"></span>
+                  <span style="display: table-cell; width: 50px;"><label style="margin-left: 5px">บาท</label></span>
+              </p>
+              <p style="width: 400px; display: table;">
+                <span style="display: table-cell; width: 100px;"><input type="checkbox" name="getmoney" class="radio" value="check" >
+                  <label>เช็ค</label><label style="margin-left: 5px">จำนวน</label></span>
+                  <span style="display: table-cell; border-bottom: 1px solid black;margin-top: -4mm"></span>
+                  <span style="display: table-cell; width: 50px;"><label style="margin-left: 5px">บาท</label></span>
+              </p>
+            
+            </td>
+            <td>VATABLE</td><td class="number">{{number_format($sum->sum - ($sum->sum * 7/100))}}</td>
             </tr>
             <tr>
                 <td>VAT 7%</td><td class="number">{{number_format($sum->sum * 7/100)}}</td>
@@ -101,13 +124,9 @@
        
       </table>
       <div style="float: right;width: 40%;">
-        <div style="width: 40%;margin-right: 5px;float: left;">
-            <p class="text-center">ผู้อนุมัติ</p>
-            <p width="100%" style="border-bottom: 1px dotted;margin-top: 2cm;"></p>
-            <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
-        </div>
+        
         <div style="width: 40%;float: left;margin-left: 55%">
-            <p class="text-center">ผู้ยอมรับใบเสนอราคา</p>
+            <p class="text-center">ผู้รับเงิน</p>
             <p width="100%" style="border-bottom: 1px dotted;margin-top: 2cm;"></p>
             <p width="100%" style="border-bottom: 1px dotted;">วันที่</p>
         </div>

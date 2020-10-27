@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 class quotationController extends Controller
 {
     public function index(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $quotation = new quotation();
@@ -24,6 +28,10 @@ class quotationController extends Controller
     }
 
     public function acceptlist(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $quotation = new quotation();
@@ -33,6 +41,10 @@ class quotationController extends Controller
     }
 
     public function acceptprocess(Request $request,$idincome){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $quotation = new quotation();
         $unixTimeStamp = Carbon::now()->toDateTimeString();
@@ -41,6 +53,10 @@ class quotationController extends Controller
     }
 
     public function create(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $income = new income();
@@ -51,6 +67,10 @@ class quotationController extends Controller
     }
     
     public function preview(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $income_id = request()->input('income_id'); 
         $income = new income();
@@ -59,6 +79,10 @@ class quotationController extends Controller
     }
 
     public function show(Request $request, $quotation_id){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);
@@ -73,7 +97,10 @@ class quotationController extends Controller
    
     
     public function createQuotation(Request $request){
-        
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $organization_id = $request->session()->get('organization_id');
         $quotation = new quotation();
         $income_id = request()->input('income_id');

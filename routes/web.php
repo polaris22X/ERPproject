@@ -69,11 +69,17 @@ Route::get('expenses/update/{idexpenses}','expensesController@update');
 Route::post('expenses/update', 'expensesController@updatedo');
 Route::get('expenses/purchaseorder/show/{idexpenses}','purchaseorderController@show');
 Route::get('expenses/purchaseorder/show/pdf/{idpurchaseorder}','purchaseorderController@createpdf');
-Route::get('expenses/purchaseorder/{idexpenses}','purchaseorderController@createPurchaseorder');
+Route::post('expenses/purchaseorder/','purchaseorderController@createPurchaseorder');
 Route::get('expenses/purchaseorder/accept/{idexpenses}','purchaseorderController@acceptprocess');
 
 
 //เพิ่มข้อมูลPartner
+Route::get('partner','partnerController@index');
+Route::get('partner/list','partnerController@list');
+Route::get('partner/insert','partnerController@insertform');
+Route::get('partner/update/{idpartner}','partnerController@edit');
+Route::post('partner/insert','partnerController@insert');
+Route::post('partner/update/','partnerController@updatedo');
 Route::post('income/partner','partnerController@store');
 //เพิมข้อมูลProduct
 Route::get('product','productController@index');
@@ -85,7 +91,14 @@ Route::post('product/update/','productController@updatedo');
 Route::post('income/product','productController@store');
 
 
+Route::get('user/list','userController@userlist');
+Route::get('user/insert','userController@insertform');
+Route::post('user/insert','userController@insert');
+
+
 Route::get('report/profit','reportController@profit');
+
+Route::get('sale','saleController@index');
 
 
 

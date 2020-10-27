@@ -72,7 +72,26 @@
           @endforeach
           @foreach ($sums as $sum)
           <tr>
-          <td rowspan="3" colspan="3">หมายเหตุ : </td><td>VATABLE</td><td style="text-align: right">{{number_format($sum->sum - ($sum->sum * 7/100))}}</td>
+          <td rowspan="3" colspan="3"><p>ชำระผ่านทาง</p>
+            <p style="width: 600px; display: table;">
+                <span style="display: table-cell; width: 30px;"><input type="checkbox" name="getmoney" class="radio" value="cash" disabled></span>
+                <span style="display: table-cell; width: 120px;"><label> เงินสด</label><label style="margin-left: 5px">จำนวน</label></span>
+                  <span style="display: table-cell; border-bottom: 1px solid black;margin-top: -4mm"></span>
+                  <span style="display: table-cell; width: 50px;"><label style="margin-left: 5px">บาท</label></span>
+              </p>
+              <p style="width: 600px; display: table;">
+                <span style="display: table-cell; width: 30px;"><input type="checkbox" name="getmoney" class="radio" value="transfer" disabled></span>
+                <span style="display: table-cell; width: 120px;"><label> เงินโอน</label><label style="margin-left: 5px">จำนวน</label></span>
+                  <span style="display: table-cell; border-bottom: 1px solid black;margin-top: -4mm"></span>
+                  <span style="display: table-cell; width: 50px;"><label style="margin-left: 5px">บาท</label></span>
+              </p>
+              <p style="width: 600px; display: table;">
+                <span style="display: table-cell; width: 30px;"><input type="checkbox" name="getmoney" class="radio" value="check" disabled></span>
+                <span style="display: table-cell; width: 120px;"><label> เช็ค</label><label style="margin-left: 5px">จำนวน</label></span>
+                  <span style="display: table-cell; border-bottom: 1px solid black;margin-top: -4mm"></span>
+                  <span style="display: table-cell; width: 50px;"><label style="margin-left: 5px">บาท</label></span>
+              </p>
+          </td><td>VATABLE</td><td style="text-align: right">{{number_format($sum->sum - ($sum->sum * 7/100))}}</td>
           </tr>
           <tr>
               <td>VAT 7%</td><td style="text-align: right">{{number_format($sum->sum * 7/100)}}</td>

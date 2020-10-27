@@ -44,6 +44,7 @@ class organizationController extends Controller
 
     public function main(Request $request,$id)
     {
+        $userlevel_id = $request->session()->get('userlevel_id');
         $request->session()->put('organization_id',$id);
         $user_organization = new user_organization();
         $user_levels = $user_organization->selectlevel($id);

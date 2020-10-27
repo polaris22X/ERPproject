@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 class invoiceController extends Controller
 {
     public function index(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $invoice = new invoice();
@@ -22,6 +26,10 @@ class invoiceController extends Controller
         return view('income/invoice/listinvoice')->with(compact(['organizations','invoices','readytoinvoice']));
     }
     public function create(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $invoice = new invoice();
@@ -31,7 +39,10 @@ class invoiceController extends Controller
     }
 
     public function createinvoice(Request $request, $income_id){
-        
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $organization_id = $request->session()->get('organization_id');
         $invoice = new invoice();
         $income = new income();
@@ -58,6 +69,10 @@ class invoiceController extends Controller
     }
 
     public function show(Request $request, $invoice_id){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
         $id = $request->session()->get('organization_id');
         $organization = new organization();
         $organizations = $organization->getorganization($id);

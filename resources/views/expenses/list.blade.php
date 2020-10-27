@@ -21,8 +21,9 @@
         <table id="example" class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th scope="col">ID</th>
+               
                 <th scope="col">วันที่สร้าง</th>
+                <th scope="col">รหัสรายจ่าย</th>
                 <th scope="col">ชื่อลูกค้า</th>
                 <th scope="col">ยอดสุทธิ</th>
                 <th scope="col">สถานะ</th>
@@ -33,8 +34,8 @@
                 
                 @foreach($expensess as $expenses)
                 <tr>
-                <th scope="row">{{$expenses->expenses_id}}</th>
-                <td>{{$expenses->created_at}}</td>
+                <th scope="row">{{$expenses->created_at}}</th>
+                <td>{{$expenses->expenses_id}}</td>
                 <td>{{$expenses->partner_name}}</td>
                 <td>{{number_format($expenses->sum)}}</td>
                 @if($expenses->status_id <= 1)
@@ -43,7 +44,7 @@
                 @if($expenses->status_id == 2)
                 <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">{{$expenses->status_name}}</span></td>
                 @endif
-                <td><button class="btn btn-secondary mr-2 @if($expenses->status_id >= 2)disabled @endif" @if($expenses->status_id <= 1)onclick="location.href='{{url('expenses/update/'.$expenses->expenses_id.'')}}'"@endif @if($expenses->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
+                <td><button class="btn btn-secondary mr-2 @if($expenses->status_id >= 2)disabled @endif" @if($expenses->status_id <= 1)onclick="location.href='{{url('expenses/update/'.$expenses->expenses_id.'')}}'"@endif @if($expenses->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button></td>
                 </tr>
                 @endforeach 
                
@@ -55,7 +56,9 @@
     </div>
     <script>
       $(document).ready(function() {
-        $('#example').DataTable();
+        $('#example').DataTable({
+                "ordering": false 
+              });
       } );
       </script>
 @endsection

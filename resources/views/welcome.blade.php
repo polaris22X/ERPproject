@@ -6,9 +6,14 @@
 <div class="d-flex justify-content-center">
 <div class="card bg-dark d-flex my-5 p-2" style="width: 80%">
   <div class="jumbotron mt-2 mx-2">
-    <h2 class="display-4 text-center">ระบบบริหารบัญชีงบกำไร - ขาดทุน<br>สำหรับธุรกิจพาณิชยกรรม</h2>
+    <h2 class="display-4 text-center">ระบบบริหารบัญชีงบกำไร - ขาดทุนสำหรับธุรกิจพาณิชยกรรม</h2>
   </div>
  
+  <div class="row">
+  
+   <div class="col-6">แจ้งการชำระเงิน</div>
+   <div class="col-6">แจ้งปัญหาการใช้งาน</div>
+  </div>
   <div id="demo" class="carousel slide" data-ride="carousel">
 
     <!-- Indicators -->
@@ -39,11 +44,15 @@
       <span class="carousel-control-next-icon"></span>
     </a>
   </div>
-
-
-    
-   
+  <div class="row my-4" >
+  
+    <div class="col-4"></div>
+    <div class="col-4"><a class="btn btn-primary btn-block " style="font-size: 20px;width 100%;" href="{{url('organization')}}">เข้าสู่ระบบ</a></div>
+    <div class="col-4"></div>
+   </div>
+  
 </div>
+
 </div>
 
 

@@ -110,7 +110,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                ...
+                                <a href="{{ url('report/profit') }}" class="btn btn-dark" style="width: 100%;">งบกำไร - ขาดทุน</a>
                             </div>
                             <div class="col">
                                 <img src="{{url('/images/report.png')}}" style="width: 100%">
@@ -125,7 +125,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                ...
+                                <a href="{{url('user/insert') }}" class="btn btn-dark" style="width: 100%;">เพิ่มผู้ใช้งาน</a>
+                                <a href="{{url('user/list') }}" class="btn btn-dark mt-3" style="width: 100%;">รายชื่อผู้ใช้งาน</a>
                             </div>
                             <div class="col">
                                 <img src="{{url('/images/user.png')}}" style="width: 100%">

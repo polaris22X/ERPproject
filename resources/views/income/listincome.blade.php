@@ -21,8 +21,8 @@
         <table id="example" class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">วันที่สร้าง</th>
+                <th scope="col">รหัสรายรับ</th>
                 <th scope="col">ชื่อลูกค้า</th>
                 <th scope="col">ยอดสุทธิ</th>
                 <th scope="col">สถานะ</th>
@@ -33,8 +33,8 @@
                 
                 @foreach($incomes as $income)
                 <tr>
-                <th scope="row">{{$income->income_id}}</th>
-                <td>{{$income->created_at}}</td>
+                <th scope="row">{{$income->created_at}}</th>
+                <td>{{$income->income_id}}</td>
                 <td>{{$income->partner_name}}</td>
                 <td>{{number_format($income->sum)}}</td>
                 @if($income->status_id <= 3)
@@ -43,7 +43,7 @@
                 @if($income->status_id == 4)
                 <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">{{$income->status_name}}</span></td>
                 @endif
-                <td><button class="btn btn-secondary mr-2 @if($income->status_id >= 2)disabled @endif" @if($income->status_id <= 1)onclick="location.href='{{url('income/update/'.$income->income_id.'')}}'"@endif @if($income->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button><button class="btn btn-danger">ยกเลิก</button></td>
+                <td><button class="btn btn-secondary mr-2 @if($income->status_id >= 2)disabled @endif" @if($income->status_id <= 1)onclick="location.href='{{url('income/update/'.$income->income_id.'')}}'"@endif @if($income->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button></td>
                 </tr>
                 @endforeach 
                
