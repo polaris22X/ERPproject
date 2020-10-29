@@ -21,8 +21,8 @@
             <table id="example" class="table table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
                     <th scope="col">วันที่สร้าง</th>
+                    <th scope="col">รหัสรายรับ</th>
                     <th scope="col">ชื่อลูกค้า</th>
                     <th scope="col">ยอดสุทธิ</th>
                     <th scope="col"></th>
@@ -33,8 +33,8 @@
                     @foreach($incomeslist as $income)
                     
                     <tr>
-                    <th scope="row">{{$income->income_id}}</th>
-                    <td>{{$income->created_at}}</td>
+                    <th scope="row">{{$income->created_at}}</th>
+                    <td>{{$income->income_id}}</td>
                     <td>{{$income->partner_name}}</td>
                     <td>{{number_format($income->sum)}}</td>
                     <td><a style="color: white" class="btn btn-secondary mr-2"  data-toggle="modal" data-target="#ModalMakeQuotation" onclick="preview({{$income->income_id}})">สร้างใบเสนอราคา</a><button class="btn btn-danger" >ยกเลิก</button></td>

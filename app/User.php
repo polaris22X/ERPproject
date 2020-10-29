@@ -5,9 +5,23 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use auth;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
+    public function selectuserauth(){
+       
+        $id = Auth::id();
+        return DB::connection('mysql')->select("select * from users where id = ?",[$id]);
+   }
+   public function updatedo($user_id,$user_name,$user_email,$user_tel){
+        $uinxTimeStamp = Carbon::now()->toDateTimeString();
+        DB::connection('mysql')->update("UPDATE users SET name = ? , email = ? , tel = ? ,updated_at = ? WHERE id = ?;",[$user_name,$user_email,$user_tel,$uinxTimeStamp,$user_id]);
+    }
+
     use Notifiable;
 
     /**
@@ -16,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','tel'
     ];
 
     /**

@@ -121,12 +121,12 @@
             </div>
             <div class="col">
                 <div class="card text-dark bg-light mb-3">
-                    <h3 class="card-header">จัดการผู้ใช้งาน</h3>
+                    <h3 class="card-header">จัดการ</h3>
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <a href="{{url('user/insert') }}" class="btn btn-dark" style="width: 100%;">เพิ่มผู้ใช้งาน</a>
-                                <a href="{{url('user/list') }}" class="btn btn-dark mt-3" style="width: 100%;">รายชื่อผู้ใช้งาน</a>
+                                <a href="{{url('user/list') }}" class="btn btn-dark" style="width: 100%;">จัดการผู้ใช้งาน</a>
+                                <a href="{{url('user/list') }}" class="btn btn-dark mt-3" style="width: 100%;">จัดการองค์กร</a>
                             </div>
                             <div class="col">
                                 <img src="{{url('/images/user.png')}}" style="width: 100%">

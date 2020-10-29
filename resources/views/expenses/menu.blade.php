@@ -4,7 +4,7 @@
 @include('layouts.navmenu')
     <div class="container mt-5 shadow p-3 mb-5 bg-dark rounded">
         <div class="card text-dark bg-light mb-3">
-            <h1 class="card-header">รายจ่าย</h1>
+            <h1 class="card-header"><a href = "{{url('organization/menu')}}" class="my-2 mr-4 btn btn-secondary p-3"> <i class="fa fa-arrow-left mx-2"></i></a>รายจ่าย</h1>
             <div class="card-body">
                 <div class="row">
                     <div class="col">

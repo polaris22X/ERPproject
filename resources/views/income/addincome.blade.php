@@ -19,7 +19,7 @@
           </ol>
         </div>
       @endif
-      <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}" id="accept">
+      <form class="mx-5 my-5" method="POST" action="{{url('income/insert')}}" id="accept" enctype="multipart/form-data">
         @csrf
 
           <div class="row my-2">

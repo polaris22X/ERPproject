@@ -98,4 +98,38 @@ class organizationController extends Controller
 
     }
 
+    public function edit(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $organizations = $organization->getorganization($id);
+        return view('organization/settings/edit')->with(compact(['organizations']));
+    }
+
+    public function editdo(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        request()->validate([
+            'organization_id' => 'required',
+            'organization_name' => 'required',
+            'organization_address' => 'required',  
+        ]);
+        
+        $organization_id = request()->input('organization_id');
+        $organization_name = request()->input('organization_name');
+        $organization_address = request()->input('organization_address');
+        $organization_tel = request()->input('organization_tel');
+        $organization_email = request()->input('organization_email');
+        $organization_taxid = request()->input('organization_taxid');
+        $organization = new organization();
+        $organization->updatedo($organization_id,$organization_name,$organization_address,$organization_tel,$organization_email,$organization_taxid);
+        return redirect()->action('organizationController@edit');
+
+    }
+
 }

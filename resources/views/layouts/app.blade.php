@@ -28,8 +28,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-    <script src="jquery.min.js"></script>
-    <script src="jquery.multifield.min.js"></script>
+    
+    <script src="http://maxkostinevich.github.io/jquery-multifield/jquery.multifield.min.js"></script>
+    
     
     
     
@@ -83,6 +84,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ url('user/data') }}" >
+                                        ข้อมูลส่วนตัว
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

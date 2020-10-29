@@ -56,7 +56,14 @@
                   <a class="dropdown-item" href="{{url("partner/insert")}}"><i class="fa fa-plus mr-2" aria-hidden="true"></i>เพิ่มผู้ติดต่อ</a>
                   <a class="dropdown-item" href="{{url("partner/list")}}">รายชื่อผู้ติดต่อ</a>
           </li>
-        
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                จัดการ
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{url("user/list")}}">จัดการผู้ใช้งาน</a>
+                <a class="dropdown-item" href="{{url("organization/settings")}}">จัดการองค์กร</a>
+          </li>
       </ul>
     </div>
   </nav>

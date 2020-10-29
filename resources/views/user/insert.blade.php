@@ -13,7 +13,7 @@
 
         
         <div class="my-2">
-            <a href = "{{url('user/')}}" class="my-2 mr-2 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
+            <a href = "{{url()->previous()}}" class="my-2 ml-5 btn btn-secondary"> <i class="fa fa-arrow-left mx-2"></i> ย้อนกลับ</a>
             <div class="card my-4" style="margin-left: 10%;margin-right: 10%;">
             <form action="{{url('user/insert')}}" method="POST">
             @csrf
@@ -35,7 +35,7 @@
             <div class="col-auto">
             <select class="form-control" name="userlevel_id">
             @foreach ($levels as $level)
-            <option value="{{$level->level_name}}">{{$level->level_name}}</option>    
+            <option value="{{$level->id}}">{{$level->level_name}}</option>    
             @endforeach
             </select>
             </div>

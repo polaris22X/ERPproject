@@ -90,10 +90,17 @@ Route::post('product/insert','productController@insert');
 Route::post('product/update/','productController@updatedo');
 Route::post('income/product','productController@store');
 
+Route::get('settings','userController@index');
 
 Route::get('user/list','userController@userlist');
+Route::get('user/data','userController@userdata');
 Route::get('user/insert','userController@insertform');
 Route::post('user/insert','userController@insert');
+Route::post('user/edit','userController@editdata');
+Route::post('user/editrole','userController@editprocess');
+
+Route::get('organization/settings','organizationController@edit');
+Route::post('organization/settings/edit','organizationController@editdo');
 
 
 Route::get('report/profit','reportController@profit');
