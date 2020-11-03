@@ -62,6 +62,7 @@ Route::get('expenses/insert', 'expensesController@insert');
 Route::get('expenses/purchaseorder/list', 'purchaseorderController@index');
 Route::get('expenses/purchaseorder/create', 'purchaseorderController@create');
 Route::get('expenses/purchaseorder/accept', 'purchaseorderController@acceptlist');
+Route::get('expenses/purchaseorder/acceptpay', 'purchaseorderController@acceptpaylist');
 Route::post('expenses/purchaseorder/create', 'purchaseorderController@preview');
 Route::post('expenses/insert', 'expensesController@store');
 
@@ -71,6 +72,7 @@ Route::get('expenses/purchaseorder/show/{idexpenses}','purchaseorderController@s
 Route::get('expenses/purchaseorder/show/pdf/{idpurchaseorder}','purchaseorderController@createpdf');
 Route::post('expenses/purchaseorder/','purchaseorderController@createPurchaseorder');
 Route::get('expenses/purchaseorder/accept/{idexpenses}','purchaseorderController@acceptprocess');
+Route::get('expenses/purchaseorder/acceptpay/{idexpenses}','purchaseorderController@acceptpayprocess');
 
 
 //เพิ่มข้อมูลPartner
@@ -104,6 +106,8 @@ Route::post('organization/settings/edit','organizationController@editdo');
 
 
 Route::get('report/profit','reportController@profit');
+Route::get('report/profit/1month','reportController@profit1month');
+Route::get('report/profit/3month','reportController@profit3month');
 
 Route::get('sale','saleController@index');
 

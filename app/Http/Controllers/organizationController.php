@@ -39,7 +39,8 @@ class organizationController extends Controller
         $purchaseorder = new purchaseorder();
         $readytopurchaseorder = $purchaseorder->getreadytopurchaseorder($id);
         $readytoacceptpurchaseorder = $purchaseorder->getreadytoaccept($id);
-        return view('organization/main')->with(compact(['organizations','readytoquotation','readytoaccept','readytoinvoice','readytoreceipt','readytopurchaseorder','readytoacceptpurchaseorder']));
+        $readytoacceptpurchaseorderpay = $purchaseorder->getreadytoacceptpay($id);
+        return view('organization/main')->with(compact(['organizations','readytoquotation','readytoaccept','readytoinvoice','readytoreceipt','readytopurchaseorder','readytoacceptpurchaseorder','readytoacceptpurchaseorderpay']));
     }
 
     public function main(Request $request,$id)
@@ -94,7 +95,7 @@ class organizationController extends Controller
         $organization->insert($lastid,$organization_name,$organization_address,$organization_tel,$organization_email,$organization_taxid);
         $user_organization->insert($lastid);
         $data = $organization->select();
-        return view('organization/status');
+        return redirect()->action('organizationController@index');
 
     }
 

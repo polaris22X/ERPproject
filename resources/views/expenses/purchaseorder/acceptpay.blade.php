@@ -42,7 +42,7 @@ function preview(expenses_id){
                 var vat = netprice * 7 /100;
                 var vatable = netprice - vat;
                 $("#tbody").append("<tr><td rowspan=\"3\" colspan=\"3\">หมายเหตุ : </td><td>VATABLE</td><td>"+numberWithCommas(vatable)+"</td></tr><tr><td>VAT 7%</td><td>"+ numberWithCommas(vat) +"</td></tr><tr><td>ราคารวมทั้งสิ้น</td><td>"+numberWithCommas(netprice)+"</td></tr>");
-                $("#modalfooter").append("<a onclick=\"return accept()\" href=\"{{url('expenses/purchaseorder/accept/')}}/"+expenses_id+"\" class=\"btn btn-primary mr-2\">อนุมัติใบสั่งซื้อ</a><button type=\"button\" class=\"btn btn-secondary cancel\" data-dismiss=\"modal\">ยกเลิก</button>");
+                $("#modalfooter").append("<a onclick=\"return accept()\" href=\"{{url('expenses/purchaseorder/acceptpay/')}}/"+expenses_id+"\" class=\"btn btn-primary mr-2\">อนุมัติการชำระเงินใบสั่งซื้อ</a><button type=\"button\" class=\"btn btn-secondary cancel\" data-dismiss=\"modal\">ยกเลิก</button>");
                 
             }
     });
@@ -65,7 +65,7 @@ function accept(){
     <div class="container mt-5 shadow p-3 mb-5 bg-white rounded">
     
         <div class="jumbotron text-center bg-dark text-white">
-            <h1>อนุมัติใบสั่งซื้อ</h1>
+            <h1>อนุมัติชำระเงินใบสั่งซื้อ</h1>
             
         </div>
                
@@ -109,7 +109,7 @@ function accept(){
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">อนุมัติใบสั่งซื้อ</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">อนุมัติการชำระเงินใบสั่งซื้อ</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

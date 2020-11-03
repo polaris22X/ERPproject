@@ -24,7 +24,8 @@ class expensesController extends Controller
         $purchaseorder = new purchaseorder();
         $readytopurchaseorder = $purchaseorder->getreadytopurchaseorder($id);
         $readytoacceptpurchaseorder = $purchaseorder->getreadytoaccept($id);
-        return view('expenses/menu')->with(compact('organizations','readytopurchaseorder','readytoacceptpurchaseorder'));
+        $readytoacceptpurchaseorderpay = $purchaseorder->getreadytoacceptpay($id);
+        return view('expenses/menu')->with(compact('organizations','readytopurchaseorder','readytoacceptpurchaseorder','readytoacceptpurchaseorderpay'));
     }
     public function insert(Request $request){
         

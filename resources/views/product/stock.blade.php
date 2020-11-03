@@ -17,7 +17,7 @@
         <table id="example" class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th scope="col">ID</th>
+                <th scope="col">รหัสสินค้า</th>
                 <th scope="col">ชื่อสินค้า</th>
                 <th scope="col">จำนวนสินค้า</th>
                 <th scope="col"></th>

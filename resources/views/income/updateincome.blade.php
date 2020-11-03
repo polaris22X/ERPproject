@@ -38,34 +38,40 @@
   $("#addproduct").click(function(){
     var productname = $("#productname").val();
     var productdescription = $("#productdescription").val();
+    if ($('#productdescription').val() == ''){
+            productdescription = '-';
+        }
     addproduct(productname,productdescription);
   });
-  $("#productamount1,#productprice1").change(function(){
-    var productamount = $("#productamount1").val();
-    var productprice = $("#productprice1").val();
-    var total = parseFloat(productamount) * parseFloat(productprice);
-    $("#sum1").text(numberWithCommas(total));
-  });
-  $("#add").click(function(){
-    number++;
-    $("tbody").append("<tr id=\"myTableRow"+number+"\"><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><a id=\"sum"+number+"\" class=\"mt-2\"></a><button class=\"btn btn-danger ml-4\" type=\"button\" id=\"buttondel"+number+"\"><i class=\"fa fa-trash mx-2\"></i></button></td></tr>");
-    $('.product-select').selectpicker('render');
-    var x = 1;
-    while(x < number){
-    x++;
-    var total = 0;
-    $("#productamount"+x+",#productprice"+x).change(function(){
-    var productamount = $("#productamount"+x).val();
-    var productprice = $("#productprice"+x).val();
-    total = parseFloat(productamount) * parseFloat(productprice);
-    $("#sum"+x).text(numberWithCommas(total));    
-      });
-    $("#buttondel"+x).click(function(){
-      $("#productamount"+x).val("0");
-      $("#myTableRow"+x).hide();
-    });
-    } 
-});
+  
+  $("#add").click(function(e){
+        e.preventDefault();
+        number++;
+        var newIn = "<tr id=\"myTableRow"+number+"\"><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control productamount"+number+"\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control productprice"+number+"\" id=\"productprice"+number+"\"></td><td><a clas =\"sum"+number+"\" id=\"sum"+number+"\" class=\"mt-2\"></a><button type=\"button\" class=\"btn btn-danger btn-remove ml-4\" id=\"buttondel"+number+"\"><i class=\"fa fa-trash mx-2\"></i></button></td></tr>";
+        var newInput = $(newIn);
+        $("#myTableRow"+(number-1)).after(newInput);
+        $("#myTableRow"+number).attr('data-source',$("#myTableRow"+(number-1)).attr('data-source'));
+        $('.product-select').selectpicker('render');
+        
+        var total = 0;
+        $("#productamount"+number+",#productprice"+number).change(function(e){
+        e.preventDefault();
+        var fieldNum = this.id.charAt(this.id.length-1);
+        var productamount = $("#productamount"+fieldNum).val();
+        var productprice = $("#productprice"+fieldNum).val();
+        total = parseFloat(productamount) * parseFloat(productprice);
+        $("#sum"+fieldNum).text(numberWithCommas(total));
+            
+       });
+       $(".btn-remove").click(function(e){
+          e.preventDefault();
+          var fieldNum = this.id.charAt(this.id.length-1);
+          $("#myTableRow"+fieldNum).remove();
+          
+        });
+         
+      
+     }); 
 });
 
 function docWrite(variable) {
@@ -135,11 +141,11 @@ function addproduct(productname,productdescription){
         @csrf
         
           <div class="row my-2">
-              <div class="col"><h5>ชื่อลูกค้า</h5></div><div class="col"></div>
+              <div class="col"><h5>ชื่อผู้ติดต่อ</h5></div><div class="col"></div>
           </div>
           <div class="row my-2">
               <div class="col-5">
-                <select name="partner_id" class="form-control" id="partner">
+                <select name="partner_id" class="form-control" id="partnerid">
                   <option value="0">-- รายชื่อผู้ติดต่อ --</option>
                   @foreach($partners as $partner)
                     @foreach ($income_partner as $income_partnerdetail)
@@ -153,7 +159,7 @@ function addproduct(productname,productdescription){
                  </select>
               </div>
               <div class="col-2">
-                <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#ModalAddPartner">+ เพิ่มลูกค้า</a> 
+                <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#ModalAddPartner">+ เพิ่มผู้ติดต่อ</a> 
               </div>
             <div class="col-6">
 
@@ -176,7 +182,6 @@ function addproduct(productname,productdescription){
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">ลำดับ</th>
                   <th scope="col">รายการ</th>
                   <th scope="col">จำนวน</th>
                   <th scope="col">ราคา/หน่วย</th>
@@ -191,7 +196,7 @@ function addproduct(productname,productdescription){
                   
                   <script>number++</script>
                   
-                  <th scope="row" style="width: 10%"><script>docWrite(number)</script></th>
+                  
                   <td style="width: 40%">
                     <div class="row">
                       <div class="col-8" >
@@ -219,12 +224,13 @@ function addproduct(productname,productdescription){
                       </div>
                     </div>
                   </td>
-                <td style="width: 15%"><input type="number" name="product_amount[]" class="form-control" id="productamount{{$number}}" value="{{$income->amount}}"></td>
-                <td style="width: 15%"><input type="number" name="product_price[]"  class="form-control" id="productprice{{$number}}" value="{{$income->saleprice}}"></td>
-                <td style="width: 20%"><a id="sum{{$number}}">{{number_format($income->amount * $income->saleprice)}}</a><button type="button" class="btn btn-danger ml-4" id="buttondel{{$number}}"><i class="fa fa-trash mx-2"></i></button></td>
+                <td style="width: 15%"><input type="number" name="product_amount[]" class="form-control productamount{{$number}}" id="productamount{{$number}}" value="{{$income->amount}}"></td>
+                <td style="width: 15%"><input type="number" name="product_price[]"  class="form-control productprice{{$number}}" id="productprice{{$number}}" value="{{$income->saleprice}}"></td>
+                <td style="width: 20%"><a id="sum{{$number}}">{{number_format($income->amount * $income->saleprice)}}</a><button type="button" class="btn btn-danger btn-remove ml-4" id="buttondel{{$number}}"><i class="fa fa-trash mx-2"></i></button></td>
                 </tr>
                 
                 @endforeach
+                
               </tbody>
              
             </table>
@@ -308,25 +314,27 @@ function addproduct(productname,productdescription){
   </div>
   <!-- End_Modal_Add_product -->
 <script>
-  
-  var x = 0;
-    while(x < number){
-    x++;
-    console.log(x);
-    var total = 0;
-    $("#productamount"+x+",#productprice"+x).change(function(){
-    var productamount = $("#productamount"+x).val();
-    var productprice = $("#productprice"+x).val();
-    total = parseFloat(productamount) * parseFloat(productprice);
-    $("#sum"+x).text(numberWithCommas(total));
-          
-      });
-    $("#buttondel"+x).click(function(){
-    $("#productamount"+x).val("0");
-    $("#myTableRow"+x).hide();
+    var x = 0;
+      while(x < number){
+      x++;
+      console.log(x);
+      var total = 0;
+      $("#productamount"+x+",#productprice"+x).change(function(e){
+        e.preventDefault();
+        var fieldNum = this.id.charAt(this.id.length-1);
+        var productamount = $("#productamount"+fieldNum).val();
+        var productprice = $("#productprice"+fieldNum).val();
+        total = parseFloat(productamount) * parseFloat(productprice);
+        $("#sum"+fieldNum).text(numberWithCommas(total));
+            
+       });
+      }
+    $(".btn-remove").click(function(e){
+    e.preventDefault();
+    var fieldNum = this.id.charAt(this.id.length-1);
+    $("#myTableRow"+fieldNum).hide();
+    $("#productamount"+fieldNum).val(0);
     });
-      
-    } 
 </script>
    
 

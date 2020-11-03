@@ -12,9 +12,11 @@
                         <a href="{{ url('expenses/purchaseorder/list')}}" class="btn btn-dark mt-3 py-4" style="width: 100%;font-size: 24px">ใบสั่งซื้อ
                             @foreach ($readytopurchaseorder as $amountpurchaseorder)
                             @foreach ($readytoacceptpurchaseorder as $amountaccept)
-                            @if($amountpurchaseorder->readytopurchaseorder > 0 || $amountaccept->readytoaccept > 0)
-                            <span class="badge badge-danger"> {{$amountpurchaseorder->readytopurchaseorder + $amountaccept->readytoaccept}} </span>
+                            @foreach ($readytoacceptpurchaseorderpay as $amountpayaccept)
+                            @if($amountpurchaseorder->readytopurchaseorder > 0 || $amountaccept->readytoaccept > 0 || $amountpayaccept->readytoaccept > 0)
+                            <span class="badge badge-danger"> {{$amountpurchaseorder->readytopurchaseorder + $amountaccept->readytoaccept +$amountpayaccept->readytoaccept}} </span>
                             @endif
+                            @endforeach
                             @endforeach
                             @endforeach
                         </a>

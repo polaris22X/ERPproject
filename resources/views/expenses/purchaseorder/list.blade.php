@@ -29,8 +29,15 @@
                 @endif
               @endforeach
             </a> 
-            <a href="{{url('expenses/purchaseorder/accept')}}" class="btn btn-success mr-2">+ อนุมัติใบสั่งซื้อ
+            <a href="{{url('expenses/purchaseorder/accept')}}" class="btn btn-success mr-2">อนุมัติใบสั่งซื้อ
               @foreach ($readytoaccept as $amount)
+                @if($amount->readytoaccept > 0)
+                  <span class="badge badge-danger"> {{$amount->readytoaccept}} </span>
+                @endif
+              @endforeach
+            </a>
+            <a href="{{url('expenses/purchaseorder/acceptpay')}}" class="btn btn-success mr-2">อนุมัติการชำระเงิน
+              @foreach ($readytoacceptpay as $amount)
                 @if($amount->readytoaccept > 0)
                   <span class="badge badge-danger"> {{$amount->readytoaccept}} </span>
                 @endif
@@ -58,11 +65,15 @@
                   <td>{{$purchaseorder->po_id}}</td>
                   <td>{{$purchaseorder->partner_name}}</td>
                   <td>{{number_format($purchaseorder->sum)}}</td>
+                  
                   @if ($purchaseorder->status_id == 1)
                       <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">ยังไม่ได้อนุมัติ</span></td>
                   @endif
                   @if ($purchaseorder->status_id == 2)
-                      <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">อนุมัติแล้ว</span></td>
+                      <td><span class="badge badge-danger py-2"  style="padding: 5px;font-size: 12px;width: 100%">รอการชำระเงิน</span></td>
+                  @endif
+                  @if ($purchaseorder->status_id == 3)
+                      <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">เสร็จสิ้น</span></td>
                   @endif
                   <td><button class="btn btn-secondary mr-2 @if($purchaseorder->status_id >= 2)disabled @endif" @if($purchaseorder->status_id == 1)onclick="location.href='{{url('expenses/update/'.$purchaseorder->expenses_id.'')}}'"@endif @if($purchaseorder->status_id >= 2) onclick="alertshow()" @endif @if($purchaseorder->status_id >= 2) aria-disabled="true" tabindex="-1" @endif>แก้ไขรายการ</button><button class="btn btn-primary mr-2" onclick="location.href='{{url('expenses/purchaseorder/show/'.$purchaseorder->purchaseorder_id.'')}}'">ดูใบสั่งซื้อ</button></td>
                   </tr>

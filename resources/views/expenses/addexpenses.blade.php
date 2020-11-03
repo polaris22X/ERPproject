@@ -14,7 +14,7 @@
         @csrf
 
           <div class="row my-2">
-              <div class="col"><h5>ชื่อลูกค้า</h5></div><div class="col"></div>
+              <div class="col"><h5>ชื่อผู้ติดต่อ</h5></div><div class="col"></div>
           </div>
           <div class="row my-2">
               <div class="col-5">
@@ -25,7 +25,7 @@
                 </select>
               </div>
               <div class="col-2">
-                <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#ModalAddPartner">+ เพิ่มลูกค้า</a> 
+                <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#ModalAddPartner">+ เพิ่มผู้ติดต่อ</a> 
               </div>
             <div class="col-6">
 
@@ -42,7 +42,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">ลำดับ</th>
+                  
                   <th scope="col">รายการ</th>
                   <th scope="col">จำนวน</th>
                   <th scope="col">ราคา/หน่วย</th>
@@ -50,27 +50,27 @@
                 </tr>
               </thead>
               <tbody>
-                
                 <tr id="myTableRow1">
-                  <th scope="row" style="width: 10%">1</th>
-                  <td style="width: 40%">
-                    <div class="row">
-                      <div class="col-8" >
-                      <select name="product_id[]"  class="form-control product-select selectpicker" data-live-search="true" title="กรุณาเลือกสินค้า" id="product1" data-size="5">
-                        @foreach($products as $product)
-                        <option value="{{$product->product_id}}">{{$product->product_name}}</option>
-                        @endforeach 
-                      </select>
-                      </div>
-                      <div class="col-4">
-                      <a href="" class="btn btn-primary" data-toggle="modal" data-target="#ModalAddProduct">+ เพิ่มสินค้า</a> 
-                      </div>
+                <td style="width: 40%">
+                  <div class="row">
+                    <div class="col-8" >
+                    <select name="product_id[]"  class="form-control product-select selectpicker" data-live-search="true" title="กรุณาเลือกสินค้า" id="product1" data-size="5">
+                      @foreach($products as $product)
+                      <option value="{{$product->product_id}}">{{$product->product_name}}</option>
+                      @endforeach 
+                    </select>
                     </div>
-                  </td>
-                  <td style="width: 15%"><input type="number" name="product_amount[]" class="form-control" id="productamount1"></td>
-                  <td style="width: 15%"><input type="number" name="product_price[]"  class="form-control" id="productprice1"></td>
-                  <td style="width: 20%"><a id="sum1" class="mt-2"></a><button type="button" class="btn btn-danger ml-4 "  ><i class="fa fa-trash mx-2"></i></button></td>
-                </tr>
+                    <div class="col-4">
+                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#ModalAddProduct">+ เพิ่มสินค้า</a> 
+                    </div>
+                  </div>
+                </td>
+                <td style="width: 15%"><input type="number" name="product_amount[]" class="form-control" id="productamount1"></td>
+                <td style="width: 15%"><input type="number" name="product_price[]"  class="form-control" id="productprice1"></td>
+                <td style="width: 20%"><a id="sum1" class="mt-2"></a><button type="button" class="btn btn-danger ml-4 btn-remove" id="buttondel1"><i class="fa fa-trash mx-2"></i></button></td>
+              </tr>
+              <tr id="myTableRow2" >
+              </tr>
 
               </tbody>
              
@@ -197,6 +197,9 @@
       $("#addproduct").click(function(){
         var productname = $("#productname").val();
         var productdescription = $("#productdescription").val();
+        if ($('#productdescription').val() == ''){
+            productdescription = '-';
+        }
         addproduct(productname,productdescription);
         $("#productname").val("");
         $("#productdescription").val();
@@ -208,30 +211,35 @@
         $("#sum1").text(numberWithCommas(total));
       });
       $("#buttondel1").click(function(){
-       $("#productamount1").val("0");
-       $("#myTableRow1").hide();
+       $("#myTableRow1").remove();
       });
-      $("#add").click(function(){
+      $("#add").click(function(e){
+        e.preventDefault();
         number++;
-        
-        $("tbody").append("<tr id=\"myTableRow"+number+"\"><th scope=\"row\" style=\"width: 10%\">"+number+"</th><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><a id=\"sum"+number+"\" class=\"mt-2\"></a><button type=\"button\" class=\"btn btn-danger ml-4\" id=\"buttondel"+number+"\"><i class=\"fa fa-trash mx-2\"></i></button></td></tr>");
+        var newIn = "<tr id=\"myTableRow"+number+"\"><td style=\"width: 40%\"><div class=\"row\"><div class=\"col-8\" ><select name=\"product_id[]\" class=\"form-control product-select selectpicker\" data-live-search=\"true\" title=\"กรุณาเลือกสินค้า\" id=\"product"+number+"\" data-size=\"5\"><option value=\"\" disabled selected hidden>กรุณาเลือกสินค้า</option> @foreach($products as $product)<option value=\"{{$product->product_id}}\">{{$product->product_name}}</option>@endforeach </select></div><div class=\"col-4\"><a href=\"\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#ModalAddProduct\">+ เพิ่มสินค้า</a> </div></div></td><td><input type=\"number\" name=\"product_amount[]\" class=\"form-control\" id=\"productamount"+number+"\"></td><td><input type=\"number\" name=\"product_price[]\"  class=\"form-control\" id=\"productprice"+number+"\"></td><td><a id=\"sum"+number+"\" class=\"mt-2\"></a><button type=\"button\" class=\"btn btn-danger btn-remove ml-4\" id=\"buttondel"+number+"\"><i class=\"fa fa-trash mx-2\"></i></button></td></tr>";
+        var newInput = $(newIn);
+        $("#myTableRow"+(number-1)).after(newInput);
+        $("#myTableRow"+number).attr('data-source',$("#myTableRow"+(number-1)).attr('data-source'));
         $('.product-select').selectpicker('render');
-        var x = 1;
-        while(x < number){
-        x++;
+        
         var total = 0;
-        $("#productamount"+x+",#productprice"+x).change(function(){
-        var productamount = $("#productamount"+x).val();
-        var productprice = $("#productprice"+x).val();
+        $("#productamount"+number+",#productprice"+number).change(function(e){
+        e.preventDefault();
+        var fieldNum = this.id.charAt(this.id.length-1);
+        var productamount = $("#productamount"+fieldNum).val();
+        var productprice = $("#productprice"+fieldNum).val();
         total = parseFloat(productamount) * parseFloat(productprice);
-        $("#sum"+x).text(numberWithCommas(total));      
+        $("#sum"+fieldNum).text(numberWithCommas(total));
+            
        });
-       $("#buttondel"+x).click(function(){
-       $("#productamount"+x).val("0");
-       $("#myTableRow"+x).hide();
-    });
+       $(".btn-remove").click(function(e){
+          e.preventDefault();
+          var fieldNum = this.id.charAt(this.id.length-1);
+          $("#myTableRow"+fieldNum).remove();
+          
+        });
       
-      }    
+      
      }); 
      $("#accept").submit(function(){
         return accept();

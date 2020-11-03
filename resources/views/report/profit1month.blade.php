@@ -15,10 +15,10 @@
         </div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active"  href="{{url('report/profit/')}}">ทั้งหมด</a>
+              <a class="nav-link" href="{{url('report/profit/')}}">ทั้งหมด</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{url('report/profit/1month')}}">เดือนที่ผ่านมา</a>
+              <a class="nav-link active" href="{{url('report/profit/1month')}}">เดือนที่ผ่านมา</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{url('report/profit/3month')}}">3 เดือน</a>

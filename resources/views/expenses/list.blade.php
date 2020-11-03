@@ -42,6 +42,9 @@
                 <td><span class="badge badge-danger py-2" style="padding: 5px;font-size: 12px;width: 100%">{{$expenses->status_name}}</span></td>
                 @endif
                 @if($expenses->status_id == 2)
+                <td><span class="badge badge-danger py-2"  style="padding: 5px;font-size: 12px;width: 100%">{{$expenses->status_name}}</span></td>
+                @endif
+                @if($expenses->status_id == 3)
                 <td><span class="badge badge-success py-2"  style="padding: 5px;font-size: 12px;width: 100%">{{$expenses->status_name}}</span></td>
                 @endif
                 <td><button class="btn btn-secondary mr-2 @if($expenses->status_id >= 2)disabled @endif" @if($expenses->status_id <= 1)onclick="location.href='{{url('expenses/update/'.$expenses->expenses_id.'')}}'"@endif @if($expenses->status_id >= 2) onclick="alertshow()" @endif>แก้ไข</button></td>

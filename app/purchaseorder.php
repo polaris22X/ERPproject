@@ -63,12 +63,14 @@ class purchaseorder extends Model
         [$organization_id,$purchaseorder_id]);
     }
 
+    
+
    public function preview($organization_id,$expenses_id){
        
        return DB::connection('mysql')->select("SELECT *,`purchaseorder`.created_at as 'purchaseorder_date' FROM expenses
        INNER JOIN `partner` ON `partner`.partner_id = expenses.partner_id AND `partner`.organization_id = expenses.organization_id 
        INNER JOIN `product` ON `product`.product_id = expenses.product_id AND `product`.organization_id = expenses.organization_id 
-       LEFT JOIN `purchaseorder` ON `purchaseorder`.purchaseorder_id = expenses.purchaseorder_id AND `purchaseorder`.purchaseorder_id = expenses.purchaseorder_id AND `purchaseorder`.expenses_id = expenses.expenses_id
+       LEFT JOIN `purchaseorder` ON `purchaseorder`.purchaseorder_id = expenses.purchaseorder_id AND `purchaseorder`.organization_id = expenses.organization_id AND `purchaseorder`.expenses_id = expenses.expenses_id
         WHERE expenses.organization_id = ? AND expenses.expenses_id = ? ",[$organization_id,$expenses_id]);
    }
 
@@ -90,6 +92,16 @@ class purchaseorder extends Model
         WHERE purchaseorder.organization_id = ? AND expenses.status_id = 1 GROUP BY purchaseorder.po_id,expenses.status_id,purchaseorder.expenses_id,purchaseorder.purchaseorder_id,`partner`.partner_name,purchaseorder.created_at
         ORDER BY purchaseorder.purchaseorder_id DESC;;",
         [$organization_id]);
+    }
+
+    public function listtoacceptpay($organization_id){
+        return  DB::connection('mysql')->select("SELECT purchaseorder.po_id,expenses.status_id,purchaseorder.expenses_id,purchaseorder.purchaseorder_id,`partner`.partner_name ,purchaseorder.created_at,SUM(expenses.saleprice * expenses.amount) as 'sum' FROM purchaseorder 
+        INNER JOIN expenses ON purchaseorder.expenses_id = expenses.expenses_id AND purchaseorder.organization_id = expenses.organization_id AND purchaseorder.purchaseorder_id = expenses.purchaseorder_id
+        INNER JOIN partner ON expenses.partner_id = partner.partner_id AND expenses.organization_id = partner.organization_id
+        INNER JOIN product ON expenses.product_id = product.product_id AND expenses.organization_id = product.organization_id
+        WHERE purchaseorder.organization_id = ? AND expenses.status_id = 2 GROUP BY purchaseorder.po_id,expenses.status_id,purchaseorder.expenses_id,purchaseorder.purchaseorder_id,`partner`.partner_name,purchaseorder.created_at
+        ORDER BY purchaseorder.purchaseorder_id DESC;;",
+        [$organization_id]);
 
     }
 
@@ -97,4 +109,12 @@ class purchaseorder extends Model
         DB::connection('mysql')->update("UPDATE expenses SET  `updated_at` = ?, status_id = 2 WHERE organization_id= ? AND expenses_id= ?",
         [$unixTimeStamp,$organization_id,$expenses_id]);
     }
+    public function PurchaseorderAcceptpay($organization_id,$expenses_id,$unixTimeStamp){
+        DB::connection('mysql')->update("UPDATE expenses SET  `updated_at` = ?, status_id = 3 WHERE organization_id= ? AND expenses_id= ?",
+        [$unixTimeStamp,$organization_id,$expenses_id]);
+    }
+    public function getreadytoacceptpay($organization_id){
+        return DB::connection('mysql')->select("SELECT count(*) as 'readytoaccept' FROM (SELECT expenses_id FROM expenses WHERE organization_id = ? AND status_id = 2 GROUP BY expenses_id) AS sub;",[$organization_id]);
+    }
+
 }

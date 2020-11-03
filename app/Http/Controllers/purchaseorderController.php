@@ -24,9 +24,10 @@ class purchaseorderController extends Controller
         $purchaseorder = new purchaseorder();
         $readytopurchaseorder = $purchaseorder->getreadytopurchaseorder($id);
         $readytoaccept = $purchaseorder->getreadytoaccept($id);
+        $readytoacceptpay = $purchaseorder->getreadytoacceptpay($id);
         $purchaseorders = $purchaseorder->selectPurchaseorder($id);
         $organizations = $organization->getorganization($id);
-        return view('expenses/purchaseorder/list')->with(compact(['organizations','readytopurchaseorder','purchaseorders','readytoaccept']));
+        return view('expenses/purchaseorder/list')->with(compact(['organizations','readytopurchaseorder','purchaseorders','readytoaccept','readytoacceptpay']));
     }
 
     public function acceptlist(Request $request){
@@ -139,5 +140,30 @@ class purchaseorderController extends Controller
     }
     
     
+
+    public function acceptpaylist(Request $request){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
+        $organization = new organization();
+        $purchaseorder = new purchaseorder();
+        $organizations = $organization->getorganization($id);
+        $purchaseorders = $purchaseorder->listtoacceptpay($id);
+        return view('expenses/purchaseorder/acceptpay')->with(compact(['organizations','purchaseorders']));
+    }
+
+    public function acceptpayprocess(Request $request,$idexpenses){
+        $userlevel_id = $request->session()->get('userlevel_id');
+        if($userlevel_id != 1){
+            return redirect()->action('organizationController@index');
+        }
+        $id = $request->session()->get('organization_id');
+        $purchaseorder = new purchaseorder();
+        $unixTimeStamp = Carbon::now()->toDateTimeString();
+        $purchaseorders = $purchaseorder->PurchaseorderAcceptpay($id,$idexpenses,$unixTimeStamp);
+        return redirect()->action('purchaseorderController@acceptpaylist');
+    }
 
 }
