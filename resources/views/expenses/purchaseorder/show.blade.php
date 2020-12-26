@@ -25,7 +25,7 @@
         <div class="col-8 border border-dark">
             <div class="ml-2 my-4">
                 @foreach ($details as $detail)
-                    <p style="font-size: 16px">ชื่อลูกค้า : {{$detail->partner_name}} </p>
+                    <p style="font-size: 16px">ชื่อผู้ติดต่อ : {{$detail->partner_name}} </p>
                     <p style="font-size: 16px">ที่อยู่ : {{$detail->address}}</p>
                     @if ($detail->partner_tel != '-')
                     <p style="font-size: 16px">เบอร์โทร : {{$detail->partner_tel}} </p>

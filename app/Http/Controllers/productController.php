@@ -71,7 +71,7 @@ class productController extends Controller
     public function store(Request $request){
         request()->validate([
             'product_name' => 'required',
-            'product_description' => 'required'
+                
         ]);
         $product_name = request()->input('product_name');
         $product_description = request()->input('product_description');

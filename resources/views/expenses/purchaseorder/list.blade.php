@@ -51,7 +51,7 @@
                   <tr>
                     <th scope="col">วันที่สร้าง</th>
                     <th scope="col">รหัสใบสั่งซื้อ</th>
-                    <th scope="col">ชื่อลูกค้า</th>
+                    <th scope="col">ชื่อผู้ติดต่อ</th>
                     <th scope="col">ยอดสุทธิ</th>
                     <th scope="col">สถานะ</th>
                     <th scope="col"></th>

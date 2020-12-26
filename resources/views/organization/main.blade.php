@@ -94,8 +94,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <a href="{{ url('product/insert') }}" class="btn btn-dark" style="width: 100%;">เพิ่มผู้ติดต่อ</a>
-                                <a href="{{ url('product/stock/')}}" class="btn btn-dark mt-3" style="width: 100%;">รายชื่อผู้ติดต่อ</a>
+                                <a href="{{ url('partner/insert') }}" class="btn btn-dark" style="width: 100%;">เพิ่มผู้ติดต่อ</a>
+                                <a href="{{ url('partner/list/')}}" class="btn btn-dark mt-3" style="width: 100%;">รายชื่อผู้ติดต่อ</a>
                             </div>
                             <div class="col">
                                 <img src="{{url('/images/partner.png')}}" style="width: 100%">
@@ -128,7 +128,7 @@
                         <div class="row">
                             <div class="col">
                                 <a href="{{url('user/list') }}" class="btn btn-dark" style="width: 100%;">จัดการผู้ใช้งาน</a>
-                                <a href="{{url('user/list') }}" class="btn btn-dark mt-3" style="width: 100%;">จัดการองค์กร</a>
+                                <a href="{{url('organization/settings') }}" class="btn btn-dark mt-3" style="width: 100%;">จัดการองค์กร</a>
                             </div>
                             <div class="col">
                                 <img src="{{url('/images/user.png')}}" style="width: 100%">

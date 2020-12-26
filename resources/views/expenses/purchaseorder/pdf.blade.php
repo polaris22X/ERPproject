@@ -47,7 +47,7 @@
         <tr>
             <td>
                 @foreach ($details as $detail)
-                    <p style="font-size: 16px">ชื่อลูกค้า : {{$detail->partner_name}} </p>
+                    <p style="font-size: 16px">ชื่อผู้ติดต่อ : {{$detail->partner_name}} </p>
                     <p style="font-size: 16px">ที่อยู่ : {{$detail->address}}</p>
                     <p style="font-size: 16px">เบอร์โทร : {{$detail->partner_tel}} </p>
                     <p style="font-size: 16px">อีเมล : {{$detail->partner_email}}</p>

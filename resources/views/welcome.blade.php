@@ -11,8 +11,8 @@
  
   <div class="row">
   
-   <div class="col-6">แจ้งการชำระเงิน</div>
-   <div class="col-6">แจ้งปัญหาการใช้งาน</div>
+   {{-- <div class="col-6">แจ้งการชำระเงิน</div>
+   <div class="col-6">แจ้งปัญหาการใช้งาน</div> --}}
   </div>
   <div id="demo" class="carousel slide" data-ride="carousel">
 

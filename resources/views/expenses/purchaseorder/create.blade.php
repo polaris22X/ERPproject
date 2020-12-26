@@ -23,7 +23,7 @@
                   <tr>
                     <th scope="col">ID</th>
                     <th scope="col">วันที่สร้าง</th>
-                    <th scope="col">ชื่อลูกค้า</th>
+                    <th scope="col">ชื่อผู้ติดต่อ</th>
                     <th scope="col">ยอดสุทธิ</th>
                     <th scope="col"></th>
                   </tr>
@@ -73,7 +73,7 @@
                         <div class="col-9 border border-dark">
                             <div class="ml-2 my-4">
                         
-                                    <p style="font-size: 16px" id="partnername">ชื่อลูกค้า : </p>
+                                    <p style="font-size: 16px" id="partnername">ชื่อผู้ติดต่อ : </p>
                                     <p style="font-size: 16px" id="partneraddress">ที่อยู่ : </p>
                                     <p style="font-size: 16px" id="partnertel">เบอร์โทร : </p>
                                     <p style="font-size: 16px" id="partneremail">อีเมล : </p>
@@ -159,7 +159,7 @@ function accept(){
                 var netprice = 0;
                 console.log(data);
                 
-                $("#partnername").text("ชื่อลูกค้า : " + data[0].partner_name);
+                $("#partnername").text("ชื่อผู้ติดต่อ : " + data[0].partner_name);
                 $("#partneraddress").text("ที่อยู่ : " + data[0].partner_address);
                 $("#partnertel").text("เบอร์โทร : " + data[0].partner_tel);
                 $("#partneremail").text("อีเมล : " + data[0].partner_email);
